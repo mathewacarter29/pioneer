@@ -1,19 +1,67 @@
-import { TILE_COLORS } from "./constants";
+import { DEFAULT_TILES, TILE_COLORS } from "./constants";
 import Tile from "./Tile/Tile";
-import classes from './Tiles.module.css';
+import { useRef, useState, useEffect } from "react";
 
 const Tiles = () => {
+  const [height, setHeight] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (ref !== null && ref.current !== null && ref.current.clientHeight) {
+      setHeight(ref.current.clientHeight)
+    }
+  });
+
+  const getRandomInt = (max: number): number => {
+    return Math.floor(Math.random() * max);
+  }
+
+  const getTileTypes = (startingRowLength: number, maxRowLength: number): string[] => {
+    // get the number of tiles
+    let numTiles = startingRowLength * 2;
+    for (let i = startingRowLength + 1; i < maxRowLength; i++) {
+      numTiles += i * 2;
+    }
+    numTiles += maxRowLength;
+
+    // get the correct number of tiles to play with
+    let startingTiles = DEFAULT_TILES;
+    if (numTiles <= startingTiles.length) {
+      // fewer/equal to the default number of tiles
+      return startingTiles.slice(0, numTiles);
+    }
+    // need more tiles
+    while (startingTiles.length <= numTiles) {
+      startingTiles.push(DEFAULT_TILES[getRandomInt(DEFAULT_TILES.length)])
+    }
+    return startingTiles;
+  }
+
   const getRows = (startingRowLength: number, maxRowLength: number) => {
     if (startingRowLength >= maxRowLength) {
       throw new Error('starting rows must be less than max row length to create board')
     }
+
     let rows = [];
-    for (let numTiles = startingRowLength; numTiles <= maxRowLength; numTiles++) {
+    let shouldIncrease = true;
+    const increment = (i: number, shouldIncrease: boolean): number => {
+      if (shouldIncrease) {
+        return i+1;
+      }
+      return i-1;
+    }
+    let tileTypes = getTileTypes(startingRowLength, maxRowLength)
+    for (let numTiles = startingRowLength; numTiles >= startingRowLength; numTiles = increment(numTiles, shouldIncrease)) {
       let row = [];
       for (let i = 0; i < numTiles; i++) {
-        row.push(<Tile tileColor={TILE_COLORS.BRICKYARD} />)
+        const index = getRandomInt(tileTypes.length);
+        const color = tileTypes[index];
+        row.push(<Tile tileColor={color} />)
+        tileTypes.splice(index, 1);
       }
       rows.push(row);
+      if (numTiles == maxRowLength) {
+        shouldIncrease = false;
+      }
     }
     return rows;
   }
@@ -21,11 +69,9 @@ const Tiles = () => {
   return (
     <div>
       <h3>Tiles</h3>
-      
-
         {getRows(3,5).map((row) => {
           return (
-            <div style={{display: 'grid', 'gridTemplateColumns': 'auto '.repeat(row.length)}}>
+            <div ref={ref} style={{display: 'flex', justifyContent: 'center', marginBottom: `-${height * .25}px`}}>
               {row}
             </div>
           );
