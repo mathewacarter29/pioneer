@@ -25,15 +25,14 @@ const Tiles = () => {
       numTiles += i * 2;
     }
     numTiles += maxRowLength;
-
     // get the correct number of tiles to play with
-    let startingTiles = DEFAULT_TILES;
+    let startingTiles = DEFAULT_TILES.slice(0, DEFAULT_TILES.length);
     if (numTiles <= startingTiles.length) {
       // fewer/equal to the default number of tiles
       return startingTiles.slice(0, numTiles);
     }
     // need more tiles
-    while (startingTiles.length <= numTiles) {
+    while (startingTiles.length < numTiles) {
       startingTiles.push(DEFAULT_TILES[getRandomInt(DEFAULT_TILES.length)]);
     }
     return startingTiles;
