@@ -64,7 +64,7 @@ const Tiles = () => {
         const index = getRandomInt(tileTypes.length);
         const color = tileTypes[index];
         row.push(
-          <div key={`row${numTiles - startingRowLength}tile${i}`} style={{marginRight: '-15px'}}>
+          <div key={`row${numTiles - startingRowLength}tile${i}`} style={{marginRight: '-16px'}}>
             <Tile
               tileColor={color}
             />
