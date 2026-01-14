@@ -1,8 +1,14 @@
-import { DEFAULT_TILES } from "./constants";
+import {
+  DEFAULT_TILES,
+  TILE_EDGES,
+  type TileColorType,
+  type TileEdgeNames,
+} from "./constants";
 import Tile from "./Tile/Tile";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, type JSX } from "react";
 
 const Tiles = () => {
+  const [rows, setRows] = useState<JSX.Element[][]>([]);
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -11,6 +17,11 @@ const Tiles = () => {
     }
   });
 
+  useEffect(() => {
+    const tileRows = getRows(3, 5);
+    setRows(tileRows);
+  }, []);
+
   const getRandomInt = (max: number): number => {
     return Math.floor(Math.random() * max);
   };
@@ -18,7 +29,7 @@ const Tiles = () => {
   const getTileTypes = (
     startingRowLength: number,
     maxRowLength: number
-  ): string[] => {
+  ): TileColorType[] => {
     // get the number of tiles
     let numTiles = startingRowLength * 2;
     for (let i = startingRowLength + 1; i < maxRowLength; i++) {
@@ -38,6 +49,18 @@ const Tiles = () => {
     return startingTiles;
   };
 
+  const getShownEdges = (
+    row: number,
+    col: number,
+    midpoint: number
+  ): TileEdgeNames[] => {
+    let result = JSON.parse(JSON.stringify(TILE_EDGES));
+    if (col > 0) {
+      delete result.LEFT_SIDE;
+    }
+    return Object.values(result);
+  };
+
   const getRows = (startingRowLength: number, maxRowLength: number) => {
     if (startingRowLength >= maxRowLength) {
       throw new Error(
@@ -54,6 +77,7 @@ const Tiles = () => {
       return i - 1;
     };
     let tileTypes = getTileTypes(startingRowLength, maxRowLength);
+    let rowIndex = 0;
     for (
       let numTiles = startingRowLength;
       numTiles >= startingRowLength;
@@ -63,11 +87,17 @@ const Tiles = () => {
       for (let i = 0; i < numTiles; i++) {
         const index = getRandomInt(tileTypes.length);
         const color = tileTypes[index];
+        const shownEdges = getShownEdges(
+          rowIndex,
+          i,
+          maxRowLength - startingRowLength
+        );
         row.push(
-          <div key={`row${numTiles - startingRowLength}tile${i}`} style={{marginRight: '-16px'}}>
-            <Tile
-              tileColor={color}
-            />
+          <div
+            key={`row${numTiles - startingRowLength}tile${i}`}
+            style={{ marginRight: "-1px" }}
+          >
+            <Tile tileColor={color} shownEdges={shownEdges} />
           </div>
         );
         tileTypes.splice(index, 1);
@@ -76,13 +106,14 @@ const Tiles = () => {
       if (numTiles == maxRowLength) {
         shouldIncrease = false;
       }
+      rowIndex++;
     }
     return rows;
   };
 
   return (
     <div>
-      {getRows(3, 5).map((row, index) => {
+      {rows.map((row, index) => {
         return (
           <div
             key={`row${index}`}
@@ -90,7 +121,7 @@ const Tiles = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: `-${height * 0.25 + 16}px`,
+              marginBottom: `-${height * 0.25 + 1}px`,
             }}
           >
             {row}
