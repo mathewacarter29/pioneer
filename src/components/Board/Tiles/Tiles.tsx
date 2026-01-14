@@ -63,7 +63,13 @@ const Tiles = () => {
       for (let i = 0; i < numTiles; i++) {
         const index = getRandomInt(tileTypes.length);
         const color = tileTypes[index];
-        row.push(<Tile tileColor={color} key={`row${numTiles - startingRowLength}tile${i}`}/>);
+        row.push(
+          <div key={`row${numTiles - startingRowLength}tile${i}`} style={{marginRight: '-15px'}}>
+            <Tile
+              tileColor={color}
+            />
+          </div>
+        );
         tileTypes.splice(index, 1);
       }
       rows.push(row);
@@ -84,7 +90,7 @@ const Tiles = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: `-${height * 0.25}px`,
+              marginBottom: `-${height * 0.25 + 16}px`,
             }}
           >
             {row}
