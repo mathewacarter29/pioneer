@@ -52,11 +52,15 @@ const Tiles = () => {
   const getShownEdges = (
     row: number,
     col: number,
-    midpoint: number
+    maxRows: number,
+    tilesInRow: number,
   ): TileEdgeNames[] => {
     let result = JSON.parse(JSON.stringify(TILE_EDGES));
     if (col > 0) {
       delete result.LEFT_SIDE;
+    }
+    if (row > maxRows / 2 || (row > 0 && col != tilesInRow - 1)) {
+      delete result.TOP_RIGHT_SIDE;
     }
     return Object.values(result);
   };
@@ -90,7 +94,8 @@ const Tiles = () => {
         const shownEdges = getShownEdges(
           rowIndex,
           i,
-          maxRowLength - startingRowLength
+          (maxRowLength - startingRowLength) * 2 + 1,
+          numTiles
         );
         row.push(
           <div
