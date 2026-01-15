@@ -62,6 +62,9 @@ const Tiles = () => {
     if (row > maxRows / 2 || (row > 0 && col != tilesInRow - 1)) {
       delete result.TOP_RIGHT_SIDE;
     }
+    if ((row < maxRows - 1 && (row <= maxRows / 2 - 1 || col < tilesInRow - 1))) {
+      delete result.BOTTOM_RIGHT_SIDE
+    }
     return Object.values(result);
   };
 
