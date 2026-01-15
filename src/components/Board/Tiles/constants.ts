@@ -15,7 +15,8 @@ export const TILE_VERTICES = {
   VERTEX_SIX: "VERTEX_SIX",
   VERTEX_EIGHT: "VERTEX_EIGHT",
   VERTEX_TEN: "VERTEX_TEN",
-};
+} as const;
+export type TileVertexNames = (typeof TILE_VERTICES)[keyof typeof TILE_VERTICES];
 
 export const TILE_COLORS = {
   PLAINS: "#A0DE7E",

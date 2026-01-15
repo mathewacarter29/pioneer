@@ -4,6 +4,8 @@ import {
   TILE_BORDER_WIDTH,
   type TileColorType,
   type TileEdgeNames,
+  type TileVertexNames,
+  TILE_VERTICES,
 } from "./constants";
 import Tile from "./Tile/Tile";
 import { useRef, useState, useEffect, type JSX } from "react";
@@ -54,7 +56,7 @@ const Tiles = () => {
     row: number,
     col: number,
     maxRows: number,
-    tilesInRow: number,
+    tilesInRow: number
   ): TileEdgeNames[] => {
     let result = JSON.parse(JSON.stringify(TILE_EDGES));
     if (col > 0) {
@@ -63,8 +65,34 @@ const Tiles = () => {
     if (row > maxRows / 2 || (row > 0 && col != tilesInRow - 1)) {
       delete result.TOP_RIGHT_SIDE;
     }
-    if ((row < maxRows - 1 && (row <= maxRows / 2 - 1 || col < tilesInRow - 1))) {
-      delete result.BOTTOM_RIGHT_SIDE
+    if (row < maxRows - 1 && (row <= maxRows / 2 - 1 || col < tilesInRow - 1)) {
+      delete result.BOTTOM_RIGHT_SIDE;
+    }
+    return Object.values(result);
+  };
+
+  const getShownVertices = (
+    row: number,
+    col: number,
+    maxRows: number,
+    tilesInRow: number
+  ): TileVertexNames[] => {
+    let result = JSON.parse(JSON.stringify(TILE_VERTICES));
+    if (col > 0) {
+      // left side vertices
+      delete result.VERTEX_EIGHT;
+      delete result.VERTEX_TEN;
+    }
+    if (row > maxRows / 2 || (row > 0 && col != tilesInRow - 1)) {
+      // top right side vertices
+      delete result.VERTEX_TWELVE;
+      delete result.VERTEX_TWO;
+
+    }
+    if (row < maxRows - 1 && (row <= maxRows / 2 - 1 || col < tilesInRow - 1)) {
+      // bottom right side vertices
+      delete result.VERTEX_FOUR;
+      delete result.VERTEX_SIX;
     }
     return Object.values(result);
   };
@@ -101,12 +129,22 @@ const Tiles = () => {
           (maxRowLength - startingRowLength) * 2 + 1,
           numTiles
         );
+        const shownVertices = getShownVertices(
+          rowIndex,
+          i,
+          (maxRowLength - startingRowLength) * 2 + 1,
+          numTiles
+        );
         row.push(
           <div
             key={`row${numTiles - startingRowLength}tile${i}`}
             style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
           >
-            <Tile tileColor={color} shownEdges={shownEdges} />
+            <Tile
+              tileColor={color}
+              shownEdges={shownEdges}
+              shownVertices={shownVertices}
+            />
           </div>
         );
         tileTypes.splice(index, 1);

@@ -1,0 +1,51 @@
+const VERTEX_TEN = (
+  <path
+    id="VERTEX_TEN"
+    d="M166.025 179.776a1.984 1.984 0 0 1-1.984 1.984 1.984 1.984 0 0 1-1.985-1.984 1.984 1.984 0 0 1 1.985-1.984 1.984 1.984 0 0 1 1.984 1.984"
+    key="VERTEX_TEN"
+  ></path>
+);
+const VERTEX_EIGHT = (
+  <path
+    id="VERTEX_EIGHT"
+    d="M166.055 200.97a1.984 1.984 0 0 1-1.984 1.984 1.984 1.984 0 0 1-1.985-1.984 1.984 1.984 0 0 1 1.985-1.985 1.984 1.984 0 0 1 1.984 1.985"
+    key="VERTEX_EIGHT"
+  ></path>
+);
+const VERTEX_SIX = (
+  <path
+    id="VERTEX_SIX"
+    d="M184.424 211.54a1.984 1.984 0 0 1-1.984 1.985 1.984 1.984 0 0 1-1.984-1.984 1.984 1.984 0 0 1 1.984-1.985 1.984 1.984 0 0 1 1.984 1.985"
+    key="VERTEX_SIX"
+  ></path>
+);
+const VERTEX_FOUR = (
+  <path
+    id="VERTEX_FOUR"
+    d="M202.764 200.918a1.984 1.984 0 0 1-1.985 1.984 1.984 1.984 0 0 1-1.984-1.984 1.984 1.984 0 0 1 1.985-1.984 1.984 1.984 0 0 1 1.984 1.984"
+    key="VERTEX_FOUR"
+  ></path>
+);
+const VERTEX_TWO = (
+  <path
+    id="VERTEX_TWO"
+    d="M202.734 179.724a1.984 1.984 0 0 1-1.984 1.985 1.984 1.984 0 0 1-1.985-1.985 1.984 1.984 0 0 1 1.985-1.984 1.984 1.984 0 0 1 1.984 1.984"
+    key="VERTEX_TWO"
+  ></path>
+);
+const VERTEX_TWELVE = (
+  <path
+    id="VERTEX_TWELVE"
+    d="M184.365 169.153a1.984 1.984 0 0 1-1.985 1.985 1.984 1.984 0 0 1-1.984-1.985 1.984 1.984 0 0 1 1.984-1.984 1.984 1.984 0 0 1 1.985 1.984"
+    key="VERTEX_TWELVE"
+  ></path>
+);
+
+export {
+  VERTEX_EIGHT,
+  VERTEX_FOUR,
+  VERTEX_SIX,
+  VERTEX_TEN,
+  VERTEX_TWELVE,
+  VERTEX_TWO,
+};
