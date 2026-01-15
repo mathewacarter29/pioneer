@@ -48,3 +48,5 @@ export const DEFAULT_TILES = [
   TILE_COLORS.FORREST,
   TILE_COLORS.PLAINS,
 ];
+
+export const TILE_BORDER_WIDTH = 1;

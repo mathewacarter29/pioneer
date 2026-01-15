@@ -1,6 +1,7 @@
 import {
   DEFAULT_TILES,
   TILE_EDGES,
+  TILE_BORDER_WIDTH,
   type TileColorType,
   type TileEdgeNames,
 } from "./constants";
@@ -103,7 +104,7 @@ const Tiles = () => {
         row.push(
           <div
             key={`row${numTiles - startingRowLength}tile${i}`}
-            style={{ marginRight: "-1px" }}
+            style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
           >
             <Tile tileColor={color} shownEdges={shownEdges} />
           </div>
@@ -129,7 +130,7 @@ const Tiles = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: `-${height * 0.25 + 1}px`,
+              marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
             }}
           >
             {row}
