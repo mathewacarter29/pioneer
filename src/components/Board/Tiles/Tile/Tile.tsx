@@ -21,7 +21,7 @@ import {
   VERTEX_TEN,
 } from "./vertices";
 
-interface TileProps {
+export interface TileProps {
   tileColor: TileColorType;
   shownEdges: TileEdgeNames[];
   shownVertices: TileVertexNames[];

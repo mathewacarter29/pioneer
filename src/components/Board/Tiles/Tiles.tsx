@@ -7,13 +7,21 @@ import {
   type TileVertexNames,
   TILE_VERTICES,
 } from "./constants";
-import Tile from "./Tile/Tile";
-import { useRef, useState, useEffect, type JSX } from "react";
+import Tile, { type TileProps } from "./Tile/Tile";
+import { useRef, useState, useEffect } from "react";
 
 const Tiles = () => {
-  const [rows, setRows] = useState<JSX.Element[][]>([]);
+  interface TileInfo {
+    tileProps: TileProps;
+    row: number;
+    col: number;
+  }
+
+  const [rows, setRows] = useState<TileInfo[][]>([]);
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const STARTING_ROW_TILES = 3;
+  const MAX_ROW_TILES = 5;
   useEffect(() => {
     if (ref !== null && ref.current !== null && ref.current.clientHeight) {
       setHeight(ref.current.clientHeight);
@@ -21,7 +29,7 @@ const Tiles = () => {
   });
 
   useEffect(() => {
-    const tileRows = getRows(3, 5);
+    const tileRows = getRows(STARTING_ROW_TILES, MAX_ROW_TILES);
     setRows(tileRows);
   }, []);
 
@@ -71,7 +79,7 @@ const Tiles = () => {
     return Object.values(result);
   };
 
-  const getShownVertices = (
+  const getShownVerticesHelper = (
     row: number,
     col: number,
     maxRows: number,
@@ -85,20 +93,22 @@ const Tiles = () => {
     }
     if (row > maxRows / 2 || (row > 0 && col != tilesInRow - 1)) {
       // top right side vertices
-      delete result.VERTEX_TWELVE;
       delete result.VERTEX_TWO;
-
+      delete result.VERTEX_TWELVE;
     }
     if (row < maxRows - 1 && (row <= maxRows / 2 - 1 || col < tilesInRow - 1)) {
       // bottom right side vertices
-      delete result.VERTEX_FOUR;
       delete result.VERTEX_SIX;
+      delete result.VERTEX_FOUR;
     }
     return Object.values(result);
   };
 
-  const getRows = (startingRowLength: number, maxRowLength: number) => {
-    if (startingRowLength >= maxRowLength) {
+  const getRows = (
+    startingRowLength: number,
+    maxRowLength: number
+  ): TileInfo[][] => {
+    if (startingRowLength > maxRowLength) {
       throw new Error(
         "starting rows must be less than max row length to create board"
       );
@@ -129,24 +139,34 @@ const Tiles = () => {
           (maxRowLength - startingRowLength) * 2 + 1,
           numTiles
         );
-        const shownVertices = getShownVertices(
+        const shownVertices = getShownVerticesHelper(
           rowIndex,
           i,
           (maxRowLength - startingRowLength) * 2 + 1,
           numTiles
         );
-        row.push(
-          <div
-            key={`row${numTiles - startingRowLength}tile${i}`}
-            style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
-          >
-            <Tile
-              tileColor={color}
-              shownEdges={shownEdges}
-              shownVertices={shownVertices}
-            />
-          </div>
-        );
+        const tileInfo = {
+          tileProps: {
+            tileColor: color,
+            shownEdges: shownEdges,
+            shownVertices: shownVertices,
+          },
+          row: numTiles - startingRowLength,
+          col: i,
+        } as TileInfo;
+        row.push(tileInfo);
+        // row.push(
+        // <div
+        //   key={`row${numTiles - startingRowLength}tile${i}`}
+        //   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+        // >
+        //   <Tile
+        //     tileColor={color}
+        //     shownEdges={shownEdges}
+        //     shownVertices={shownVertices}
+        //   />
+        // </div>
+        // );
         tileTypes.splice(index, 1);
       }
       rows.push(row);
@@ -171,7 +191,18 @@ const Tiles = () => {
               marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
             }}
           >
-            {row}
+            {row.map((tile) => (
+              <div
+                key={`row${tile.row}tile${tile.col}`}
+                style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+              >
+                <Tile
+                  tileColor={tile.tileProps.tileColor}
+                  shownEdges={tile.tileProps.shownEdges}
+                  shownVertices={tile.tileProps.shownVertices}
+                />
+              </div>
+            ))}
           </div>
         );
       })}
