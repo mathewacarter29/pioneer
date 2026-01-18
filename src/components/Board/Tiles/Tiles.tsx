@@ -209,8 +209,8 @@ const Tiles = () => {
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "1000px" }}>
-      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+    <div style={{ position: "relative", height: "1000px", margin: 'auto', marginRight: `${TILE_BORDER_WIDTH}px` }}>
+      <div style={{ position: "absolute", left: 0, right: 0}}>
         {rows.map((row, index) => {
           // SHOW HEXES
           return (
@@ -235,7 +235,7 @@ const Tiles = () => {
           );
         })}
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+      <div style={{ position: "absolute", left: 0, right: 0}}>
         {rows.map((row, index) => {
           // SHOW EDGES
           return (
@@ -260,7 +260,7 @@ const Tiles = () => {
           );
         })}
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+      <div style={{ position: "absolute", left: 0, right: 0}}>
         {rows.map((row, index) => {
           // SHOW VERTICES
           return (
