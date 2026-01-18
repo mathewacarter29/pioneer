@@ -139,6 +139,12 @@ const Tiles = () => {
       delete result.VERTEX_SIX;
       delete result.VERTEX_FOUR;
     }
+    // cover base case of a 3 row, 1-2-1 board - add right side
+    if (maxRows == 3 && tilesInRow == 2 && row == 1) {
+      result["VERTEX_TWO"] = "VERTEX_TWO";
+      result["VERTEX_FOUR"] = "VERTEX_FOUR";
+    }
+
     return Object.values(result);
   };
 
