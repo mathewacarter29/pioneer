@@ -6,6 +6,8 @@ import {
   type TileEdgeNames,
   type TileVertexNames,
   TILE_VERTICES,
+  STARTING_ROW_TILES,
+  MAX_ROW_TILES,
 } from "./constants";
 import Edges from "./TileParts/Edges";
 import Hex from "./TileParts/Hex";
@@ -26,8 +28,6 @@ const Tiles = () => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const STARTING_ROW_TILES = 3;
-  const MAX_ROW_TILES = 5;
   useEffect(() => {
     if (ref !== null && ref.current !== null) {
       if (ref.current.clientHeight) {
