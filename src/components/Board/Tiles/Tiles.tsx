@@ -24,12 +24,18 @@ const Tiles = () => {
 
   const [rows, setRows] = useState<TileInfo[][]>([]);
   const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const STARTING_ROW_TILES = 3;
   const MAX_ROW_TILES = 5;
   useEffect(() => {
-    if (ref !== null && ref.current !== null && ref.current.clientHeight) {
-      setHeight(ref.current.clientHeight);
+    if (ref !== null && ref.current !== null) {
+      if (ref.current.clientHeight) {
+        setHeight(ref.current.clientHeight);
+      }
+      if (ref.current.clientWidth) {
+        setWidth(ref.current.clientWidth);
+      }
     }
   });
 
@@ -209,14 +215,23 @@ const Tiles = () => {
   };
 
   return (
-    <div style={{ position: "relative", height: "1000px", margin: 'auto', marginRight: `${TILE_BORDER_WIDTH}px` }}>
-      <div style={{ position: "absolute", left: 0, right: 0}}>
+    <div
+      style={{
+        position: "relative",
+        margin: "auto",
+        marginRight: `${TILE_BORDER_WIDTH}px`,
+        height: `${
+          height * 0.75 * ((MAX_ROW_TILES - STARTING_ROW_TILES) * 2 + 1)
+        }px`,
+        width: `${width * MAX_ROW_TILES}px`,
+      }}
+    >
+      <div style={{ position: "absolute", left: 0, right: 0 }}>
         {rows.map((row, index) => {
           // SHOW HEXES
           return (
             <div
               key={`hex-row${index}`}
-              ref={ref}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -235,13 +250,12 @@ const Tiles = () => {
           );
         })}
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0}}>
+      <div style={{ position: "absolute", left: 0, right: 0 }}>
         {rows.map((row, index) => {
           // SHOW EDGES
           return (
             <div
               key={`edge-row${index}`}
-              ref={ref}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -260,13 +274,12 @@ const Tiles = () => {
           );
         })}
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0}}>
+      <div style={{ position: "absolute", left: 0, right: 0 }}>
         {rows.map((row, index) => {
           // SHOW VERTICES
           return (
             <div
               key={`vertex-row${index}`}
-              ref={ref}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -277,6 +290,7 @@ const Tiles = () => {
                 <div
                   key={`vertex-row${tile.row}-tile${tile.col}`}
                   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+                  ref={ref}
                 >
                   <Vertices shownVertices={tile.shownVertices} />
                 </div>
