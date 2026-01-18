@@ -7,12 +7,16 @@ import {
   type TileVertexNames,
   TILE_VERTICES,
 } from "./constants";
-import Tile, { type TileProps } from "./Tile/Tile";
+import Edges from "./TileParts/Edges";
+import Hex from "./TileParts/Hex";
 import { useRef, useState, useEffect } from "react";
+import Vertices from "./TileParts/Vertices";
 
 const Tiles = () => {
   interface TileInfo {
-    tileProps: TileProps;
+    tileColor: TileColorType;
+    shownEdges: TileEdgeNames[];
+    shownVertices: TileVertexNames[];
     row: number;
     col: number;
     tilesInRow: number;
@@ -103,7 +107,7 @@ const Tiles = () => {
         const boundedRow = row.slice(colBounds[0], colBounds[1] + 1);
         for (let [j, tile] of boundedRow.entries()) {
           if (rowBounds.includes(tile.row) || colBounds.includes(tile.col)) {
-            tile.tileProps.shownVertices = getShownVerticesHelper(
+            tile.shownVertices = getShownVerticesHelper(
               i,
               j,
               boundedRows.length,
@@ -184,11 +188,9 @@ const Tiles = () => {
           numTiles
         );
         const tileInfo = {
-          tileProps: {
-            tileColor: color,
-            shownEdges: shownEdges,
-            shownVertices: [], // these get set as a part of setShownVertices()
-          },
+          tileColor: color,
+          shownEdges: shownEdges,
+          shownVertices: [], // these get set as a part of setShownVertices()
           row: rowIndex,
           col: i,
           tilesInRow: numTiles,
@@ -207,33 +209,82 @@ const Tiles = () => {
   };
 
   return (
-    <div>
-      {rows.map((row, index) => {
-        return (
-          <div
-            key={`row${index}`}
-            ref={ref}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
-            }}
-          >
-            {row.map((tile) => (
-              <div
-                key={`row${tile.row}tile${tile.col}`}
-                style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
-              >
-                <Tile
-                  tileColor={tile.tileProps.tileColor}
-                  shownEdges={tile.tileProps.shownEdges}
-                  shownVertices={tile.tileProps.shownVertices}
-                />
-              </div>
-            ))}
-          </div>
-        );
-      })}
+    <div style={{ position: "relative", width: "100%", height: "1000px" }}>
+      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+        {rows.map((row, index) => {
+          // SHOW HEXES
+          return (
+            <div
+              key={`hex-row${index}`}
+              ref={ref}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
+              }}
+            >
+              {row.map((tile) => (
+                <div
+                  key={`hex-row${tile.row}-tile${tile.col}`}
+                  style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+                >
+                  <Hex tileColor={tile.tileColor} />
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+        {rows.map((row, index) => {
+          // SHOW EDGES
+          return (
+            <div
+              key={`edge-row${index}`}
+              ref={ref}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
+              }}
+            >
+              {row.map((tile) => (
+                <div
+                  key={`edge-row${tile.row}-tile${tile.col}`}
+                  style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+                >
+                  <Edges shownEdges={tile.shownEdges} />
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ position: "absolute", left: 0, right: 0, margin: "auto" }}>
+        {rows.map((row, index) => {
+          // SHOW VERTICES
+          return (
+            <div
+              key={`vertex-row${index}`}
+              ref={ref}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
+              }}
+            >
+              {row.map((tile) => (
+                <div
+                  key={`vertex-row${tile.row}-tile${tile.col}`}
+                  style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+                >
+                  <Vertices shownVertices={tile.shownVertices} />
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
