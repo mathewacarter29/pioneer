@@ -20,11 +20,11 @@ export type TileVertexNames = (typeof TILE_VERTICES)[keyof typeof TILE_VERTICES]
 
 export const TILE_COLORS = {
   PLAINS: "#A0DE7E",
-  FIELD: "#f0f878ff",
+  FIELD: "#F0F878",
   QUARRY: "#404040",
-  FORREST: "#06440a",
-  BRICKYARD: "#773a18",
-  DESSERT: "#ffd900ff",
+  FORREST: "#06440A",
+  BRICKYARD: "#773A18",
+  DESSERT: "#FFD900",
 } as const;
 export type TileColorType = (typeof TILE_COLORS)[keyof typeof TILE_COLORS];
 
