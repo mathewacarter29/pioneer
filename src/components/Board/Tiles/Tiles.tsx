@@ -15,6 +15,7 @@ const Tiles = () => {
     tileProps: TileProps;
     row: number;
     col: number;
+    tilesInRow: number;
   }
 
   const [rows, setRows] = useState<TileInfo[][]>([]);
@@ -79,6 +80,43 @@ const Tiles = () => {
     return Object.values(result);
   };
 
+  // the getShownVerticesHelper function will get the outer ring of any shape
+  // go through the hexes in rings to get all vertices
+  const setShownVertices = (rows: TileInfo[][]) => {
+    const maxRows = rows.length;
+    // determine what row and column you want the vertices for
+    // start with the outside and work your way in
+    let currRowOffset = 0;
+    let currColOffset = 0;
+    // go until we reach the middle row
+    while (currRowOffset < maxRows / 2) {
+      const rowBounds: [number, number] = [
+        currRowOffset,
+        maxRows - 1 - currRowOffset,
+      ];
+      const boundedRows = rows.slice(rowBounds[0], rowBounds[1] + 1);
+      for (let [i, row] of boundedRows.entries()) {
+        const colBounds: [number, number] = [
+          currColOffset,
+          row.length - 1 - currColOffset,
+        ];
+        const boundedRow = row.slice(colBounds[0], colBounds[1] + 1);
+        for (let [j, tile] of boundedRow.entries()) {
+          if (rowBounds.includes(tile.row) || colBounds.includes(tile.col)) {
+            tile.tileProps.shownVertices = getShownVerticesHelper(
+              i,
+              j,
+              boundedRows.length,
+              boundedRow.length
+            );
+          }
+        }
+      }
+      currRowOffset++;
+      currColOffset++;
+    }
+  };
+
   const getShownVerticesHelper = (
     row: number,
     col: number,
@@ -139,34 +177,17 @@ const Tiles = () => {
           (maxRowLength - startingRowLength) * 2 + 1,
           numTiles
         );
-        const shownVertices = getShownVerticesHelper(
-          rowIndex,
-          i,
-          (maxRowLength - startingRowLength) * 2 + 1,
-          numTiles
-        );
         const tileInfo = {
           tileProps: {
             tileColor: color,
             shownEdges: shownEdges,
-            shownVertices: shownVertices,
+            shownVertices: [], // these get set as a part of setShownVertices()
           },
-          row: numTiles - startingRowLength,
+          row: rowIndex,
           col: i,
+          tilesInRow: numTiles,
         } as TileInfo;
         row.push(tileInfo);
-        // row.push(
-        // <div
-        //   key={`row${numTiles - startingRowLength}tile${i}`}
-        //   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
-        // >
-        //   <Tile
-        //     tileColor={color}
-        //     shownEdges={shownEdges}
-        //     shownVertices={shownVertices}
-        //   />
-        // </div>
-        // );
         tileTypes.splice(index, 1);
       }
       rows.push(row);
@@ -175,6 +196,7 @@ const Tiles = () => {
       }
       rowIndex++;
     }
+    setShownVertices(rows);
     return rows;
   };
 
