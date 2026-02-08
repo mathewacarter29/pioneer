@@ -13,8 +13,15 @@ import Edges from "./TileParts/Edges";
 import Hex from "./TileParts/Hex";
 import { useRef, useState, useEffect } from "react";
 import Vertices from "./TileParts/Vertices";
+import type { Builds } from "../Board";
 
-const Tiles = () => {
+interface TilesProps {
+  selectedBuild: Builds;
+}
+
+const Tiles = (props: TilesProps) => {
+  const {selectedBuild} = props;
+
   interface TileInfo {
     tileColor: TileColorType;
     shownEdges: TileEdgeNames[];
@@ -255,16 +262,17 @@ const Tiles = () => {
           // SHOW EDGES
           return (
             <div
-              key={`edge-row${index}`}
+              key={`edge-row-${index}`}
               style={{
                 display: "flex",
                 justifyContent: "center",
                 marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
+                opacity: selectedBuild === 'ROAD' ? '80%' : '30%'
               }}
             >
               {row.map((tile) => (
                 <div
-                  key={`edge-row${tile.row}-tile${tile.col}`}
+                  key={`edge-row-${tile.row}-tile-${tile.col}`}
                   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
                 >
                   <Edges shownEdges={tile.shownEdges} />
@@ -279,16 +287,17 @@ const Tiles = () => {
           // SHOW VERTICES
           return (
             <div
-              key={`vertex-row${index}`}
+              key={`vertex-row-${index}`}
               style={{
                 display: "flex",
                 justifyContent: "center",
                 marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
+                opacity: selectedBuild === 'SETTLEMENT' ? '80%' : '30%'
               }}
             >
               {row.map((tile) => (
                 <div
-                  key={`vertex-row${tile.row}-tile${tile.col}`}
+                  key={`vertex-row-${tile.row}-tile-${tile.col}`}
                   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
                   ref={ref}
                 >
