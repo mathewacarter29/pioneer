@@ -20,7 +20,7 @@ interface TilesProps {
 }
 
 const Tiles = (props: TilesProps) => {
-  const {selectedBuild} = props;
+  const { selectedBuild } = props;
 
   interface TileInfo {
     tileColor: TileColorType;
@@ -57,7 +57,7 @@ const Tiles = (props: TilesProps) => {
 
   const getTileTypes = (
     startingRowLength: number,
-    maxRowLength: number
+    maxRowLength: number,
   ): TileColorType[] => {
     // get the number of tiles
     let numTiles = startingRowLength * 2;
@@ -82,7 +82,7 @@ const Tiles = (props: TilesProps) => {
     row: number,
     col: number,
     maxRows: number,
-    tilesInRow: number
+    tilesInRow: number,
   ): TileEdgeNames[] => {
     let result = JSON.parse(JSON.stringify(TILE_EDGES));
     if (col > 0) {
@@ -124,7 +124,7 @@ const Tiles = (props: TilesProps) => {
               i,
               j,
               boundedRows.length,
-              boundedRow.length
+              boundedRow.length,
             );
           }
         }
@@ -138,7 +138,7 @@ const Tiles = (props: TilesProps) => {
     row: number,
     col: number,
     maxRows: number,
-    tilesInRow: number
+    tilesInRow: number,
   ): TileVertexNames[] => {
     let result = JSON.parse(JSON.stringify(TILE_VERTICES));
     if (col > 0) {
@@ -167,11 +167,11 @@ const Tiles = (props: TilesProps) => {
 
   const getRows = (
     startingRowLength: number,
-    maxRowLength: number
+    maxRowLength: number,
   ): TileInfo[][] => {
     if (startingRowLength > maxRowLength) {
       throw new Error(
-        "starting rows must be less than max row length to create board"
+        "starting rows must be less than max row length to create board",
       );
     }
 
@@ -198,7 +198,7 @@ const Tiles = (props: TilesProps) => {
           rowIndex,
           i,
           (maxRowLength - startingRowLength) * 2 + 1,
-          numTiles
+          numTiles,
         );
         const tileInfo = {
           tileColor: color,
@@ -225,10 +225,9 @@ const Tiles = (props: TilesProps) => {
     <div
       style={{
         position: "relative",
-        margin: "auto",
         marginRight: `${TILE_BORDER_WIDTH}px`,
         height: `${
-          height * 0.75 * ((MAX_ROW_TILES - STARTING_ROW_TILES) * 2 + 1)
+          height * 0.75 * ((MAX_ROW_TILES - STARTING_ROW_TILES) * 2 + 1) - height * 0.25 + TILE_BORDER_WIDTH
         }px`,
         width: `${width * MAX_ROW_TILES}px`,
       }}
@@ -248,7 +247,8 @@ const Tiles = (props: TilesProps) => {
               {row.map((tile) => (
                 <div
                   key={`hex-row${tile.row}-tile${tile.col}`}
-                  style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
+                  style={{ marginRight: `-${TILE_BORDER_WIDTH}px`}}
+                  ref={ref}
                 >
                   <Hex tileColor={tile.tileColor} />
                 </div>
@@ -267,7 +267,7 @@ const Tiles = (props: TilesProps) => {
                 display: "flex",
                 justifyContent: "center",
                 marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
-                opacity: selectedBuild === 'ROAD' ? '80%' : '30%'
+                opacity: selectedBuild === "ROAD" ? "80%" : "30%",
               }}
             >
               {row.map((tile) => (
@@ -292,16 +292,18 @@ const Tiles = (props: TilesProps) => {
                 display: "flex",
                 justifyContent: "center",
                 marginBottom: `-${height * 0.25 + TILE_BORDER_WIDTH}px`,
-                opacity: selectedBuild === 'SETTLEMENT' ? '80%' : '30%'
               }}
             >
               {row.map((tile) => (
                 <div
                   key={`vertex-row-${tile.row}-tile-${tile.col}`}
                   style={{ marginRight: `-${TILE_BORDER_WIDTH}px` }}
-                  ref={ref}
                 >
-                  <Vertices shownVertices={tile.shownVertices} />
+                  <Vertices
+                    shownVertices={tile.shownVertices}
+                    opacity={selectedBuild === "SETTLEMENT" ? "80%" : "30%"}
+                    isBuilding={selectedBuild === "SETTLEMENT"}
+                  />
                 </div>
               ))}
             </div>

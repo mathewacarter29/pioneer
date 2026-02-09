@@ -13,13 +13,20 @@ const Board = () => {
 
   return (
     <div>
-      <Tiles selectedBuild={selectedBuild} />
+      <div style={{ margin: "2vw" }}>
+        <Tiles selectedBuild={selectedBuild} />
+      </div>
       <div
         style={{
-          margin: "auto",
           display: "flex",
           justifyContent: "space-around",
           gap: "1vw",
+          position: "fixed",
+          bottom: "2vh",
+          left: 0,
+          right: 0,
+          width: "60%",
+          margin: "auto",
         }}
       >
         <Button
@@ -54,7 +61,7 @@ const Board = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("")}
-          disabled={selectedBuild === ''}
+          disabled={selectedBuild === ""}
         >
           Cancel
         </Button>
