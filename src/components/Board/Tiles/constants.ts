@@ -52,6 +52,6 @@ export const DEFAULT_TILES = [
 
 export const TILE_BORDER_WIDTH = 16;
 
-export const STARTING_ROW_TILES = 3;
+export const STARTING_ROW_TILES = 1;
 
-export const MAX_ROW_TILES = 5;
+export const MAX_ROW_TILES = 2;
