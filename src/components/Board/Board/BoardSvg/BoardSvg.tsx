@@ -1,16 +1,16 @@
 import type { Builds } from "../../Table";
 import type {
-  EdgeInfo,
-  HexInfo,
+  EdgeSvgInfo,
+  HexSvgInfo,
   TileColorType,
-  VertexInfo,
+  VertexSvgInfo,
 } from "../constants";
 
 interface BoardSvgProps {
   tileColors: TileColorType[];
-  hexes: HexInfo[];
-  edges: EdgeInfo[];
-  vertices: VertexInfo[];
+  hexes: HexSvgInfo[];
+  edges: EdgeSvgInfo[];
+  vertices: VertexSvgInfo[];
   selectedBuild: Builds;
 }
 

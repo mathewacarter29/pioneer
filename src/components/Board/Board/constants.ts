@@ -30,11 +30,11 @@ export const DEFAULT_TILES = [
   TILE_COLORS.PLAINS,
 ];
 
-export interface HexInfo {
+export interface HexSvgInfo {
   d: string;
   transform: string;
 }
-export const DEFAULT_HEXES: HexInfo[] = [
+export const DEFAULT_HEXES: HexSvgInfo[] = [
   {
     d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
     transform: "matrix(.28182 0 0 .28182 168.027 170.765)",
@@ -113,11 +113,11 @@ export const DEFAULT_HEXES: HexInfo[] = [
   },
 ];
 
-export interface EdgeInfo {
+export interface EdgeSvgInfo {
   d: string;
   transform?: string;
 }
-export const DEFAULT_EDGES: EdgeInfo[] = [
+export const DEFAULT_EDGES: EdgeSvgInfo[] = [
   { d: "M126.257 120.843h2v12h-2z" },
   { d: "M163.279-68.669h2v12h-2z", transform: "rotate(60)" },
   { d: "M-19.667 183.486h2v12h-2z", transform: "rotate(-60)" },
@@ -192,12 +192,12 @@ export const DEFAULT_EDGES: EdgeInfo[] = [
   { d: "M236.563 247.851h2v12h-2z" },
 ];
 
-export interface VertexInfo {
+export interface VertexSvgInfo {
   cx: string;
   cy: string;
   r: string;
 }
-export const DEFAULT_VERTICES: VertexInfo[] = [
+export const DEFAULT_VERTICES: VertexSvgInfo[] = [
   { cx: "127.243", cy: "116.246", r: "2" },
   { cx: "145.582", cy: "105.624", r: "2" },
   { cx: "163.951", cy: "116.195", r: "2" },
