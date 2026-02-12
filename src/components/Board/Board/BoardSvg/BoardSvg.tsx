@@ -7,12 +7,12 @@ import type {
 } from "../constants";
 
 interface BoardSvgProps {
-  tileColors: TileColorType[];
-  hexes: HexSvgInfo[];
-  edges: EdgeSvgInfo[];
+  hexes: HexInfo[];
+  edges: EdgeInfo[];
   vertices: VertexInfo[];
   selectedBuild: Builds;
   buildSettlement: (vertexIndex: number) => void;
+  buildRoad: (edgeIndex: number) => void;
 }
 
 export interface VertexInfo {
@@ -20,8 +20,18 @@ export interface VertexInfo {
   selected: boolean;
 }
 
+export interface EdgeInfo {
+  svgInfo: EdgeSvgInfo;
+  selected: boolean;
+}
+
+export interface HexInfo {
+  svgInfo: HexSvgInfo;
+  color: TileColorType;
+}
+
 const BoardSvg = (props: BoardSvgProps) => {
-  const { tileColors, hexes, edges, vertices, selectedBuild, buildSettlement } =
+  const { hexes, edges, vertices, selectedBuild, buildSettlement, buildRoad } =
     props;
 
   return (
@@ -45,9 +55,9 @@ const BoardSvg = (props: BoardSvgProps) => {
           <path
             key={i}
             id="HEX"
-            d={hex.d}
-            transform={hex.transform}
-            fill={tileColors[i]}
+            d={hex.svgInfo.d}
+            transform={hex.svgInfo.transform}
+            fill={hex.color}
           />
         ))}
       </g>
@@ -62,9 +72,14 @@ const BoardSvg = (props: BoardSvgProps) => {
           <path
             key={i}
             id="EDGE"
-            d={edge.d}
-            transform={edge.transform}
-            style={{ opacity: selectedBuild === "ROAD" ? 1 : 0.3 }}
+            d={edge.svgInfo.d}
+            transform={edge.svgInfo.transform}
+            style={{
+              opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
+              fill: edge.selected ? "red" : "black",
+              pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
+            }}
+            onClick={() => buildRoad(i)}
           />
         ))}
       </g>
@@ -83,8 +98,10 @@ const BoardSvg = (props: BoardSvgProps) => {
             cx={vertex.svgInfo.cx}
             r={vertex.svgInfo.r}
             style={{
-              opacity: selectedBuild === "SETTLEMENT" || vertex.selected ? 1 : 0.3,
+              opacity:
+                selectedBuild === "SETTLEMENT" || vertex.selected ? 1 : 0.3,
               fill: vertex.selected ? "red" : "black",
+              pointerEvents: selectedBuild === "SETTLEMENT" ? "inherit" : "none",
             }}
             onClick={() => buildSettlement(i)}
           />
