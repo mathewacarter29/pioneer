@@ -1,24 +1,3 @@
-export const TILE_EDGES = {
-  RIGHT_SIDE: "RIGHT_SIDE",
-  TOP_RIGHT_SIDE: "TOP_RIGHT_SIDE",
-  TOP_LEFT_SIDE: "TOP_LEFT_SIDE",
-  LEFT_SIDE: "LEFT_SIDE",
-  BOTTOM_RIGHT_SIDE: "BOTTOM_RIGHT_SIDE",
-  BOTTOM_LEFT_SIDE: "BOTTOM_LEFT_SIDE",
-} as const;
-export type TileEdgeNames = (typeof TILE_EDGES)[keyof typeof TILE_EDGES];
-
-export const TILE_VERTICES = {
-  VERTEX_TWELVE: "VERTEX_TWELVE",
-  VERTEX_TWO: "VERTEX_TWO",
-  VERTEX_FOUR: "VERTEX_FOUR",
-  VERTEX_SIX: "VERTEX_SIX",
-  VERTEX_EIGHT: "VERTEX_EIGHT",
-  VERTEX_TEN: "VERTEX_TEN",
-} as const;
-export type TileVertexNames =
-  (typeof TILE_VERTICES)[keyof typeof TILE_VERTICES];
-
 export const TILE_COLORS = {
   PLAINS: "#A0DE7E",
   FIELD: "#F0F878",
@@ -55,7 +34,6 @@ export interface HexInfo {
   d: string;
   transform: string;
 }
-
 export const DEFAULT_HEXES: HexInfo[] = [
   {
     d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
@@ -250,7 +228,6 @@ export const DEFAULT_VERTICES: VertexInfo[] = [
   { cx: "255.798", cy: "169.05", r: "2" },
   { cx: "255.768", cy: "147.856", r: "2" },
   { cx: "237.399", cy: "137.285", r: "2" },
-
   { cx: "163.981", cy: "137.388", r: "2" },
   { cx: "182.35", cy: "147.959", r: "2" },
   { cx: "200.69", cy: "137.337", r: "2" },
@@ -278,9 +255,3 @@ export const DEFAULT_VERTICES: VertexInfo[] = [
 ];
 
 export const DEFAULT_NUM_TILES = 19;
-
-export const TILE_BORDER_WIDTH = 16;
-
-export const STARTING_ROW_TILES = 1;
-
-export const MAX_ROW_TILES = 2;

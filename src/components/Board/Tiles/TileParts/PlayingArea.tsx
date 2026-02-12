@@ -6,7 +6,7 @@ import type {
   VertexInfo,
 } from "../constants";
 
-interface GameBoardProps {
+interface PlayingAreaProps {
   tileColors: TileColorType[];
   hexes: HexInfo[];
   edges: EdgeInfo[];
@@ -14,7 +14,7 @@ interface GameBoardProps {
   selectedBuild: Builds;
 }
 
-const WholeBoard = (props: GameBoardProps) => {
+const PlayingArea = (props: PlayingAreaProps) => {
   const { tileColors, hexes, edges, vertices, selectedBuild } = props;
 
   return (
@@ -26,6 +26,7 @@ const WholeBoard = (props: GameBoardProps) => {
       version="1.1"
       viewBox="0 0 187.574 173.654"
     >
+      {/* HEXES */}
       <g
         id="HEXES"
         fillOpacity="1"
@@ -33,7 +34,6 @@ const WholeBoard = (props: GameBoardProps) => {
         strokeWidth="0.265"
         transform="translate(-88.623 -103.52)"
       >
-        {/* Hexes */}
         {hexes.map((hex, i) => (
           <path
             key={i}
@@ -83,4 +83,4 @@ const WholeBoard = (props: GameBoardProps) => {
   );
 };
 
-export default WholeBoard;
+export default PlayingArea;

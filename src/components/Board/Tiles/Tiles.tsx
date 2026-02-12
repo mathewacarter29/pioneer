@@ -8,7 +8,7 @@ import {
 } from "./constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../Board";
-import WholeBoard from "./TileParts/WholeBoard";
+import PlayingArea from "./TileParts/PlayingArea";
 
 interface TilesProps {
   selectedBuild: Builds;
@@ -62,7 +62,7 @@ const Tiles = (props: TilesProps) => {
   };
 
   return (
-    <WholeBoard
+    <PlayingArea
       tileColors={tiles.map((tile) => tile.tileColor)}
       hexes={DEFAULT_HEXES}
       edges={DEFAULT_EDGES}
