@@ -7,14 +7,14 @@ import {
   DEFAULT_VERTICES,
 } from "./constants";
 import { useState, useEffect } from "react";
-import type { Builds } from "../Board";
-import PlayingArea from "./TileParts/PlayingArea";
+import type { Builds } from "../Table";
+import PlayingArea from "./BoardSvg/BoardSvg";
 
 interface TilesProps {
   selectedBuild: Builds;
 }
 
-const Tiles = (props: TilesProps) => {
+const Board = (props: TilesProps) => {
   const { selectedBuild } = props;
 
   interface TileInfo {
@@ -24,7 +24,7 @@ const Tiles = (props: TilesProps) => {
   const [tiles, setTiles] = useState<TileInfo[]>([]);
 
   useEffect(() => {
-    const tileRows = getRows(DEFAULT_NUM_TILES);
+    const tileRows = getTiles(DEFAULT_NUM_TILES);
     setTiles(tileRows);
   }, []);
 
@@ -46,7 +46,7 @@ const Tiles = (props: TilesProps) => {
     return startingTiles;
   };
 
-  const getRows = (numTiles: number): TileInfo[] => {
+  const getTiles = (numTiles: number): TileInfo[] => {
     let tileColors: TileInfo[] = [];
     let tileTypes = getTileTypes(numTiles);
     for (let rowIndex = 0; rowIndex < numTiles; rowIndex++) {
@@ -72,4 +72,4 @@ const Tiles = (props: TilesProps) => {
   );
 };
 
-export default Tiles;
+export default Board;

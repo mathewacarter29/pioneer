@@ -1,5 +1,5 @@
 import "./App.css";
-import Board from "./components/Board/Board";
+import Table from "./components/Board/Table";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
@@ -14,7 +14,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div>
         <h2>Pioneer</h2>
-        <Board />
+        <Table />
       </div>
     </ThemeProvider>
   );

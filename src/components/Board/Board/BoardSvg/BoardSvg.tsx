@@ -1,4 +1,4 @@
-import type { Builds } from "../../Board";
+import type { Builds } from "../../Table";
 import type {
   EdgeInfo,
   HexInfo,
@@ -6,7 +6,7 @@ import type {
   VertexInfo,
 } from "../constants";
 
-interface PlayingAreaProps {
+interface BoardSvgProps {
   tileColors: TileColorType[];
   hexes: HexInfo[];
   edges: EdgeInfo[];
@@ -14,7 +14,7 @@ interface PlayingAreaProps {
   selectedBuild: Builds;
 }
 
-const PlayingArea = (props: PlayingAreaProps) => {
+const BoardSvg = (props: BoardSvgProps) => {
   const { tileColors, hexes, edges, vertices, selectedBuild } = props;
 
   return (
@@ -83,4 +83,4 @@ const PlayingArea = (props: PlayingAreaProps) => {
   );
 };
 
-export default PlayingArea;
+export default BoardSvg;

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import Tiles from "./Tiles/Tiles";
+import Board from "./Board/Board";
 import { Button } from "@mui/material";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
-const Board = () => {
+const Table = () => {
     const [height, setHeight] = useState(0);
     const ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -23,7 +23,7 @@ const Board = () => {
   return (
     <div>
       <div style={{ margin: "2vw" }}>
-        <Tiles selectedBuild={selectedBuild} />
+        <Board selectedBuild={selectedBuild} />
       </div>
       <div style={{height: height, marginBottom: "2vh"}}/>
       <div
@@ -81,4 +81,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Table;
