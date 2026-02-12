@@ -10,12 +10,19 @@ interface BoardSvgProps {
   tileColors: TileColorType[];
   hexes: HexSvgInfo[];
   edges: EdgeSvgInfo[];
-  vertices: VertexSvgInfo[];
+  vertices: VertexInfo[];
   selectedBuild: Builds;
+  buildSettlement: (vertexIndex: number) => void;
+}
+
+export interface VertexInfo {
+  svgInfo: VertexSvgInfo;
+  selected: boolean;
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const { tileColors, hexes, edges, vertices, selectedBuild } = props;
+  const { tileColors, hexes, edges, vertices, selectedBuild, buildSettlement } =
+    props;
 
   return (
     <svg
@@ -72,10 +79,14 @@ const BoardSvg = (props: BoardSvgProps) => {
           <circle
             key={i}
             id="VERTEX"
-            cy={vertex.cy}
-            cx={vertex.cx}
-            r={vertex.r}
-            style={{ opacity: selectedBuild === "SETTLEMENT" ? 1 : 0.3 }}
+            cy={vertex.svgInfo.cy}
+            cx={vertex.svgInfo.cx}
+            r={vertex.svgInfo.r}
+            style={{
+              opacity: selectedBuild === "SETTLEMENT" || vertex.selected ? 1 : 0.3,
+              fill: vertex.selected ? "red" : "black",
+            }}
+            onClick={() => buildSettlement(i)}
           />
         ))}
       </g>

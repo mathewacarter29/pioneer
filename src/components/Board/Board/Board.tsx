@@ -8,7 +8,7 @@ import {
 } from "./constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../Table";
-import PlayingArea from "./BoardSvg/BoardSvg";
+import PlayingArea, { type VertexInfo } from "./BoardSvg/BoardSvg";
 
 interface TilesProps {
   selectedBuild: Builds;
@@ -22,10 +22,16 @@ const Board = (props: TilesProps) => {
   }
 
   const [tiles, setTiles] = useState<TileInfo[]>([]);
+  const [vertices, setVertices] = useState<VertexInfo[]>([]);
 
   useEffect(() => {
-    const tileRows = getTiles(DEFAULT_NUM_TILES);
-    setTiles(tileRows);
+    setTiles(getTiles(DEFAULT_NUM_TILES));
+    setVertices(
+      DEFAULT_VERTICES.map((vertex) => ({
+        svgInfo: vertex,
+        selected: false,
+      })),
+    );
   }, []);
 
   const getRandomInt = (max: number): number => {
@@ -61,13 +67,22 @@ const Board = (props: TilesProps) => {
     return tileColors;
   };
 
+  const buildSettlement = (vertexIndex: number) => {
+    setVertices((prevVertices) =>
+      prevVertices.map((vertex, i) =>
+        i === vertexIndex ? { ...vertex, selected: true } : vertex,
+      ),
+    );
+  };
+
   return (
     <PlayingArea
       tileColors={tiles.map((tile) => tile.tileColor)}
       hexes={DEFAULT_HEXES}
       edges={DEFAULT_EDGES}
-      vertices={DEFAULT_VERTICES}
+      vertices={vertices}
       selectedBuild={selectedBuild}
+      buildSettlement={buildSettlement}
     />
   );
 };
