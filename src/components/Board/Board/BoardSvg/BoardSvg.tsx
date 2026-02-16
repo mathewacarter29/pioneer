@@ -3,20 +3,22 @@ import type {
   EdgeSvgInfo,
   HexSvgInfo,
   TileColorType,
-  VertexSvgInfo,
+  CircleSvgInfo,
+  NumberSvgInfo,
 } from "../constants";
 
 interface BoardSvgProps {
   hexes: HexInfo[];
   edges: EdgeInfo[];
   vertices: VertexInfo[];
+  numbers: NumberInfo[];
   selectedBuild: Builds;
   buildSettlement: (vertexIndex: number) => void;
   buildRoad: (edgeIndex: number) => void;
 }
 
 export interface VertexInfo {
-  svgInfo: VertexSvgInfo;
+  svgInfo: CircleSvgInfo;
   selected: boolean;
 }
 
@@ -30,9 +32,61 @@ export interface HexInfo {
   color: TileColorType;
 }
 
+export interface NumberInfo {
+  numberInfo: NumberSvgInfo;
+  number: string;
+  transform?: string;
+}
+
 const BoardSvg = (props: BoardSvgProps) => {
-  const { hexes, edges, vertices, selectedBuild, buildSettlement, buildRoad } =
-    props;
+  const {
+    hexes,
+    edges,
+    vertices,
+    numbers,
+    selectedBuild,
+    buildSettlement,
+    buildRoad,
+  } = props;
+  const textStyle: React.CSSProperties = {
+    fontStyle: "normal",
+    fontVariant: "normal",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontSize: "12.7px",
+    fontFamily: "Krungthep",
+    fontVariantLigatures: "normal",
+    fontVariantCaps: "normal",
+    fontVariantNumeric: "normal",
+    fontVariantEastAsian: "normal",
+    direction: "ltr",
+    fill: "#000000",
+    stroke: "#000000",
+    strokeWidth: 1,
+    strokeDasharray: "none",
+    strokeOpacity: 0.997409,
+  };
+  const tspanStyle: React.CSSProperties = {
+    fontStyle: "normal",
+    fontVariant: "normal",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontSize: "12.7px",
+    fontFamily: "Krungthep",
+    fontVariantLigatures: "normal",
+    fontVariantCaps: "normal",
+    fontVariantNumeric: "normal",
+    fontVariantEastAsian: "normal",
+    fill: "#000000",
+    strokeWidth: 1,
+  };
+  const circleStyle: React.CSSProperties = {
+    fill: "none",
+    stroke: "#000000",
+    strokeWidth: 1,
+    strokeDasharray: "none",
+    strokeOpacity: 0.997409,
+  };
 
   return (
     <svg
@@ -59,6 +113,32 @@ const BoardSvg = (props: BoardSvgProps) => {
             transform={hex.svgInfo.transform}
             fill={hex.color}
           />
+        ))}
+      </g>
+      <g id="NUMBERS">
+        {numbers.map((info, i) => (
+          <g id="NUMBER" key={i} transform={info.transform}>
+            <circle
+              style={circleStyle}
+              cx={info.numberInfo.circleInfo.cx}
+              cy={info.numberInfo.circleInfo.cy}
+              r={info.numberInfo.circleInfo.r}
+            />
+            <text
+              xmlSpace="preserve"
+              style={textStyle}
+              x={info.numberInfo.textInfo.x}
+              y={info.numberInfo.textInfo.y}
+            >
+              <tspan
+                style={tspanStyle}
+                x={info.numberInfo.tspanInfo.x}
+                y={info.numberInfo.tspanInfo.y}
+              >
+                {info.number}
+              </tspan>
+            </text>
+          </g>
         ))}
       </g>
       {/* ROADS */}
@@ -101,7 +181,8 @@ const BoardSvg = (props: BoardSvgProps) => {
               opacity:
                 selectedBuild === "SETTLEMENT" || vertex.selected ? 1 : 0.3,
               fill: vertex.selected ? "red" : "black",
-              pointerEvents: selectedBuild === "SETTLEMENT" ? "inherit" : "none",
+              pointerEvents:
+                selectedBuild === "SETTLEMENT" ? "inherit" : "none",
             }}
             onClick={() => buildSettlement(i)}
           />

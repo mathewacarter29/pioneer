@@ -192,12 +192,12 @@ export const DEFAULT_EDGES: EdgeSvgInfo[] = [
   { d: "M236.563 247.851h2v12h-2z" },
 ];
 
-export interface VertexSvgInfo {
+export interface CircleSvgInfo {
   cx: string;
   cy: string;
   r: string;
 }
-export const DEFAULT_VERTICES: VertexSvgInfo[] = [
+export const DEFAULT_VERTICES: CircleSvgInfo[] = [
   { cx: "127.243", cy: "116.246", r: "2" },
   { cx: "145.582", cy: "105.624", r: "2" },
   { cx: "163.951", cy: "116.195", r: "2" },
@@ -254,4 +254,40 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
   { cx: "164.071", cy: "200.97", r: "2" },
 ];
 
-export const DEFAULT_NUM_TILES = 19;
+export interface CoordinateSvgInfo {
+  x: string;
+  y: string;
+}
+
+export interface NumberSvgInfo {
+  circleInfo: CircleSvgInfo;
+  textInfo: CoordinateSvgInfo;
+  tspanInfo: CoordinateSvgInfo;
+  transform?: string;
+}
+
+export const DEFAULT_NUMBERS: NumberSvgInfo[] = [
+  { transform: undefined, circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(36.708729,-0.05175909)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "47.994209", y: "28.059814" }, tspanInfo: { x: "47.994209", y: "28.059814" } },
+  { transform: "translate(73.417459,-0.10351909)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(-18.309541,31.816581)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(18.399189,31.764821)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "53.282574", y: "28.059814" }, tspanInfo: { x: "53.282574", y: "28.059814" } },
+  { transform: "translate(55.107919,31.713061)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(91.816649,31.661291)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(-36.619081,63.633151)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(0.08964933,63.581391)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(36.798382,63.529629)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "47.994209", y: "28.059816" }, tspanInfo: { x: "47.994209", y: "28.059816" } },
+  { transform: "translate(73.507109,63.477871)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "49.055847", y: "28.059814" }, tspanInfo: { x: "49.055847", y: "28.059814" } },
+  { transform: "translate(110.21584,63.426101)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "53.282574", y: "28.059814" }, tspanInfo: { x: "53.282574", y: "28.059814" } },
+  { transform: "translate(91.906309,95.242681)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "47.994209", y: "28.059814" }, tspanInfo: { x: "47.994209", y: "28.059814" } },
+  { transform: "translate(55.197569,95.294441)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(18.488839,95.346201)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(-18.219891,95.397961)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(0.17929933,127.16278)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "49.055847", y: "28.059814" }, tspanInfo: { x: "49.055847", y: "28.059814" } },
+  { transform: "translate(36.888029,127.11101)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+  { transform: "translate(73.596769,127.05925)", circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" }, textInfo: { x: "52.751755", y: "28.059814" }, tspanInfo: { x: "52.751755", y: "28.059814" } },
+];
+
+export const DEFAULT_NUMBER_VALUES: string[] = [
+  "8", "12", "2", "3", "4", "5", "6", "8", "9", "10", "11", "4", "10", "9", "6", "5", "11", "3", "7"
+];

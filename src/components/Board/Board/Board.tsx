@@ -4,15 +4,19 @@ import {
   DEFAULT_HEXES,
   DEFAULT_EDGES,
   DEFAULT_VERTICES,
-  type VertexSvgInfo,
+  type CircleSvgInfo,
   type EdgeSvgInfo,
   type HexSvgInfo,
+  type NumberSvgInfo,
+  DEFAULT_NUMBERS,
+  DEFAULT_NUMBER_VALUES,
 } from "./constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../Table";
 import PlayingArea, {
   type EdgeInfo,
   type HexInfo,
+  type NumberInfo,
   type VertexInfo,
 } from "./BoardSvg/BoardSvg";
 
@@ -32,11 +36,13 @@ const Board = (props: TilesProps) => {
   const [hexes, setHexes] = useState<HexInfo[]>([]);
   const [vertices, setVertices] = useState<VertexInfo[]>([]);
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
+  const [numbers, setNumbers] = useState<NumberInfo[]>([]);
 
   useEffect(() => {
     setHexes(getTiles(DEFAULT_HEXES));
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
+    setNumbers(getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_VALUES));
   }, []);
 
   /**
@@ -48,12 +54,26 @@ const Board = (props: TilesProps) => {
     return Math.floor(Math.random() * max);
   };
 
+  const getNumbers = (
+    numbersSvgInfo: NumberSvgInfo[],
+    numbers: string[],
+  ): NumberInfo[] => {
+    const shuffledNumbers = shuffle(numbers);
+    return numbersSvgInfo.map(
+      (numberInfo, i): NumberInfo => ({
+        numberInfo,
+        number: shuffledNumbers[i],
+        transform: numberInfo.transform,
+      }),
+    );
+  };
+
   /**
    * Generates an array of VertexInfo objects based on the provided vertex information.
    * @param baseVerticesInfo The base vertex information.
    * @returns An array of VertexInfo objects.
    */
-  const getVertices = (baseVerticesInfo: VertexSvgInfo[]): VertexInfo[] => {
+  const getVertices = (baseVerticesInfo: CircleSvgInfo[]): VertexInfo[] => {
     return baseVerticesInfo.map((vertex) => ({
       svgInfo: vertex,
       selected: false,
@@ -161,6 +181,7 @@ const Board = (props: TilesProps) => {
       hexes={hexes}
       edges={edges}
       vertices={vertices}
+      numbers={numbers}
       selectedBuild={selectedBuild}
       buildSettlement={buildSettlement}
       buildRoad={buildRoad}
