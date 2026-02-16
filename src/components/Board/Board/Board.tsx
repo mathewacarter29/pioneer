@@ -18,6 +18,7 @@ import PlayingArea, {
 
 interface TilesProps {
   selectedBuild: Builds;
+  onBuild: () => void;
 }
 
 /**
@@ -26,7 +27,7 @@ interface TilesProps {
  * @returns The Board component.
  */
 const Board = (props: TilesProps) => {
-  const { selectedBuild } = props;
+  const { selectedBuild, onBuild } = props;
 
   const [hexes, setHexes] = useState<HexInfo[]>([]);
   const [vertices, setVertices] = useState<VertexInfo[]>([]);
@@ -139,6 +140,7 @@ const Board = (props: TilesProps) => {
         i === vertexIndex ? { ...vertex, selected: true } : vertex,
       ),
     );
+    onBuild();
   };
 
   /**
@@ -151,7 +153,8 @@ const Board = (props: TilesProps) => {
         i === edgeIndex ? { ...edge, selected: true } : edge,
       ),
     );
-  }
+    onBuild();
+  };
 
   return (
     <PlayingArea

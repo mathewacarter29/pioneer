@@ -23,7 +23,7 @@ const Table = () => {
   return (
     <div>
       <div style={{ margin: "2vw" }}>
-        <Board selectedBuild={selectedBuild} />
+        <Board selectedBuild={selectedBuild} onBuild={() => setSelectedBuild("")} />
       </div>
       <div style={{height: height, marginBottom: "2vh"}}/>
       <div
