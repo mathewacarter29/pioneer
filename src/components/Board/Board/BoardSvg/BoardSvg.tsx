@@ -11,7 +11,7 @@ interface BoardSvgProps {
   hexes: HexInfo[];
   edges: EdgeInfo[];
   vertices: VertexInfo[];
-  numbers: NumberInfo[];
+  numbers: (NumberInfo | undefined)[];
   selectedBuild: Builds;
   buildSettlement: (vertexIndex: number) => void;
   buildRoad: (edgeIndex: number) => void;
@@ -34,7 +34,6 @@ export interface HexInfo {
 
 export interface NumberInfo {
   numberInfo: NumberSvgInfo;
-  number: string;
   transform?: string;
 }
 
@@ -115,9 +114,10 @@ const BoardSvg = (props: BoardSvgProps) => {
           />
         ))}
       </g>
+      {/* NUMBERS */}
       <g id="NUMBERS">
-        {numbers.map((info, i) => (
-          <g id="NUMBER" key={i} transform={info.transform}>
+        {numbers.map((info, i) => (info &&
+          (<g id="NUMBER" key={i} transform={info.transform}>
             <circle
               style={circleStyle}
               cx={info.numberInfo.circleInfo.cx}
@@ -135,10 +135,10 @@ const BoardSvg = (props: BoardSvgProps) => {
                 x={info.numberInfo.tspanInfo.x}
                 y={info.numberInfo.tspanInfo.y}
               >
-                {info.number}
+                {info.numberInfo.number}
               </tspan>
             </text>
-          </g>
+          </g>)
         ))}
       </g>
       {/* ROADS */}

@@ -9,7 +9,8 @@ import {
   type HexSvgInfo,
   type NumberSvgInfo,
   DEFAULT_NUMBERS,
-  DEFAULT_NUMBER_VALUES,
+  DEFAULT_NUMBER_TRANSFORMS,
+  TILE_COLORS,
 } from "./constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../Table";
@@ -36,13 +37,16 @@ const Board = (props: TilesProps) => {
   const [hexes, setHexes] = useState<HexInfo[]>([]);
   const [vertices, setVertices] = useState<VertexInfo[]>([]);
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
-  const [numbers, setNumbers] = useState<NumberInfo[]>([]);
+  const [numbers, setNumbers] = useState<(NumberInfo | undefined)[]>([]);
 
   useEffect(() => {
-    setHexes(getTiles(DEFAULT_HEXES));
+    const shuffledHexes = getTiles(DEFAULT_HEXES);
+    setHexes(shuffledHexes);
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
-    setNumbers(getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_VALUES));
+    setNumbers(
+      getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_TRANSFORMS, shuffledHexes),
+    );
   }, []);
 
   /**
@@ -56,16 +60,30 @@ const Board = (props: TilesProps) => {
 
   const getNumbers = (
     numbersSvgInfo: NumberSvgInfo[],
-    numbers: string[],
-  ): NumberInfo[] => {
-    const shuffledNumbers = shuffle(numbers);
-    return numbersSvgInfo.map(
-      (numberInfo, i): NumberInfo => ({
-        numberInfo,
-        number: shuffledNumbers[i],
-        transform: numberInfo.transform,
-      }),
+    transforms: (string | undefined)[],
+    hexes: HexInfo[],
+  ): (NumberInfo | undefined)[] => {
+    if (
+      numbersSvgInfo.length + 1 !== transforms.length &&
+      numbersSvgInfo.length + 1 !== hexes.length
+    ) {
+      throw new Error(
+        "The number of numbers, transforms, and hexes must be the same.",
+      );
+    }
+    // remove the transform for the desert tile
+    const desertTileIndex = hexes.findIndex(
+      (hex) => hex.color === TILE_COLORS.DESSERT,
     );
+    console.log("desert tile index", desertTileIndex);
+    const availableTransforms = transforms.filter(
+      (_, i) => i !== desertTileIndex,
+    );
+    const shuffledTransforms = shuffle(availableTransforms);
+    return numbersSvgInfo.map((numberInfo, i): NumberInfo | undefined => ({
+      numberInfo,
+      transform: shuffledTransforms[i],
+    }));
   };
 
   /**
@@ -124,6 +142,11 @@ const Board = (props: TilesProps) => {
    */
   const getTiles = (baseHexInfo: HexSvgInfo[]): HexInfo[] => {
     let tileColors = getTileTypes(baseHexInfo.length);
+    if (tileColors.length < baseHexInfo.length) {
+      throw new Error(
+        "Not enough tile colors provided for the number of hexes.",
+      );
+    }
     tileColors = shuffle(tileColors);
     return baseHexInfo.map((hex, i) => ({
       svgInfo: hex,
