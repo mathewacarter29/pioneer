@@ -73,7 +73,7 @@ const Board = (props: TilesProps) => {
     }
     // remove the transform for any desert tiles
     const desertTiles = hexes.filter(
-      ([_, hex]) => hex.color === TILE_COLORS.DESSERT,
+      ([_, hex]) => hex.color === TILE_COLORS.DESERT,
     );
     const availableTransforms = transforms.filter(
       ([index, _]) =>
