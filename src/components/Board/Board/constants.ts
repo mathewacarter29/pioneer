@@ -423,6 +423,10 @@ export const DEFAULT_NUMBERS: NumberSvgInfo[] = [
 /**
  * The first element is the index of the tile a number could be on second is the transform to place that number
  * undefined is the first spot on the board
+ * 
+ * Needed index to match number's transform up to a hex so we can remove the number from the desert hex
+ * 
+ * This could be just an array in the correct order, but I wanted to be explicit about which transform goes on which tile
  */
 export const DEFAULT_NUMBER_TRANSFORMS: [number, (string | undefined)][] = [
   [0, undefined],
