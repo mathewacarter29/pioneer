@@ -1,9 +1,9 @@
-import die1 from "../../assets/png/die1.png";
-import die2 from "../../assets/png/die2.png";
-import die3 from "../../assets/png/die3.png";
-import die4 from "../../assets/png/die4.png";
-import die5 from "../../assets/png/die5.png";
-import die6 from "../../assets/png/die6.png";
+import die1 from "../../../assets/png/die1.png";
+import die2 from "../../../assets/png/die2.png";
+import die3 from "../../../assets/png/die3.png";
+import die4 from "../../../assets/png/die4.png";
+import die5 from "../../../assets/png/die5.png";
+import die6 from "../../../assets/png/die6.png";
 
 interface DieProps {
   value: number;
