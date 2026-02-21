@@ -8,6 +8,7 @@ export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
 const Table = () => {
   const [dice, setDice] = useState<[number, number]>([1, 1]);
+  const [isRolling, setIsRolling] = useState<boolean>(false);
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -23,8 +24,22 @@ const Table = () => {
     setSelectedBuild(build);
   };
 
-  const onRollDice = () => {
+  const setDiceToRandom = () => {
     setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
+  };
+
+  const onRollDice = () => {
+    setIsRolling(true);
+    // cycle through dice numbers
+    let timerId = setInterval(() => {
+      setDiceToRandom();
+    }, 100);
+    setTimeout(() => {
+      clearInterval(timerId);
+      setIsRolling(false);
+      console.log('rolled dice')
+
+    }, 1000);
   };
 
   return (
@@ -34,12 +49,19 @@ const Table = () => {
           selectedBuild={selectedBuild}
           onBuild={() => setSelectedBuild("")}
         />
-        <div style={{marginLeft: "2vw"}}>
-          <div style={{ display: "flex", flexDirection: "row", gap: "1vw", margin: "1vh" }}>
-              <Die value={dice[0]} />
-              <Die value={dice[1]} />
+        <div style={{ marginLeft: "2vw" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "1vw",
+              margin: "1vh",
+            }}
+          >
+            <Die value={dice[0]} />
+            <Die value={dice[1]} />
           </div>
-          <Button fullWidth variant="contained" onClick={() => onRollDice()}>
+          <Button fullWidth variant="contained" onClick={() => onRollDice()} disabled={isRolling}>
             Roll Dice
           </Button>
         </div>
