@@ -13,14 +13,14 @@ import {
   TILE_COLORS,
 } from "./constants";
 import { useState, useEffect } from "react";
-import type { Builds } from "../Table/Table";
+import type { Builds } from "../../Table/Table";
 import BoardSvg, {
   type EdgeInfo,
   type HexInfo,
   type NumberInfo,
   type VertexInfo,
 } from "./BoardSvg/BoardSvg";
-import { getRandomInt } from "../../utils/numbers";
+import { getRandomInt } from "../../../utils/numbers";
 
 interface TilesProps {
   selectedBuild: Builds;

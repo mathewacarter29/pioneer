@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import Board from "../Board/Board";
+import Board from "./Board/Board";
 import { Button } from "@mui/material";
 import { getRandomInt } from "../../utils/numbers";
-import Die from "../Die/Die";
+import Die from "./Die/Die";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
@@ -13,7 +13,7 @@ const Table = () => {
   useEffect(() => {
     if (ref !== null && ref.current !== null) {
       if (ref.current.clientHeight) {
-        setHeight(ref.current.clientHeight);
+        setHeight(ref.current.offsetHeight);
       }
     }
   });
@@ -34,7 +34,7 @@ const Table = () => {
           selectedBuild={selectedBuild}
           onBuild={() => setSelectedBuild("")}
         />
-        <div>
+        <div style={{marginLeft: "2vw"}}>
           <div style={{ display: "flex", flexDirection: "row", gap: "1vw", margin: "1vh" }}>
               <Die value={dice[0]} />
               <Die value={dice[1]} />
