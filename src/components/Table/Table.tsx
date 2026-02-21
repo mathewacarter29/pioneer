@@ -37,8 +37,6 @@ const Table = () => {
     setTimeout(() => {
       clearInterval(timerId);
       setIsRolling(false);
-      console.log('rolled dice')
-
     }, 1000);
   };
 
@@ -58,8 +56,8 @@ const Table = () => {
               margin: "1vh",
             }}
           >
-            <Die value={dice[0]} />
-            <Die value={dice[1]} />
+            <Die value={dice[0]} isRolling={isRolling}/>
+            <Die value={dice[1]} isRolling={isRolling}/>
           </div>
           <Button fullWidth variant="contained" onClick={() => onRollDice()} disabled={isRolling}>
             Roll Dice
