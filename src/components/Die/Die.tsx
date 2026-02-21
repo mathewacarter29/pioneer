@@ -12,17 +12,17 @@ interface DieProps {
 const Die = (props: DieProps) => {
   switch (props.value) {
     case 1:
-      return <img src={die1} alt="die1" style={{width: '5vw'}}/>;
+      return <img src={die1} alt="die1" style={{width: '5vw', minWidth: '50px'}}/>;
     case 2:
-      return <img src={die2} alt="die2" style={{width: '5vw'}}/>;
+      return <img src={die2} alt="die2" style={{width: '5vw', minWidth: '50px'}}/>;
     case 3:
-      return <img src={die3} alt="die3" style={{width: '5vw'}}/>;
+      return <img src={die3} alt="die3" style={{width: '5vw', minWidth: '50px'}}/>;
     case 4:
-      return <img src={die4} alt="die4" style={{width: '5vw'}}/>;
+      return <img src={die4} alt="die4" style={{width: '5vw', minWidth: '50px'}}/>;
     case 5:
-      return <img src={die5} alt="die5" style={{width: '5vw'}}/>;
+      return <img src={die5} alt="die5" style={{width: '5vw', minWidth: '50px'}}/>;
     case 6:
-      return <img src={die6} alt="die6" style={{width: '5vw'}}/>;
+      return <img src={die6} alt="die6" style={{width: '5vw', minWidth: '50px'}}/>;
   }
 }
 
