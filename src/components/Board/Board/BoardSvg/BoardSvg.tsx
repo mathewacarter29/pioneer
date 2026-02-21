@@ -59,8 +59,6 @@ const BoardSvg = (props: BoardSvgProps) => {
     fontVariantNumeric: "normal",
     fontVariantEastAsian: "normal",
     direction: "ltr",
-    fill: "#000000",
-    stroke: "#000000",
     strokeWidth: 1,
     strokeDasharray: "none",
     strokeOpacity: 0.997409,
@@ -76,12 +74,10 @@ const BoardSvg = (props: BoardSvgProps) => {
     fontVariantCaps: "normal",
     fontVariantNumeric: "normal",
     fontVariantEastAsian: "normal",
-    fill: "#000000",
     strokeWidth: 1,
   };
   const circleStyle: React.CSSProperties = {
     fill: "none",
-    stroke: "#000000",
     strokeWidth: 1,
     strokeDasharray: "none",
     strokeOpacity: 0.997409,
@@ -116,30 +112,43 @@ const BoardSvg = (props: BoardSvgProps) => {
       </g>
       {/* NUMBERS */}
       <g id="NUMBERS">
-        {numbers.map((info, i) => (info &&
-          (<g id="NUMBER" key={i} transform={info.transform}>
-            <circle
-              style={circleStyle}
-              cx={info.numberInfo.circleInfo.cx}
-              cy={info.numberInfo.circleInfo.cy}
-              r={info.numberInfo.circleInfo.r}
-            />
-            <text
-              xmlSpace="preserve"
-              style={textStyle}
-              x={info.numberInfo.textInfo.x}
-              y={info.numberInfo.textInfo.y}
-            >
-              <tspan
-                style={tspanStyle}
-                x={info.numberInfo.tspanInfo.x}
-                y={info.numberInfo.tspanInfo.y}
+        {numbers.map((info, i) => {
+          if (!info) {
+            return null;
+          }
+          const color =
+            info.numberInfo.number === "6" || info.numberInfo.number === "8"
+              ? "#da0000"
+              : "black";
+          return (
+            <g id="NUMBER" key={i} transform={info.transform}>
+              <circle
+                style={{...circleStyle, stroke: color}}
+                cx={info.numberInfo.circleInfo.cx}
+                cy={info.numberInfo.circleInfo.cy}
+                r={info.numberInfo.circleInfo.r}
+              />
+              <text
+                xmlSpace="preserve"
+                style={{...textStyle, fill: color, stroke: color}}
+                x={info.numberInfo.textInfo.x}
+                y={info.numberInfo.textInfo.y}
               >
-                {info.numberInfo.number}
-              </tspan>
-            </text>
-          </g>)
-        ))}
+                <tspan
+                  style={{
+                    ...tspanStyle,
+                    fill: color,
+                  }}
+                  x={info.numberInfo.tspanInfo.x}
+                  y={info.numberInfo.tspanInfo.y}
+                  // style={info.numberInfo.number === "6" || info.numberInfo.number === "8" ? "red" : "black"}
+                >
+                  {info.numberInfo.number}
+                </tspan>
+              </text>
+            </g>
+          );
+        })}
       </g>
       {/* ROADS */}
       <g
