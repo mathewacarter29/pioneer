@@ -13,13 +13,14 @@ import {
   TILE_COLORS,
 } from "./constants";
 import { useState, useEffect } from "react";
-import type { Builds } from "../Table";
-import PlayingArea, {
+import type { Builds } from "../Table/Table";
+import BoardSvg, {
   type EdgeInfo,
   type HexInfo,
   type NumberInfo,
   type VertexInfo,
 } from "./BoardSvg/BoardSvg";
+import { getRandomInt } from "../../utils/numbers";
 
 interface TilesProps {
   selectedBuild: Builds;
@@ -48,15 +49,6 @@ const Board = (props: TilesProps) => {
       getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_TRANSFORMS, coloredHexes),
     );
   }, []);
-
-  /**
-   * Generates a random integer between 0 (inclusive) and the specified maximum (exclusive).
-   * @param max The maximum value (exclusive) for the random integer.
-   * @returns A random integer between 0 and max - 1.
-   */
-  const getRandomInt = (max: number): number => {
-    return Math.floor(Math.random() * max);
-  };
 
   const getNumbers = (
     numbersSvgInfo: NumberSvgInfo[],
@@ -205,7 +197,7 @@ const Board = (props: TilesProps) => {
   };
 
   return (
-    <PlayingArea
+    <BoardSvg
       hexes={hexes}
       edges={edges}
       vertices={vertices}

@@ -1,5 +1,5 @@
 import "./App.css";
-import Table from "./components/Board/Table";
+import Table from "./components/Table/Table";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {

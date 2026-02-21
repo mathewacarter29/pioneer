@@ -1,4 +1,4 @@
-import type { Builds } from "../../Table";
+import type { Builds } from "../../Table/Table";
 import type {
   EdgeSvgInfo,
   HexSvgInfo,
@@ -87,10 +87,10 @@ const BoardSvg = (props: BoardSvgProps) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       id="svg1"
-      width="708.939"
-      height="656.33"
+      // width="100%"
       version="1.1"
       viewBox="0 0 187.574 173.654"
+      style={{width: '40vw', minWidth: '600px'}}
     >
       {/* HEXES */}
       <g
@@ -123,14 +123,14 @@ const BoardSvg = (props: BoardSvgProps) => {
           return (
             <g id="NUMBER" key={i} transform={info.transform}>
               <circle
-                style={{...circleStyle, stroke: color}}
+                style={{ ...circleStyle, stroke: color }}
                 cx={info.numberInfo.circleInfo.cx}
                 cy={info.numberInfo.circleInfo.cy}
                 r={info.numberInfo.circleInfo.r}
               />
               <text
                 xmlSpace="preserve"
-                style={{...textStyle, fill: color, stroke: color}}
+                style={{ ...textStyle, fill: color, stroke: color }}
                 x={info.numberInfo.textInfo.x}
                 y={info.numberInfo.textInfo.y}
               >

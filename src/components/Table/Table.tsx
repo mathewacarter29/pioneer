@@ -1,31 +1,50 @@
 import { useEffect, useRef, useState } from "react";
-import Board from "./Board/Board";
+import Board from "../Board/Board";
 import { Button } from "@mui/material";
+import { getRandomInt } from "../../utils/numbers";
+import Die from "../Die/Die";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
 const Table = () => {
-    const [height, setHeight] = useState(0);
-    const ref = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      if (ref !== null && ref.current !== null) {
-        if (ref.current.clientHeight) {
-          setHeight(ref.current.clientHeight);
-        }
+  const [dice, setDice] = useState<[number, number]>([1, 1]);
+  const [height, setHeight] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (ref !== null && ref.current !== null) {
+      if (ref.current.clientHeight) {
+        setHeight(ref.current.clientHeight);
       }
-    });
+    }
+  });
   const [selectedBuild, setSelectedBuild] = useState<Builds>("");
 
   const onClickBuild = (build: Builds) => {
     setSelectedBuild(build);
   };
 
+  const onRollDice = () => {
+    setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
+  };
+
   return (
     <div>
-      <div style={{ margin: "2vw" }}>
-        <Board selectedBuild={selectedBuild} onBuild={() => setSelectedBuild("")} />
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "end" }}>
+        <Board
+          selectedBuild={selectedBuild}
+          onBuild={() => setSelectedBuild("")}
+        />
+        <div>
+          <div style={{ display: "flex", flexDirection: "row", gap: "1vw", margin: "1vh" }}>
+              <Die value={dice[0]} />
+              <Die value={dice[1]} />
+          </div>
+          <Button fullWidth variant="contained" onClick={() => onRollDice()}>
+            Roll Dice
+          </Button>
+        </div>
       </div>
-      <div style={{height: height, marginBottom: "2vh"}}/>
+      <div style={{ height: height, marginBottom: "2vh" }} />
       <div
         ref={ref}
         style={{
