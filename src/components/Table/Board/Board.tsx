@@ -25,6 +25,7 @@ import { getRandomInt } from "../../../utils/numbers";
 interface TilesProps {
   selectedBuild: Builds;
   onBuild: () => void;
+  numberRolled: number;
 }
 
 /**
@@ -33,49 +34,82 @@ interface TilesProps {
  * @returns The Board component.
  */
 const Board = (props: TilesProps) => {
-  const { selectedBuild, onBuild } = props;
+  const { selectedBuild, onBuild, numberRolled } = props;
 
   const [hexes, setHexes] = useState<HexInfo[]>([]);
   const [vertices, setVertices] = useState<VertexInfo[]>([]);
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
-  const [numbers, setNumbers] = useState<(NumberInfo | undefined)[]>([]);
+  const [numbers, setNumbers] = useState<NumberInfo[]>([]);
 
   useEffect(() => {
     const coloredHexes = getTiles(DEFAULT_HEXES);
-    setHexes(coloredHexes.map(([_, hex]) => hex));
+    setHexes(coloredHexes);
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
+    // pass in hexes to figure out the index of the desert tile and don't put a number there
     setNumbers(
       getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_TRANSFORMS, coloredHexes),
     );
   }, []);
 
+  useEffect(() => {
+    if (numberRolled === 0) {
+      return;
+    }
+    // find the hexes with the rolled number
+    const rolledIndexes = numbers
+      .filter((num) => num.numberInfo.number === numberRolled)
+      .map((num) => num.index);
+    setHexes((prevHexes) =>
+      prevHexes.map((hex) => ({
+        ...hex,
+        isHighlighted: rolledIndexes.includes(hex.index),
+      })),
+    );
+    setTimeout(() => {
+      setHexes((prevHexes) =>
+        prevHexes.map((hex) => ({
+          ...hex,
+          isHighlighted: false,
+        })),
+      );
+    }, 3000);
+  }, [numberRolled]);
+
+  /**
+   * Generates an array of NumberInfo objects based on the provided number information, transforms, and hexes.
+   * @param numbersSvgInfo The base number information.
+   * @param transforms The transforms for each number.
+   * @param hexes The hexes on the board.
+   * @returns An array of NumberInfo objects.
+   */
   const getNumbers = (
     numbersSvgInfo: NumberSvgInfo[],
     transforms: [number, string | undefined][],
-    hexes: [number, HexInfo][],
-  ): (NumberInfo | undefined)[] => {
+    hexes: HexInfo[],
+  ): NumberInfo[] => {
+    // remove the transform for any desert tiles
+    const desertTiles = hexes.filter((hex) => hex.color === TILE_COLORS.DESERT);
+    const availableTransforms = transforms.filter(
+      ([index, _]) =>
+        !desertTiles.some((desertTile) => desertTile.index === index),
+    );
     if (
-      numbersSvgInfo.length + 1 !== transforms.length &&
-      numbersSvgInfo.length + 1 !== hexes.length
+      numbersSvgInfo.length !== transforms.length &&
+      numbersSvgInfo.length + desertTiles.length !== hexes.length
     ) {
       throw new Error(
         "The number of numbers, transforms, and hexes must be the same.",
       );
     }
-    // remove the transform for any desert tiles
-    const desertTiles = hexes.filter(
-      ([_, hex]) => hex.color === TILE_COLORS.DESERT,
-    );
-    const availableTransforms = transforms.filter(
-      ([index, _]) =>
-        !desertTiles.some(([desertIndex, _]) => desertIndex === index),
-    );
     const shuffledTransforms = shuffle(availableTransforms);
-    return numbersSvgInfo.map((numberInfo, i): NumberInfo | undefined => ({
-      numberInfo,
-      transform: shuffledTransforms[i][1],
-    }));
+    return numbersSvgInfo.map(
+      (numberInfo, i): NumberInfo => ({
+        numberInfo,
+        index: shuffledTransforms[i][0],
+        transform: shuffledTransforms[i][1],
+      }),
+    );
   };
 
   /**
@@ -132,9 +166,7 @@ const Board = (props: TilesProps) => {
    * @param baseHexInfo The base hex information.
    * @returns An array of HexInfo objects with assigned colors.
    */
-  const getTiles = (
-    baseHexInfo: [number, HexSvgInfo][],
-  ): [number, HexInfo][] => {
+  const getTiles = (baseHexInfo: [number, HexSvgInfo][]): HexInfo[] => {
     let tileColors = getTileTypes(baseHexInfo.length);
     if (tileColors.length < baseHexInfo.length) {
       throw new Error(
@@ -142,13 +174,12 @@ const Board = (props: TilesProps) => {
       );
     }
     tileColors = shuffle(tileColors);
-    return baseHexInfo.map(([index, hex], i) => [
-      index,
-      {
-        svgInfo: hex,
-        color: tileColors[i],
-      },
-    ]);
+    return baseHexInfo.map(([index, hex], i) => ({
+      svgInfo: hex,
+      color: tileColors[i],
+      index: index,
+      isHighlighted: false,
+    }));
   };
 
   /**

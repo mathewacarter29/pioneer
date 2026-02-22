@@ -306,114 +306,114 @@ export interface NumberSvgInfo {
   circleInfo: CircleSvgInfo;
   textInfo: CoordinateSvgInfo;
   tspanInfo: CoordinateSvgInfo;
-  number: string;
+  number: number;
 }
 
 export const DEFAULT_NUMBERS: NumberSvgInfo[] = [
   {
-    number: "8",
+    number: 8,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "12",
+    number: 12,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "47.994209", y: "28.059814" },
     tspanInfo: { x: "47.994209", y: "28.059814" },
   },
   {
-    number: "2",
+    number: 2,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "3",
+    number: 3,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "4",
+    number: 4,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "53.282574", y: "28.059814" },
     tspanInfo: { x: "53.282574", y: "28.059814" },
   },
   {
-    number: "5",
+    number: 5,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "6",
+    number: 6,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "8",
+    number: 8,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "9",
+    number: 9,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "10",
+    number: 10,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "47.994209", y: "28.059814" },
     tspanInfo: { x: "47.994209", y: "28.059814" },
   },
   {
-    number: "11",
+    number: 11,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "49.055847", y: "28.059814" },
     tspanInfo: { x: "49.055847", y: "28.059814" },
   },
   {
-    number: "4",
+    number: 4,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "53.282574", y: "28.059814" },
     tspanInfo: { x: "53.282574", y: "28.059814" },
   },
   {
-    number: "5",
+    number: 5,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "6",
+    number: 6,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "10",
+    number: 10,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "47.994209", y: "28.059814" },
     tspanInfo: { x: "47.994209", y: "28.059814" },
   },
   {
-    number: "9",
+    number: 9,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
   {
-    number: "11",
+    number: 11,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "49.055847", y: "28.059814" },
     tspanInfo: { x: "49.055847", y: "28.059814" },
   },
   {
-    number: "3",
+    number: 3,
     circleInfo: { cx: "56.988392", cy: "23.297314", r: "10" },
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },

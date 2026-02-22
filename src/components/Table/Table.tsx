@@ -7,7 +7,7 @@ import Die from "./Die/Die";
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
 const Table = () => {
-  const [dice, setDice] = useState<[number, number]>([1, 1]);
+  const [dice, setDice] = useState<[number, number]>([0, 0]);
   const [isRolling, setIsRolling] = useState<boolean>(false);
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -46,6 +46,7 @@ const Table = () => {
         <Board
           selectedBuild={selectedBuild}
           onBuild={() => setSelectedBuild("")}
+          numberRolled={isRolling ? 0 : dice[0] + dice[1]}
         />
         <div style={{ marginLeft: "2vw" }}>
           <div

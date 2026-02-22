@@ -1,4 +1,4 @@
-import type { Builds } from "../../Table/Table";
+import type { Builds } from "../../Table";
 import type {
   EdgeSvgInfo,
   HexSvgInfo,
@@ -30,10 +30,13 @@ export interface EdgeInfo {
 export interface HexInfo {
   svgInfo: HexSvgInfo;
   color: TileColorType;
+  index: number;
+  isHighlighted: boolean;
 }
 
 export interface NumberInfo {
   numberInfo: NumberSvgInfo;
+  index: number;
   transform?: string;
 }
 
@@ -107,6 +110,7 @@ const BoardSvg = (props: BoardSvgProps) => {
             d={hex.svgInfo.d}
             transform={hex.svgInfo.transform}
             fill={hex.color}
+            filter={hex.isHighlighted ? "brightness(2.0)" : "none"}
           />
         ))}
       </g>
@@ -117,7 +121,7 @@ const BoardSvg = (props: BoardSvgProps) => {
             return null;
           }
           const color =
-            info.numberInfo.number === "6" || info.numberInfo.number === "8"
+            info.numberInfo.number === 6 || info.numberInfo.number === 8
               ? "#da0000"
               : "black";
           return (
@@ -141,7 +145,6 @@ const BoardSvg = (props: BoardSvgProps) => {
                   }}
                   x={info.numberInfo.tspanInfo.x}
                   y={info.numberInfo.tspanInfo.y}
-                  // style={info.numberInfo.number === "6" || info.numberInfo.number === "8" ? "red" : "black"}
                 >
                   {info.numberInfo.number}
                 </tspan>

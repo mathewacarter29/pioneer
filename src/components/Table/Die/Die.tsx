@@ -24,6 +24,8 @@ const Die = (props: DieProps) => {
       return <img src={die5} alt="die5" style={{width: '5vw', minWidth: '50px', opacity: props.isRolling ? 1 : 0.7}}/>;
     case 6:
       return <img src={die6} alt="die6" style={{width: '5vw', minWidth: '50px', opacity: props.isRolling ? 1 : 0.7}}/>;
+    default: // return 1 as default for when table is initialized
+      return <img src={die1} alt="die1" style={{width: '5vw', minWidth: '50px', opacity: props.isRolling ? 1 : 0.7}}/>;
   }
 }
 
