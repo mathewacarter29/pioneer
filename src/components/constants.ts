@@ -449,3 +449,7 @@ export const DEFAULT_NUMBER_TRANSFORMS: [number, (string | undefined)][] = [
   [17, "translate(36.888029,127.11101)"],
   [18, "translate(73.596769,127.05925)"],
 ];
+
+export const TILE_FLASH_DURATION = 3000;
+
+export const ROLL_DURATION = 1000;

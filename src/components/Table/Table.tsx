@@ -3,12 +3,17 @@ import Board from "./Board/Board";
 import { Button } from "@mui/material";
 import { getRandomInt } from "../../utils/numbers";
 import Die from "./Die/Die";
+import {
+  ROLL_DURATION,
+  TILE_FLASH_DURATION,
+} from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
 const Table = () => {
   const [dice, setDice] = useState<[number, number]>([0, 0]);
   const [isRolling, setIsRolling] = useState<boolean>(false);
+  const [isRollButtonDisabled, setIsRollButtonDisabled] = useState<boolean>(false);
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -30,6 +35,7 @@ const Table = () => {
 
   const onRollDice = () => {
     setIsRolling(true);
+    setIsRollButtonDisabled(true);
     // cycle through dice numbers
     let timerId = setInterval(() => {
       setDiceToRandom();
@@ -37,7 +43,10 @@ const Table = () => {
     setTimeout(() => {
       clearInterval(timerId);
       setIsRolling(false);
-    }, 1000);
+      setTimeout(() => {
+        setIsRollButtonDisabled(false);
+      }, TILE_FLASH_DURATION)
+    }, ROLL_DURATION);
   };
 
   return (
@@ -57,10 +66,15 @@ const Table = () => {
               margin: "1vh",
             }}
           >
-            <Die value={dice[0]} isRolling={isRolling}/>
-            <Die value={dice[1]} isRolling={isRolling}/>
+            <Die value={dice[0]} isRolling={isRolling} />
+            <Die value={dice[1]} isRolling={isRolling} />
           </div>
-          <Button fullWidth variant="contained" onClick={() => onRollDice()} disabled={isRolling}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => onRollDice()}
+            disabled={isRollButtonDisabled}
+          >
             Roll Dice
           </Button>
         </div>

@@ -5,7 +5,7 @@ import type {
   TileColorType,
   CircleSvgInfo,
   NumberSvgInfo,
-} from "../constants";
+} from "../../../constants";
 
 interface BoardSvgProps {
   hexes: HexInfo[];

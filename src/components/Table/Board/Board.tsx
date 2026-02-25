@@ -11,7 +11,8 @@ import {
   DEFAULT_NUMBERS,
   DEFAULT_NUMBER_TRANSFORMS,
   TILE_COLORS,
-} from "./constants";
+  TILE_FLASH_DURATION,
+} from "../../constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../../Table/Table";
 import BoardSvg, {
@@ -73,7 +74,7 @@ const Board = (props: TilesProps) => {
           isHighlighted: false,
         })),
       );
-    }, 3000);
+    }, TILE_FLASH_DURATION);
   }, [numberRolled]);
 
   /**
