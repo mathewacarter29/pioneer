@@ -13,13 +13,14 @@ interface BoardSvgProps {
   vertices: VertexInfo[];
   numbers: (NumberInfo | undefined)[];
   selectedBuild: Builds;
-  buildSettlement: (vertexIndex: number) => void;
+  buildVertex: (vertexIndex: number) => void;
   buildRoad: (edgeIndex: number) => void;
 }
 
 export interface VertexInfo {
   svgInfo: CircleSvgInfo;
-  selected: boolean;
+  isSettlement: boolean;
+  isCity: boolean;
 }
 
 export interface EdgeInfo {
@@ -47,7 +48,7 @@ const BoardSvg = (props: BoardSvgProps) => {
     vertices,
     numbers,
     selectedBuild,
-    buildSettlement,
+    buildVertex,
     buildRoad,
   } = props;
   const textStyle: React.CSSProperties = {
@@ -93,7 +94,7 @@ const BoardSvg = (props: BoardSvgProps) => {
       // width="100%"
       version="1.1"
       viewBox="0 0 187.574 173.654"
-      style={{width: '40vw', minWidth: '600px'}}
+      style={{ width: "40vw", minWidth: "600px" }}
     >
       {/* HEXES */}
       <g
@@ -182,23 +183,36 @@ const BoardSvg = (props: BoardSvgProps) => {
         strokeWidth="0.265"
         transform="translate(-88.623 -103.52)"
       >
-        {vertices.map((vertex, i) => (
-          <circle
-            key={i}
-            id="VERTEX"
-            cy={vertex.svgInfo.cy}
-            cx={vertex.svgInfo.cx}
-            r={vertex.svgInfo.r}
-            style={{
-              opacity:
-                selectedBuild === "SETTLEMENT" || vertex.selected ? 1 : 0.3,
-              fill: vertex.selected ? "red" : "black",
-              pointerEvents:
-                selectedBuild === "SETTLEMENT" ? "inherit" : "none",
-            }}
-            onClick={() => buildSettlement(i)}
-          />
-        ))}
+        {vertices.map((vertex, i) => {
+          let color = "black";
+          if (vertex.isCity) {
+            color = "blue";
+          } else if (vertex.isSettlement) {
+            color = "red";
+          }
+          const canBecomeCity = vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
+          return (
+            <circle
+              key={i}
+              id="VERTEX"
+              cy={vertex.svgInfo.cy}
+              cx={vertex.svgInfo.cx}
+              r={canBecomeCity ? vertex.svgInfo.r * 2 : vertex.svgInfo.r}
+              style={{
+                opacity:
+                  selectedBuild === "SETTLEMENT" || vertex.isSettlement
+                    ? 1
+                    : 0.3,
+                fill: color,
+                pointerEvents:
+                  selectedBuild === "SETTLEMENT" || canBecomeCity
+                    ? "inherit"
+                    : "none",
+              }}
+              onClick={() => buildVertex(i)}
+            />
+          );
+        })}
       </g>
     </svg>
   );

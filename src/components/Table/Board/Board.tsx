@@ -121,7 +121,8 @@ const Board = (props: TilesProps) => {
   const getVertices = (baseVerticesInfo: CircleSvgInfo[]): VertexInfo[] => {
     return baseVerticesInfo.map((vertex) => ({
       svgInfo: vertex,
-      selected: false,
+      isSettlement: false,
+      isCity: false,
     }));
   };
 
@@ -206,12 +207,20 @@ const Board = (props: TilesProps) => {
    * Marks a vertex as selected to indicate a settlement has been built.
    * @param vertexIndex The index of the vertex to select.
    */
-  const buildSettlement = (vertexIndex: number) => {
-    setVertices((prevVertices) =>
-      prevVertices.map((vertex, i) =>
-        i === vertexIndex ? { ...vertex, selected: true } : vertex,
-      ),
-    );
+  const buildVertex = (vertexIndex: number) => {
+    if (selectedBuild === "SETTLEMENT") {
+      setVertices((prevVertices) =>
+        prevVertices.map((vertex, i) =>
+          i === vertexIndex ? { ...vertex, isSettlement: true } : vertex,
+        ),
+      );
+    } else if (selectedBuild === "CITY") {
+      setVertices((prevVertices) =>
+        prevVertices.map((vertex, i) =>
+          i === vertexIndex ? { ...vertex, isCity: true } : vertex,
+        ),
+      );
+    }
     onBuild();
   };
 
@@ -235,7 +244,7 @@ const Board = (props: TilesProps) => {
       vertices={vertices}
       numbers={numbers}
       selectedBuild={selectedBuild}
-      buildSettlement={buildSettlement}
+      buildVertex={buildVertex}
       buildRoad={buildRoad}
     />
   );
