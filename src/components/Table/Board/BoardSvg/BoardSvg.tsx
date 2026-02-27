@@ -1,11 +1,14 @@
 import type { Builds } from "../../Table";
-import type {
-  EdgeSvgInfo,
-  HexSvgInfo,
-  TileColorType,
-  CircleSvgInfo,
-  NumberSvgInfo,
+import {
+  type EdgeSvgInfo,
+  type HexSvgInfo,
+  type TileColorType,
+  type CircleSvgInfo,
+  type NumberSvgInfo,
+  UNSELECTED_BUILD_COLOR,
+  SELECTED_BUILD_COLOR,
 } from "../../../constants";
+import classes from "./BoardSvg.module.css";
 
 interface BoardSvgProps {
   hexes: HexInfo[];
@@ -161,7 +164,9 @@ const BoardSvg = (props: BoardSvgProps) => {
         strokeWidth="0.265"
         transform="translate(-88.623 -103.52)"
       >
-        {edges.map((edge, i) => (
+        {edges.map((edge, i) => {
+          const shouldFlash = (selectedBuild === "ROAD" && !edge.selected);
+          return (
           <path
             key={i}
             id="EDGE"
@@ -169,35 +174,40 @@ const BoardSvg = (props: BoardSvgProps) => {
             transform={edge.svgInfo.transform}
             style={{
               opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
-              fill: edge.selected ? "red" : "black",
+              fill: edge.selected ? SELECTED_BUILD_COLOR : UNSELECTED_BUILD_COLOR,
               pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
             }}
+            className={shouldFlash ? classes.flashSvg : ""}
             onClick={() => buildRoad(i)}
           />
-        ))}
+        )})}
       </g>
       {/* SETTLEMENTS */}
       <g
         id="VERTICES"
-        fill="#000"
+        fill={UNSELECTED_BUILD_COLOR}
         strokeWidth="0.265"
         transform="translate(-88.623 -103.52)"
       >
         {vertices.map((vertex, i) => {
-          let color = "black";
+          let color = UNSELECTED_BUILD_COLOR;
           if (vertex.isCity) {
             color = "blue";
           } else if (vertex.isSettlement) {
-            color = "red";
+            color = SELECTED_BUILD_COLOR;
           }
-          const canBecomeCity = vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
+          const canBecomeCity =
+            vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
+          const shouldFlash =
+            (selectedBuild === "SETTLEMENT" && !vertex.isSettlement) ||
+            (selectedBuild === "CITY" && canBecomeCity);
           return (
             <circle
               key={i}
               id="VERTEX"
               cy={vertex.svgInfo.cy}
               cx={vertex.svgInfo.cx}
-              r={canBecomeCity ? vertex.svgInfo.r * 2 : vertex.svgInfo.r}
+              r={vertex.svgInfo.r}
               style={{
                 opacity:
                   selectedBuild === "SETTLEMENT" || vertex.isSettlement
@@ -209,6 +219,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                     ? "inherit"
                     : "none",
               }}
+              className={shouldFlash ? classes.flashSvg : ""}
               onClick={() => buildVertex(i)}
             />
           );

@@ -1,0 +1,9 @@
+@keyframes flashBrightness {
+  0% { filter: brightness(100%); }
+  50% { filter: brightness(150%); } /* Flash brightness */
+  100% { filter: brightness(100%); }
+}
+
+.flashSvg {
+  animation: flashBrightness 1s infinite; /* Adjust speed as needed */
+}

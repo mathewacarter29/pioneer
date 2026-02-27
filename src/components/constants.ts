@@ -453,3 +453,7 @@ export const DEFAULT_NUMBER_TRANSFORMS: [number, (string | undefined)][] = [
 export const TILE_FLASH_DURATION = 3000;
 
 export const ROLL_DURATION = 1000;
+
+export const UNSELECTED_BUILD_COLOR = "#555555";
+
+export const SELECTED_BUILD_COLOR = "#aa0000";
