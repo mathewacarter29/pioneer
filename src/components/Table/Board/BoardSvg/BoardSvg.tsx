@@ -3,10 +3,10 @@ import {
   type EdgeSvgInfo,
   type HexSvgInfo,
   type TileColorType,
-  type CircleSvgInfo,
   type NumberSvgInfo,
   UNSELECTED_BUILD_COLOR,
   SELECTED_BUILD_COLOR,
+  type VertexSvgInfo,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
 
@@ -21,7 +21,7 @@ interface BoardSvgProps {
 }
 
 export interface VertexInfo {
-  svgInfo: CircleSvgInfo;
+  svgInfo: VertexSvgInfo;
   isSettlement: boolean;
   isCity: boolean;
 }
@@ -165,22 +165,25 @@ const BoardSvg = (props: BoardSvgProps) => {
         transform="translate(-88.623 -103.52)"
       >
         {edges.map((edge, i) => {
-          const shouldFlash = (selectedBuild === "ROAD" && !edge.selected);
+          const shouldFlash = selectedBuild === "ROAD" && !edge.selected;
           return (
-          <path
-            key={i}
-            id="EDGE"
-            d={edge.svgInfo.d}
-            transform={edge.svgInfo.transform}
-            style={{
-              opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
-              fill: edge.selected ? SELECTED_BUILD_COLOR : UNSELECTED_BUILD_COLOR,
-              pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
-            }}
-            className={shouldFlash ? classes.flashSvg : ""}
-            onClick={() => buildRoad(i)}
-          />
-        )})}
+            <path
+              key={i}
+              id="EDGE"
+              d={edge.svgInfo.d}
+              transform={edge.svgInfo.transform}
+              style={{
+                opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
+                fill: edge.selected
+                  ? SELECTED_BUILD_COLOR
+                  : UNSELECTED_BUILD_COLOR,
+                pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
+              }}
+              className={shouldFlash ? classes.flashSvg : ""}
+              onClick={() => buildRoad(i)}
+            />
+          );
+        })}
       </g>
       {/* SETTLEMENTS */}
       <g
@@ -189,38 +192,87 @@ const BoardSvg = (props: BoardSvgProps) => {
         strokeWidth="0.265"
         transform="translate(-88.623 -103.52)"
       >
-        {vertices.map((vertex, i) => {
+        {vertices.map((vertex) => {
           let color = UNSELECTED_BUILD_COLOR;
-          if (vertex.isCity) {
-            color = "blue";
-          } else if (vertex.isSettlement) {
-            color = SELECTED_BUILD_COLOR;
-          }
           const canBecomeCity =
             vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
           const shouldFlash =
             (selectedBuild === "SETTLEMENT" && !vertex.isSettlement) ||
             (selectedBuild === "CITY" && canBecomeCity);
+          if (vertex.isCity) {
+            color = "blue";
+            return (
+              <circle
+                key={vertex.svgInfo.index}
+                id="VERTEX"
+                cy={vertex.svgInfo.unsettledSvgInfo.cy}
+                cx={vertex.svgInfo.unsettledSvgInfo.cx}
+                r={vertex.svgInfo.unsettledSvgInfo.r}
+                style={{
+                  opacity: 1,
+                  fill: color,
+                  pointerEvents: "none",
+                }}
+                className={shouldFlash ? classes.flashSvg : ""}
+                onClick={() => buildVertex(vertex.svgInfo.index)}
+              />
+            );
+          }
+          if (vertex.isSettlement) {
+            color = SELECTED_BUILD_COLOR;
+            return (
+              <g
+                key={vertex.svgInfo.index}
+                id="SETTLEMENT"
+                transform={vertex.svgInfo.settlementSvgInfo.transform}
+              >
+                <path
+                  id="BASE"
+                  strokeWidth={
+                    vertex.svgInfo.settlementSvgInfo.basePaths[0].strokeWidth
+                  }
+                  d={vertex.svgInfo.settlementSvgInfo.basePaths[0].d}
+                  style={{
+                    opacity: 1,
+                    fill: color,
+                    pointerEvents: canBecomeCity ? "inherit" : "none",
+                  }}
+                  className={shouldFlash ? classes.flashSvg : ""}
+                  onClick={() => buildVertex(vertex.svgInfo.index)}
+                ></path>
+                <path
+                  id="ROOF"
+                  strokeWidth={
+                    vertex.svgInfo.settlementSvgInfo.basePaths[1].strokeWidth
+                  }
+                  d={vertex.svgInfo.settlementSvgInfo.basePaths[1].d}
+                  style={{
+                    opacity: 1,
+                    fill: color,
+                    pointerEvents: canBecomeCity ? "inherit" : "none",
+                  }}
+                  className={shouldFlash ? classes.flashSvg : ""}
+                  onClick={() => buildVertex(vertex.svgInfo.index)}
+                ></path>
+              </g>
+            );
+          }
           return (
+            // not a city or settlement yet
             <circle
-              key={i}
+              key={vertex.svgInfo.index}
               id="VERTEX"
-              cy={vertex.svgInfo.cy}
-              cx={vertex.svgInfo.cx}
-              r={vertex.svgInfo.r}
+              cy={vertex.svgInfo.unsettledSvgInfo.cy}
+              cx={vertex.svgInfo.unsettledSvgInfo.cx}
+              r={vertex.svgInfo.unsettledSvgInfo.r}
               style={{
-                opacity:
-                  selectedBuild === "SETTLEMENT" || vertex.isSettlement
-                    ? 1
-                    : 0.3,
+                opacity: selectedBuild === "SETTLEMENT" ? 1 : 0.3,
                 fill: color,
                 pointerEvents:
-                  selectedBuild === "SETTLEMENT" || canBecomeCity
-                    ? "inherit"
-                    : "none",
+                  selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}
               className={shouldFlash ? classes.flashSvg : ""}
-              onClick={() => buildVertex(i)}
+              onClick={() => buildVertex(vertex.svgInfo.index)}
             />
           );
         })}

@@ -4,7 +4,6 @@ import {
   DEFAULT_HEXES,
   DEFAULT_EDGES,
   DEFAULT_VERTICES,
-  type CircleSvgInfo,
   type EdgeSvgInfo,
   type HexSvgInfo,
   type NumberSvgInfo,
@@ -12,6 +11,7 @@ import {
   DEFAULT_NUMBER_TRANSFORMS,
   TILE_COLORS,
   TILE_FLASH_DURATION,
+  type VertexSvgInfo,
 } from "../../constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../../Table/Table";
@@ -118,9 +118,9 @@ const Board = (props: TilesProps) => {
    * @param baseVerticesInfo The base vertex information.
    * @returns An array of VertexInfo objects.
    */
-  const getVertices = (baseVerticesInfo: CircleSvgInfo[]): VertexInfo[] => {
-    return baseVerticesInfo.map((vertex) => ({
-      svgInfo: vertex,
+  const getVertices = (baseVerticesInfo: VertexSvgInfo[]): VertexInfo[] => {
+    return baseVerticesInfo.map((info) => ({
+      svgInfo: info,
       isSettlement: false,
       isCity: false,
     }));
@@ -208,16 +208,17 @@ const Board = (props: TilesProps) => {
    * @param vertexIndex The index of the vertex to select.
    */
   const buildVertex = (vertexIndex: number) => {
+    console.log("index", vertexIndex);
     if (selectedBuild === "SETTLEMENT") {
       setVertices((prevVertices) =>
-        prevVertices.map((vertex, i) =>
-          i === vertexIndex ? { ...vertex, isSettlement: true } : vertex,
+        prevVertices.map((vertex) =>
+          vertexIndex === vertex.svgInfo.index ? { ...vertex, isSettlement: true } : vertex,
         ),
       );
     } else if (selectedBuild === "CITY") {
       setVertices((prevVertices) =>
-        prevVertices.map((vertex, i) =>
-          i === vertexIndex ? { ...vertex, isCity: true } : vertex,
+        prevVertices.map((vertex) =>
+          vertexIndex === vertex.svgInfo.index ? { ...vertex, isCity: true } : vertex,
         ),
       );
     }
