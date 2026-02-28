@@ -38,7 +38,7 @@ const Board = (props: TilesProps) => {
   const { selectedBuild, onBuild, numberRolled } = props;
 
   const [hexes, setHexes] = useState<HexInfo[]>([]);
-  const [vertices, setVertices] = useState<VertexInfo[]>([]);
+  const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
   const [numbers, setNumbers] = useState<NumberInfo[]>([]);
 
@@ -118,12 +118,18 @@ const Board = (props: TilesProps) => {
    * @param baseVerticesInfo The base vertex information.
    * @returns An array of VertexInfo objects.
    */
-  const getVertices = (baseVerticesInfo: VertexSvgInfo[]): VertexInfo[] => {
-    return baseVerticesInfo.map((info) => ({
-      svgInfo: info,
-      isSettlement: false,
-      isCity: false,
-    }));
+  const getVertices = (
+    baseVerticesInfo: Record<string, VertexSvgInfo>,
+  ): Record<string, VertexInfo> => {
+    let vertices: Record<string, VertexInfo> = {};
+    for (const key in baseVerticesInfo) {
+      vertices[key] = {
+        svgInfo: baseVerticesInfo[key],
+        isSettlement: false,
+        isCity: false,
+      };
+    }
+    return vertices;
   };
 
   /**
@@ -207,20 +213,23 @@ const Board = (props: TilesProps) => {
    * Marks a vertex as selected to indicate a settlement has been built.
    * @param vertexIndex The index of the vertex to select.
    */
-  const buildVertex = (vertexIndex: number) => {
-    console.log("index", vertexIndex);
+  const buildVertex = (vertexIndex: string) => {
     if (selectedBuild === "SETTLEMENT") {
-      setVertices((prevVertices) =>
-        prevVertices.map((vertex) =>
-          vertexIndex === vertex.svgInfo.index ? { ...vertex, isSettlement: true } : vertex,
-        ),
-      );
+      setVertices((prevVertices) => ({
+        ...prevVertices,
+        [vertexIndex]: {
+          ...prevVertices[vertexIndex],
+          isSettlement: true,
+        },
+      }));
     } else if (selectedBuild === "CITY") {
-      setVertices((prevVertices) =>
-        prevVertices.map((vertex) =>
-          vertexIndex === vertex.svgInfo.index ? { ...vertex, isCity: true } : vertex,
-        ),
-      );
+      setVertices((prevVertices) => ({
+        ...prevVertices,
+        [vertexIndex]: {
+          ...prevVertices[vertexIndex],
+          isCity: true,
+        },
+      }));
     }
     onBuild();
   };

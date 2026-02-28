@@ -39,6 +39,7 @@ export interface HexSvgInfo {
 /**
  * first number is the index of the hex, second is the svg info for that hex
  */
+// TODO rewrite this to be objects with hexinfo, index, numbertransform
 export const DEFAULT_HEXES: [number, HexSvgInfo][] = [
   [
     0,
@@ -286,8 +287,9 @@ export interface CircleSvgInfo {
   cy: string;
   r: number;
 }
-export const DEFAULT_VERTICES: VertexSvgInfo[] = [
-  {
+// TODO redo path to use just one instead of 2
+export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
+  "0": {
     index: 0,
     unsettledSvgInfo: { cx: "145.582", cy: "105.624", r: 2 },
     settlementSvgInfo: {
@@ -295,7 +297,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "1": {
     index: 1,
     unsettledSvgInfo: { cx: "182.291", cy: "105.572", r: 2 },
     settlementSvgInfo: {
@@ -303,7 +305,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "2": {
     index: 2,
     unsettledSvgInfo: { cx: "218.999", cy: "105.52", r: 2 },
     settlementSvgInfo: {
@@ -311,7 +313,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "3": {
     index: 3,
     unsettledSvgInfo: { cx: "127.243", cy: "116.246", r: 2 },
     settlementSvgInfo: {
@@ -319,7 +321,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "4": {
     index: 4,
     unsettledSvgInfo: { cx: "163.951", cy: "116.195", r: 2 },
     settlementSvgInfo: {
@@ -327,7 +329,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "5": {
     index: 5,
     unsettledSvgInfo: { cx: "200.66", cy: "116.143", r: 2 },
     settlementSvgInfo: {
@@ -335,7 +337,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "6": {
     index: 6,
     unsettledSvgInfo: { cx: "237.369", cy: "116.091", r: 2 },
     settlementSvgInfo: {
@@ -343,7 +345,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "7": {
     index: 7,
     unsettledSvgInfo: { cx: "127.272", cy: "137.44", r: 2 },
     settlementSvgInfo: {
@@ -351,7 +353,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "8": {
     index: 8,
     unsettledSvgInfo: { cx: "163.981", cy: "137.388", r: 2 },
     settlementSvgInfo: {
@@ -359,7 +361,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "9": {
     index: 9,
     unsettledSvgInfo: { cx: "200.69", cy: "137.337", r: 2 },
     settlementSvgInfo: {
@@ -367,7 +369,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "10": {
     index: 10,
     unsettledSvgInfo: { cx: "237.399", cy: "137.285", r: 2 },
     settlementSvgInfo: {
@@ -375,7 +377,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "11": {
     index: 11,
     unsettledSvgInfo: { cx: "108.933", cy: "148.063", r: 2 },
     settlementSvgInfo: {
@@ -383,7 +385,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "12": {
     index: 12,
     unsettledSvgInfo: { cx: "145.642", cy: "148.011", r: 2 },
     settlementSvgInfo: {
@@ -391,7 +393,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "13": {
     index: 13,
     unsettledSvgInfo: { cx: "182.35", cy: "147.959", r: 2 },
     settlementSvgInfo: {
@@ -399,7 +401,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "14": {
     index: 14,
     unsettledSvgInfo: { cx: "219.059", cy: "147.908", r: 2 },
     settlementSvgInfo: {
@@ -407,7 +409,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "15": {
     index: 15,
     unsettledSvgInfo: { cx: "255.768", cy: "147.856", r: 2 },
     settlementSvgInfo: {
@@ -415,7 +417,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "16": {
     index: 16,
     unsettledSvgInfo: { cx: "108.963", cy: "169.257", r: 2 },
     settlementSvgInfo: {
@@ -423,7 +425,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "17": {
     index: 17,
     unsettledSvgInfo: { cx: "145.672", cy: "169.205", r: 2 },
     settlementSvgInfo: {
@@ -431,7 +433,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "18": {
     index: 18,
     unsettledSvgInfo: { cx: "182.38", cy: "169.153", r: 2 },
     settlementSvgInfo: {
@@ -439,7 +441,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "19":{
     index: 19,
     unsettledSvgInfo: { cx: "219.089", cy: "169.101", r: 2 },
     settlementSvgInfo: {
@@ -447,7 +449,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "20":{
     index: 20,
     unsettledSvgInfo: { cx: "255.798", cy: "169.05", r: 2 },
     settlementSvgInfo: {
@@ -455,7 +457,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "21":{
     index: 21,
     unsettledSvgInfo: { cx: "90.623", cy: "179.88", r: 2 },
     settlementSvgInfo: {
@@ -463,7 +465,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "22":{
     index: 22,
     unsettledSvgInfo: { cx: "127.332", cy: "179.828", r: 2 },
     settlementSvgInfo: {
@@ -471,7 +473,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "23":{
     index: 23,
     unsettledSvgInfo: { cx: "164.041", cy: "179.776", r: 2 },
     settlementSvgInfo: {
@@ -479,7 +481,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "24":{
     index: 24,
     unsettledSvgInfo: { cx: "200.75", cy: "179.724", r: 2 },
     settlementSvgInfo: {
@@ -487,7 +489,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "25":{
     index: 25,
     unsettledSvgInfo: { cx: "237.458", cy: "179.672", r: 2 },
     settlementSvgInfo: {
@@ -495,7 +497,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "26":{
     index: 26,
     unsettledSvgInfo: { cx: "274.167", cy: "179.621", r: 2 },
     settlementSvgInfo: {
@@ -503,7 +505,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "27":{
     index: 27,
     unsettledSvgInfo: { cx: "90.653", cy: "201.073", r: 2 },
     settlementSvgInfo: {
@@ -511,7 +513,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "28":{
     index: 28,
     unsettledSvgInfo: { cx: "127.362", cy: "201.022", r: 2 },
     settlementSvgInfo: {
@@ -519,7 +521,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "29":{
     index: 29,
     unsettledSvgInfo: { cx: "164.071", cy: "200.97", r: 2 },
     settlementSvgInfo: {
@@ -527,7 +529,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "30":{
     index: 30,
     unsettledSvgInfo: { cx: "200.78", cy: "200.918", r: 2 },
     settlementSvgInfo: {
@@ -535,7 +537,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "31":{
     index: 31,
     unsettledSvgInfo: { cx: "237.488", cy: "200.866", r: 2 },
     settlementSvgInfo: {
@@ -543,7 +545,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "32":{
     index: 32,
     unsettledSvgInfo: { cx: "274.197", cy: "200.815", r: 2 },
     settlementSvgInfo: {
@@ -551,7 +553,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "33":{
     index: 33,
     unsettledSvgInfo: { cx: "109.023", cy: "211.644", r: 2 },
     settlementSvgInfo: {
@@ -559,7 +561,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "34":{
     index: 34,
     unsettledSvgInfo: { cx: "145.731", cy: "211.593", r: 2 },
     settlementSvgInfo: {
@@ -567,7 +569,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "35":{
     index: 35,
     unsettledSvgInfo: { cx: "182.44", cy: "211.541", r: 2 },
     settlementSvgInfo: {
@@ -575,7 +577,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "36":{
     index: 36,
     unsettledSvgInfo: { cx: "219.149", cy: "211.489", r: 2 },
     settlementSvgInfo: {
@@ -583,7 +585,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "37":{
     index: 37,
     unsettledSvgInfo: { cx: "255.858", cy: "211.437", r: 2 },
     settlementSvgInfo: {
@@ -591,7 +593,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "38":{
     index: 38,
     unsettledSvgInfo: { cx: "109.052", cy: "232.838", r: 2 },
     settlementSvgInfo: {
@@ -599,7 +601,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "39":{
     index: 39,
     unsettledSvgInfo: { cx: "145.761", cy: "232.786", r: 2 },
     settlementSvgInfo: {
@@ -607,7 +609,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "40":{
     index: 40,
     unsettledSvgInfo: { cx: "182.47", cy: "232.735", r: 2 },
     settlementSvgInfo: {
@@ -615,7 +617,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "41":{
     index: 41,
     unsettledSvgInfo: { cx: "219.179", cy: "232.683", r: 2 },
     settlementSvgInfo: {
@@ -623,7 +625,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "42":{
     index: 42,
     unsettledSvgInfo: { cx: "255.887", cy: "232.631", r: 2 },
     settlementSvgInfo: {
@@ -631,7 +633,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "43":{
     index: 43,
     unsettledSvgInfo: { cx: "127.422", cy: "243.409", r: 2 },
     settlementSvgInfo: {
@@ -639,7 +641,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "44":{
     index: 44,
     unsettledSvgInfo: { cx: "164.131", cy: "243.357", r: 2 },
     settlementSvgInfo: {
@@ -647,7 +649,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "45":{
     index: 45,
     unsettledSvgInfo: { cx: "200.839", cy: "243.306", r: 2 },
     settlementSvgInfo: {
@@ -655,7 +657,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "46":{
     index: 46,
     unsettledSvgInfo: { cx: "237.548", cy: "243.254", r: 2 },
     settlementSvgInfo: {
@@ -663,7 +665,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "47":{
     index: 47,
     unsettledSvgInfo: { cx: "127.452", cy: "264.603", r: 2 },
     settlementSvgInfo: {
@@ -671,7 +673,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "48":{
     index: 48,
     unsettledSvgInfo: { cx: "164.16", cy: "264.551", r: 2 },
     settlementSvgInfo: {
@@ -679,7 +681,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "49":{
     index: 49,
     unsettledSvgInfo: { cx: "200.869", cy: "264.499", r: 2 },
     settlementSvgInfo: {
@@ -687,7 +689,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "50":{
     index: 50,
     unsettledSvgInfo: { cx: "237.578", cy: "264.448", r: 2 },
     settlementSvgInfo: {
@@ -695,7 +697,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "51":{
     index: 51,
     unsettledSvgInfo: { cx: "145.821", cy: "275.174", r: 2 },
     settlementSvgInfo: {
@@ -703,7 +705,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "52":{
     index: 52,
     unsettledSvgInfo: { cx: "182.53", cy: "275.122", r: 2 },
     settlementSvgInfo: {
@@ -711,7 +713,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-  {
+  "53":{
     index: 53,
     unsettledSvgInfo: { cx: "219.238", cy: "275.07", r: 2 },
     settlementSvgInfo: {
@@ -719,7 +721,7 @@ export const DEFAULT_VERTICES: VertexSvgInfo[] = [
       basePaths: settlementPaths
     },
   },
-];
+};
 
 export interface CoordinateSvgInfo {
   x: string;
@@ -880,4 +882,4 @@ export const ROLL_DURATION = 1000;
 
 export const UNSELECTED_BUILD_COLOR = "#555555";
 
-export const SELECTED_BUILD_COLOR = "#aa0000";
+export const SELECTED_BUILD_COLOR = "red";

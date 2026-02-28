@@ -13,10 +13,10 @@ import classes from "./BoardSvg.module.css";
 interface BoardSvgProps {
   hexes: HexInfo[];
   edges: EdgeInfo[];
-  vertices: VertexInfo[];
+  vertices: Record<number, VertexInfo>;
   numbers: (NumberInfo | undefined)[];
   selectedBuild: Builds;
-  buildVertex: (vertexIndex: number) => void;
+  buildVertex: (vertexIndex: string) => void;
   buildRoad: (edgeIndex: number) => void;
 }
 
@@ -186,7 +186,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         })}
       </g>
       {/* SETTLEMENTS */}
-      {vertices.map((vertex) => {
+      {Object.entries(vertices).map(([index, vertex]) => {
         let color = UNSELECTED_BUILD_COLOR;
         const canBecomeCity =
           vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
@@ -197,10 +197,10 @@ const BoardSvg = (props: BoardSvgProps) => {
               id="VERTICES"
               strokeWidth="0.265"
               transform="translate(-88.623 -103.52)"
-              key={vertex.svgInfo.index}
+              key={index}
             >
               <circle
-                key={vertex.svgInfo.index}
+                key={index}
                 id="VERTEX"
                 cy={vertex.svgInfo.unsettledSvgInfo.cy}
                 cx={vertex.svgInfo.unsettledSvgInfo.cx}
@@ -210,7 +210,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                   fill: color,
                   pointerEvents: "none",
                 }}
-                onClick={() => buildVertex(vertex.svgInfo.index)}
+                onClick={() => buildVertex(index)}
               />
             </g>
           );
@@ -221,7 +221,7 @@ const BoardSvg = (props: BoardSvgProps) => {
             <g
               id="layer3"
               transform="translate(36.709 -.052)"
-              key={vertex.svgInfo.index}
+              key={index}
             >
               <g
                 id="SETTLEMENT"
@@ -232,7 +232,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                   pointerEvents: canBecomeCity ? "inherit" : "none",
                 }}
                 className={selectedBuild === "CITY" ? classes.flashSvg : ""}
-                onClick={() => buildVertex(vertex.svgInfo.index)}
+                onClick={() => buildVertex(index)}
               >
                 <path
                   id="BASE"
@@ -258,10 +258,10 @@ const BoardSvg = (props: BoardSvgProps) => {
             id="VERTICES"
             strokeWidth="0.265"
             transform="translate(-88.623 -103.52)"
-            key={vertex.svgInfo.index}
+            key={index}
           >
             <circle
-              key={vertex.svgInfo.index}
+              key={index}
               id="VERTEX"
               cy={vertex.svgInfo.unsettledSvgInfo.cy}
               cx={vertex.svgInfo.unsettledSvgInfo.cx}
@@ -273,7 +273,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                   selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}
               className={selectedBuild === "SETTLEMENT" ? classes.flashSvg : ""}
-              onClick={() => buildVertex(vertex.svgInfo.index)}
+              onClick={() => buildVertex(index)}
             />
           </g>
         );
