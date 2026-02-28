@@ -262,19 +262,8 @@ interface PathInfo {
 
 export interface SettlementInfo {
   transform: string;
-  basePaths: PathInfo[];
+  path: PathInfo;
 }
-
-const settlementPaths: PathInfo[] = [
-  {
-    d: "M133.481 161.207h6v4h-6z",
-    strokeWidth: 0.049,
-  },
-  {
-    d: "m133.481 161.207 3-1.595 3 1.595z",
-    strokeWidth: 0.047,
-  },
-];
 
 export interface VertexSvgInfo {
   unsettledSvgInfo: CircleSvgInfo;
@@ -292,378 +281,540 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
     unsettledSvgInfo: { cx: "145.582", cy: "105.624", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.262 -118.641)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M56.959 1.3v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "1": {
     unsettledSvgInfo: { cx: "182.291", cy: "105.572", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.553 -118.693)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.667 1.248v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "2": {
     unsettledSvgInfo: { cx: "218.999", cy: "105.52", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.844 -118.745)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.376 1.196v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "3": {
     unsettledSvgInfo: { cx: "127.243", cy: "116.246", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.601 -108.019)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.62 11.923V9.53l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "4": {
     unsettledSvgInfo: { cx: "163.951", cy: "116.195", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.893 -108.07)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.328 11.871V9.478l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "5": {
     unsettledSvgInfo: { cx: "200.66", cy: "116.143", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -26.184 -108.122)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.037 11.82V9.425l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "6": {
     unsettledSvgInfo: { cx: "237.369", cy: "116.091", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.525 -108.174)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.745 11.767V9.375l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "7": {
     unsettledSvgInfo: { cx: "127.272", cy: "137.44", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.571 -86.825)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.649 33.117v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "8": {
     unsettledSvgInfo: { cx: "163.981", cy: "137.388", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.863 -86.877)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.358 33.065v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "9": {
     unsettledSvgInfo: { cx: "200.69", cy: "137.337", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -26.154 -86.928)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.066 33.013V30.62l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "10": {
     unsettledSvgInfo: { cx: "237.399", cy: "137.285", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.555 -86.98)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.775 32.961v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "11": {
     unsettledSvgInfo: { cx: "108.933", cy: "148.063", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -117.91 -76.202)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M20.31 43.74v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "12": {
     unsettledSvgInfo: { cx: "145.642", cy: "148.011", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.202 -76.254)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M57.018 43.688v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "13": {
     unsettledSvgInfo: { cx: "182.35", cy: "147.959", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.493 -76.306)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.727 43.636v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "14": {
     unsettledSvgInfo: { cx: "219.059", cy: "147.908", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.785 -76.357)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.436 43.584v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "15": {
     unsettledSvgInfo: { cx: "255.768", cy: "147.856", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 28.924 -76.41)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M167.144 43.532V41.14l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "16": {
     unsettledSvgInfo: { cx: "108.963", cy: "169.257", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -117.881 -55.008)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M20.34 64.933V62.54l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "17": {
     unsettledSvgInfo: { cx: "145.672", cy: "169.205", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.172 -55.06)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M57.048 64.881v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "18": {
     unsettledSvgInfo: { cx: "182.38", cy: "169.153", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.464 -55.112)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.757 64.83v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "19": {
     unsettledSvgInfo: { cx: "219.089", cy: "169.101", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.755 -55.164)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.466 64.778v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "20": {
     unsettledSvgInfo: { cx: "255.798", cy: "169.05", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 28.954 -55.215)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.466 64.778v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "21": {
     unsettledSvgInfo: { cx: "90.623", cy: "179.88", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -136.22 -44.385)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M2 75.556v-2.393l-2.5 2.393v4h5v-4L2 73.163",
+        strokeWidth: 1
+      },
     },
   },
   "22": {
     unsettledSvgInfo: { cx: "127.332", cy: "179.828", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.512 -44.437)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.709 75.504v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "23": {
     unsettledSvgInfo: { cx: "164.041", cy: "179.776", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.803 -44.489)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.417 75.452V73.06l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "24": {
     unsettledSvgInfo: { cx: "200.75", cy: "179.724", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -26.094 -44.54)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.126 75.4v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "25": {
     unsettledSvgInfo: { cx: "237.458", cy: "179.672", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.615 -44.593)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.835 75.349v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "26": {
     unsettledSvgInfo: { cx: "274.167", cy: "179.621", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 47.323 -44.644)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M185.544 75.297v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "27": {
     unsettledSvgInfo: { cx: "90.653", cy: "201.073", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -136.19 -23.192)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M2.03 96.75v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "28": {
     unsettledSvgInfo: { cx: "127.362", cy: "201.022", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.482 -23.243)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.739 96.698v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "29": {
     unsettledSvgInfo: { cx: "164.071", cy: "200.97", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.773 -23.295)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.447 96.646v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "30": {
     unsettledSvgInfo: { cx: "200.78", cy: "200.918", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -26.064 -23.347)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.156 96.594v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "31": {
     unsettledSvgInfo: { cx: "237.488", cy: "200.866", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.644 -23.399)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.865 96.543V94.15l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "32": {
     unsettledSvgInfo: { cx: "274.197", cy: "200.815", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 47.353 -23.45)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M185.574 96.49v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "33": {
     unsettledSvgInfo: { cx: "109.023", cy: "211.644", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -117.821 -12.62)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M20.4 107.32v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "34": {
     unsettledSvgInfo: { cx: "145.731", cy: "211.593", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.112 -12.672)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M57.108 107.269v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "35": {
     unsettledSvgInfo: { cx: "182.44", cy: "211.541", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.404 -12.724)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.817 107.217v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "36": {
     unsettledSvgInfo: { cx: "219.149", cy: "211.489", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.695 -12.776)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.525 107.165v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "37": {
     unsettledSvgInfo: { cx: "255.858", cy: "211.437", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 29.014 -12.828)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M167.234 107.114v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "38": {
     unsettledSvgInfo: { cx: "109.052", cy: "232.838", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -117.791 8.573)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M20.43 128.514v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "39": {
     unsettledSvgInfo: { cx: "145.761", cy: "232.786", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.083 8.521)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M57.138 128.463v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "40": {
     unsettledSvgInfo: { cx: "182.47", cy: "232.735", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.374 8.47)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.847 128.411v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "41": {
     unsettledSvgInfo: { cx: "219.179", cy: "232.683", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.665 8.418)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.555 128.36v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "42": {
     unsettledSvgInfo: { cx: "255.887", cy: "232.631", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 29.044 8.366)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M167.264 128.307v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "43": {
     unsettledSvgInfo: { cx: "127.422", cy: "243.409", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.422 19.144)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.798 139.085v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
+        strokeWidth: 1
+      },
     },
   },
   "44": {
     unsettledSvgInfo: { cx: "164.131", cy: "243.357", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.713 19.092)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.507 139.034v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "45": {
     unsettledSvgInfo: { cx: "200.839", cy: "243.306", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -26.005 19.04)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.216 138.982v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "46": {
     unsettledSvgInfo: { cx: "237.548", cy: "243.254", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.704 18.989)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.925 138.93v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "47": {
     unsettledSvgInfo: { cx: "127.452", cy: "264.603", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -99.392 40.338)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M38.828 160.28v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "48": {
     unsettledSvgInfo: { cx: "164.16", cy: "264.551", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -62.683 40.286)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M75.537 160.228v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "49": {
     unsettledSvgInfo: { cx: "200.869", cy: "264.499", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -25.975 40.234)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M112.246 160.176v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "50": {
     unsettledSvgInfo: { cx: "237.578", cy: "264.448", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 10.734 40.183)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M148.954 160.124v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "51": {
     unsettledSvgInfo: { cx: "145.821", cy: "275.174", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -81.023 50.909)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M57.198 170.85v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "52": {
     unsettledSvgInfo: { cx: "182.53", cy: "275.122", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -44.314 50.857)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M93.906 170.799v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
   "53": {
     unsettledSvgInfo: { cx: "219.238", cy: "275.07", r: 2 },
     settlementSvgInfo: {
       transform: "matrix(.74378 0 0 .74378 -7.605 50.805)",
-      basePaths: settlementPaths,
+      path: {
+        d: "M130.615 170.747v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+        strokeWidth: 1
+      },
     },
   },
 };

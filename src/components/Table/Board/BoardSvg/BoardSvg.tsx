@@ -94,10 +94,9 @@ const BoardSvg = (props: BoardSvgProps) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       id="svg1"
-      // width="100%"
       version="1.1"
-      viewBox="0 0 187.574 173.654"
-      style={{ width: "40vw", minWidth: "600px" }}
+      viewBox="0 0 188.574 176.047"
+      style={{ width: "90vw", minWidth: "600px" }}
     >
       {/* HEXES */}
       <g
@@ -105,7 +104,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         fillOpacity="1"
         fillRule="nonzero"
         strokeWidth="0.265"
-        transform="translate(-88.623 -103.52)"
+        transform="translate(-88.123417,-102.32365)"
       >
         {hexes.map((hex, i) => (
           <path
@@ -129,30 +128,32 @@ const BoardSvg = (props: BoardSvgProps) => {
               ? "#da0000"
               : "black";
           return (
-            <g id="NUMBER" key={i} transform={info.transform}>
-              <circle
-                style={{ ...circleStyle, stroke: color }}
-                cx={info.numberInfo.circleInfo.cx}
-                cy={info.numberInfo.circleInfo.cy}
-                r={info.numberInfo.circleInfo.r}
-              />
-              <text
-                xmlSpace="preserve"
-                style={{ ...textStyle, fill: color, stroke: color }}
-                x={info.numberInfo.textInfo.x}
-                y={info.numberInfo.textInfo.y}
-              >
-                <tspan
-                  style={{
-                    ...tspanStyle,
-                    fill: color,
-                  }}
-                  x={info.numberInfo.tspanInfo.x}
-                  y={info.numberInfo.tspanInfo.y}
+            <g transform="translate(0.49999631,1.1964218)">
+              <g id="NUMBER" key={i} transform={info.transform}>
+                <circle
+                  style={{ ...circleStyle, stroke: color }}
+                  cx={info.numberInfo.circleInfo.cx}
+                  cy={info.numberInfo.circleInfo.cy}
+                  r={info.numberInfo.circleInfo.r}
+                />
+                <text
+                  xmlSpace="preserve"
+                  style={{ ...textStyle, fill: color, stroke: color }}
+                  x={info.numberInfo.textInfo.x}
+                  y={info.numberInfo.textInfo.y}
                 >
-                  {info.numberInfo.number}
-                </tspan>
-              </text>
+                  <tspan
+                    style={{
+                      ...tspanStyle,
+                      fill: color,
+                    }}
+                    x={info.numberInfo.tspanInfo.x}
+                    y={info.numberInfo.tspanInfo.y}
+                  >
+                    {info.numberInfo.number}
+                  </tspan>
+                </text>
+              </g>
             </g>
           );
         })}
@@ -162,7 +163,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         id="EDGES"
         fill="#000"
         strokeWidth="0.265"
-        transform="translate(-88.623 -103.52)"
+        transform="translate(-88.123417,-102.32365)"
       >
         {edges.map((edge, i) => {
           const shouldFlash = selectedBuild === "ROAD" && !edge.selected;
@@ -185,18 +186,18 @@ const BoardSvg = (props: BoardSvgProps) => {
           );
         })}
       </g>
-      {/* SETTLEMENTS */}
       {Object.entries(vertices).map(([index, vertex]) => {
         let color = UNSELECTED_BUILD_COLOR;
         const canBecomeCity =
           vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
+        // CITIES
         if (vertex.isCity) {
           color = "blue";
           return (
             <g
               id="VERTICES"
               strokeWidth="0.265"
-              transform="translate(-88.623 -103.52)"
+              transform="translate(-88.123417,-102.32365)"
               key={index}
             >
               <circle
@@ -215,17 +216,14 @@ const BoardSvg = (props: BoardSvgProps) => {
             </g>
           );
         }
+        // SETTLEMENTS
         if (vertex.isSettlement) {
           color = SELECTED_BUILD_COLOR;
           return (
-            <g
-              id="layer3"
-              transform="translate(36.709 -.052)"
-              key={index}
-            >
+            <g id="layer3" transform="translate(.5 1.196)" key={index}>
               <g
                 id="SETTLEMENT"
-                transform={vertex.svgInfo.settlementSvgInfo.transform}
+                // transform={vertex.svgInfo.settlementSvgInfo.transform}
                 style={{
                   opacity: 1,
                   fill: color,
@@ -235,29 +233,23 @@ const BoardSvg = (props: BoardSvgProps) => {
                 onClick={() => buildVertex(index)}
               >
                 <path
-                  id="BASE"
+                  id="SETTLEMENT"
                   strokeWidth={
-                    vertex.svgInfo.settlementSvgInfo.basePaths[0].strokeWidth
+                    vertex.svgInfo.settlementSvgInfo.path.strokeWidth
                   }
-                  d={vertex.svgInfo.settlementSvgInfo.basePaths[0].d}
-                ></path>
-                <path
-                  id="ROOF"
-                  strokeWidth={
-                    vertex.svgInfo.settlementSvgInfo.basePaths[1].strokeWidth
-                  }
-                  d={vertex.svgInfo.settlementSvgInfo.basePaths[1].d}
+                  d={vertex.svgInfo.settlementSvgInfo.path.d}
                 ></path>
               </g>
             </g>
           );
         }
+        // UNSETTLED
         return (
           // not a city or settlement yet
           <g
             id="VERTICES"
             strokeWidth="0.265"
-            transform="translate(-88.623 -103.52)"
+            transform="translate(-88.123417,-102.32365)"
             key={index}
           >
             <circle
