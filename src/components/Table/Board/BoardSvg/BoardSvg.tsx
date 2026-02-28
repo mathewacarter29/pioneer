@@ -186,22 +186,19 @@ const BoardSvg = (props: BoardSvgProps) => {
         })}
       </g>
       {/* SETTLEMENTS */}
-      <g
-        id="VERTICES"
-        fill={UNSELECTED_BUILD_COLOR}
-        strokeWidth="0.265"
-        transform="translate(-88.623 -103.52)"
-      >
-        {vertices.map((vertex) => {
-          let color = UNSELECTED_BUILD_COLOR;
-          const canBecomeCity =
-            vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
-          const shouldFlash =
-            (selectedBuild === "SETTLEMENT" && !vertex.isSettlement) ||
-            (selectedBuild === "CITY" && canBecomeCity);
-          if (vertex.isCity) {
-            color = "blue";
-            return (
+      {vertices.map((vertex) => {
+        let color = UNSELECTED_BUILD_COLOR;
+        const canBecomeCity =
+          vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
+        if (vertex.isCity) {
+          color = "blue";
+          return (
+            <g
+              id="VERTICES"
+              strokeWidth="0.265"
+              transform="translate(-88.623 -103.52)"
+              key={vertex.svgInfo.index}
+            >
               <circle
                 key={vertex.svgInfo.index}
                 id="VERTEX"
@@ -213,18 +210,29 @@ const BoardSvg = (props: BoardSvgProps) => {
                   fill: color,
                   pointerEvents: "none",
                 }}
-                className={shouldFlash ? classes.flashSvg : ""}
                 onClick={() => buildVertex(vertex.svgInfo.index)}
               />
-            );
-          }
-          if (vertex.isSettlement) {
-            color = SELECTED_BUILD_COLOR;
-            return (
+            </g>
+          );
+        }
+        if (vertex.isSettlement) {
+          color = SELECTED_BUILD_COLOR;
+          return (
+            <g
+              id="layer3"
+              transform="translate(36.709 -.052)"
+              key={vertex.svgInfo.index}
+            >
               <g
-                key={vertex.svgInfo.index}
                 id="SETTLEMENT"
                 transform={vertex.svgInfo.settlementSvgInfo.transform}
+                style={{
+                  opacity: 1,
+                  fill: color,
+                  pointerEvents: canBecomeCity ? "inherit" : "none",
+                }}
+                className={selectedBuild === "CITY" ? classes.flashSvg : ""}
+                onClick={() => buildVertex(vertex.svgInfo.index)}
               >
                 <path
                   id="BASE"
@@ -232,13 +240,6 @@ const BoardSvg = (props: BoardSvgProps) => {
                     vertex.svgInfo.settlementSvgInfo.basePaths[0].strokeWidth
                   }
                   d={vertex.svgInfo.settlementSvgInfo.basePaths[0].d}
-                  style={{
-                    opacity: 1,
-                    fill: color,
-                    pointerEvents: canBecomeCity ? "inherit" : "none",
-                  }}
-                  className={shouldFlash ? classes.flashSvg : ""}
-                  onClick={() => buildVertex(vertex.svgInfo.index)}
                 ></path>
                 <path
                   id="ROOF"
@@ -246,19 +247,19 @@ const BoardSvg = (props: BoardSvgProps) => {
                     vertex.svgInfo.settlementSvgInfo.basePaths[1].strokeWidth
                   }
                   d={vertex.svgInfo.settlementSvgInfo.basePaths[1].d}
-                  style={{
-                    opacity: 1,
-                    fill: color,
-                    pointerEvents: canBecomeCity ? "inherit" : "none",
-                  }}
-                  className={shouldFlash ? classes.flashSvg : ""}
-                  onClick={() => buildVertex(vertex.svgInfo.index)}
                 ></path>
               </g>
-            );
-          }
-          return (
-            // not a city or settlement yet
+            </g>
+          );
+        }
+        return (
+          // not a city or settlement yet
+          <g
+            id="VERTICES"
+            strokeWidth="0.265"
+            transform="translate(-88.623 -103.52)"
+            key={vertex.svgInfo.index}
+          >
             <circle
               key={vertex.svgInfo.index}
               id="VERTEX"
@@ -271,12 +272,12 @@ const BoardSvg = (props: BoardSvgProps) => {
                 pointerEvents:
                   selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}
-              className={shouldFlash ? classes.flashSvg : ""}
+              className={selectedBuild === "SETTLEMENT" ? classes.flashSvg : ""}
               onClick={() => buildVertex(vertex.svgInfo.index)}
             />
-          );
-        })}
-      </g>
+          </g>
+        );
+      })}
     </svg>
   );
 };
