@@ -96,7 +96,7 @@ const BoardSvg = (props: BoardSvgProps) => {
       id="svg1"
       version="1.1"
       viewBox="0 0 188.574 176.047"
-      style={{ width: "90vw", minWidth: "600px" }}
+      style={{ width: "40vw", minWidth: "600px" }}
     >
       {/* HEXES */}
       <g
