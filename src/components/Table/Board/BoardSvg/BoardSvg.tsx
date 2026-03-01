@@ -6,14 +6,14 @@ import {
   SELECTED_BUILD_COLOR,
   type VertexSvgInfo,
   type PathSvgInfo,
+  type HexSvgInfo,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
 
 interface BoardSvgProps {
-  hexes: HexInfo[];
+  hexes: Record<string, HexInfo>;
   edges: EdgeInfo[];
-  vertices: Record<number, VertexInfo>;
-  numbers: (NumberInfo | undefined)[];
+  vertices: Record<string, VertexInfo>;
   selectedBuild: Builds;
   buildVertex: (vertexIndex: string) => void;
   buildRoad: (edgeIndex: number) => void;
@@ -31,10 +31,10 @@ export interface EdgeInfo {
 }
 
 export interface HexInfo {
-  svgInfo: PathSvgInfo;
+  hexSvgInfo: HexSvgInfo;
   color: TileColorType;
-  index: number;
   isHighlighted: boolean;
+  numberSvgInfo?: NumberSvgInfo;
 }
 
 export interface NumberInfo {
@@ -44,15 +44,8 @@ export interface NumberInfo {
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const {
-    hexes,
-    edges,
-    vertices,
-    numbers,
-    selectedBuild,
-    buildVertex,
-    buildRoad,
-  } = props;
+  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad } =
+    props;
   const textStyle: React.CSSProperties = {
     fontStyle: "normal",
     fontVariant: "normal",
@@ -97,66 +90,62 @@ const BoardSvg = (props: BoardSvgProps) => {
       viewBox="0 0 188.574 176.047"
       style={{ width: "40vw", minWidth: "600px" }}
     >
-      {/* HEXES */}
-      <g
-        id="HEXES"
-        fillOpacity="1"
-        fillRule="nonzero"
-        strokeWidth="0.265"
-        transform="translate(-88.123417,-102.32365)"
-      >
-        {hexes.map((hex, i) => (
-          <path
-            key={i}
-            id="HEX"
-            d={hex.svgInfo.d}
-            transform={hex.svgInfo.transform}
-            fill={hex.color}
-            filter={hex.isHighlighted ? "brightness(2.0)" : "none"}
-          />
-        ))}
-      </g>
-      {/* NUMBERS */}
-      <g id="NUMBERS">
-        {numbers.map((info, i) => {
-          if (!info) {
-            return null;
-          }
-          const color =
-            info.numberInfo.number === 6 || info.numberInfo.number === 8
-              ? "#da0000"
-              : "black";
-          return (
-            <g transform="translate(0.49999631,1.1964218)">
-              <g id="NUMBER" key={i} transform={info.transform}>
-                <circle
-                  style={{ ...circleStyle, stroke: color }}
-                  cx={info.numberInfo.circleInfo.cx}
-                  cy={info.numberInfo.circleInfo.cy}
-                  r={info.numberInfo.circleInfo.r}
-                />
-                <text
-                  xmlSpace="preserve"
-                  style={{ ...textStyle, fill: color, stroke: color }}
-                  x={info.numberInfo.textInfo.x}
-                  y={info.numberInfo.textInfo.y}
-                >
-                  <tspan
-                    style={{
-                      ...tspanStyle,
-                      fill: color,
-                    }}
-                    x={info.numberInfo.tspanInfo.x}
-                    y={info.numberInfo.tspanInfo.y}
-                  >
-                    {info.numberInfo.number}
-                  </tspan>
-                </text>
-              </g>
+      {Object.entries(hexes).map(([key, hex]) => {
+        const color =
+          hex.numberSvgInfo?.number === 6 || hex.numberSvgInfo?.number === 8
+            ? "#da0000"
+            : "black";
+        return (
+          <g key={key}>
+            {/* HEXES */}
+            <g
+              id="HEXES"
+              fillOpacity="1"
+              fillRule="nonzero"
+              strokeWidth="0.265"
+              transform="translate(-88.123417,-102.32365)"
+            >
+              <path
+                id="HEX"
+                d={hex.hexSvgInfo.pathInfo.d}
+                transform={hex.hexSvgInfo.pathInfo.transform}
+                fill={hex.color}
+                filter={hex.isHighlighted ? "brightness(120%)" : "none"}
+              />
             </g>
-          );
-        })}
-      </g>
+            {/* NUMBERS */}
+            {hex.numberSvgInfo && (
+              <g transform="translate(0.49999631,1.1964218)">
+                <g id="NUMBER" transform={hex.hexSvgInfo.numberTransform}>
+                  <circle
+                    style={{ ...circleStyle, stroke: color }}
+                    cx={hex.numberSvgInfo.circleInfo.cx}
+                    cy={hex.numberSvgInfo.circleInfo.cy}
+                    r={hex.numberSvgInfo.circleInfo.r}
+                  />
+                  <text
+                    xmlSpace="preserve"
+                    style={{ ...textStyle, fill: color, stroke: color }}
+                    x={hex.numberSvgInfo.textInfo.x}
+                    y={hex.numberSvgInfo.textInfo.y}
+                  >
+                    <tspan
+                      style={{
+                        ...tspanStyle,
+                        fill: color,
+                      }}
+                      x={hex.numberSvgInfo.tspanInfo.x}
+                      y={hex.numberSvgInfo.tspanInfo.y}
+                    >
+                      {hex.numberSvgInfo.number}
+                    </tspan>
+                  </text>
+                </g>
+              </g>
+            )}
+          </g>
+        );
+      })}
       {/* ROADS */}
       <g
         id="EDGES"

@@ -31,145 +31,146 @@ export const DEFAULT_TILES = [
   TILE_COLORS.PLAINS,
 ];
 
-/**
- * first number is the index of the hex, second is the svg info for that hex
- */
-// TODO rewrite this to be objects with hexinfo, index, numbertransform
-export const DEFAULT_HEXES: [number, PathSvgInfo][] = [
-  [
-    0,
-    {
+export interface HexSvgInfo {
+  pathInfo: PathSvgInfo;
+  numberTransform: string | undefined;
+}
+
+export const DEFAULT_HEXES: Record<string, HexSvgInfo> = {
+  "0": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 131.228 107.235)",
     },
-  ],
-  [
-    1,
-    {
+    numberTransform: undefined,
+  },
+  "1": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 167.937 107.183)",
     },
-  ],
-  [
-    2,
-    {
+    numberTransform: "translate(36.708729,-0.05175909)",
+  },
+  "2": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 204.646 107.131)",
     },
-  ],
-  [
-    3,
-    {
+    numberTransform: "translate(73.417459,-0.10351909)",
+  },
+  "3": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 112.919 139.052)",
     },
-  ],
-  [
-    4,
-    {
+    numberTransform: "translate(-18.309541,31.816581)",
+  },
+  "4": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 149.627 139)",
     },
-  ],
-  [
-    5,
-    {
+    numberTransform: "translate(18.399189,31.764821)",
+  },
+  "5": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 186.336 138.948)",
     },
-  ],
-  [
-    6,
-    {
+    numberTransform: "translate(55.107919,31.713061)",
+  },
+  "6": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 223.045 138.896)",
     },
-  ],
-  [
-    7,
-    {
+    numberTransform: "translate(91.816649,31.661291)",
+  },
+  "7": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 94.61 170.868)",
     },
-  ],
-  [
-    8,
-    {
+    numberTransform: "translate(-36.619081,63.633151)",
+  },
+  "8": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 131.318 170.816)",
     },
-  ],
-  [
-    9,
-    {
+    numberTransform: "translate(0.08964933,63.581391)",
+  },
+  "9": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 168.027 170.765)",
     },
-  ],
-  [
-    10,
-    {
+    numberTransform: "translate(36.798382,63.529629)",
+  },
+  "10": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 204.735 170.713)",
     },
-  ],
-  [
-    11,
-    {
+    numberTransform: "translate(73.507109,63.477871)",
+  },
+  "11": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 241.444 170.661)",
     },
-  ],
-  [
-    12,
-    {
+    numberTransform: "translate(110.21584,63.426101)",
+  },
+  "12": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 113.008 202.633)",
     },
-  ],
-  [
-    13,
-    {
+    numberTransform: "translate(-18.219891,95.397961)",
+  },
+  "13": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 149.717 202.581)",
     },
-  ],
-  [
-    14,
-    {
+    numberTransform: "translate(18.488839,95.346201)",
+  },
+  "14": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 186.426 202.53)",
     },
-  ],
-  [
-    15,
-    {
+    numberTransform: "translate(55.197569,95.294441)",
+  },
+  "15": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 223.135 202.478)",
     },
-  ],
-  [
-    16,
-    {
+    numberTransform: "translate(91.906309,95.242681)",
+  },
+  "16": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 131.408 234.398)",
     },
-  ],
-  [
-    17,
-    {
+    numberTransform: "translate(0.17929933,127.16278)",
+  },
+  "17": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 168.116 234.346)",
     },
-  ],
-  [
-    18,
-    {
+    numberTransform: "translate(36.888029,127.11101)",
+  },
+  "18": {
+    pathInfo: {
       d: "M116.22 106.995 51.143 144.69l-65.181-37.51-.106-75.203L50.932-5.718l65.181 37.51Z",
       transform: "matrix(.28182 0 0 .28182 204.825 234.294)",
     },
-  ],
-];
+    numberTransform: "translate(73.596769,127.05925)",
+  },
+}
 
 export const DEFAULT_EDGES: PathSvgInfo[] = [
   { d: "M126.257 120.843h2v12h-2z" },
@@ -932,36 +933,6 @@ export const DEFAULT_NUMBERS: NumberSvgInfo[] = [
     textInfo: { x: "52.751755", y: "28.059814" },
     tspanInfo: { x: "52.751755", y: "28.059814" },
   },
-];
-
-/**
- * The first element is the index of the tile a number could be on second is the transform to place that number
- * undefined is the first spot on the board
- *
- * Needed index to match number's transform up to a hex so we can remove the number from the desert hex
- *
- * This could be just an array in the correct order, but I wanted to be explicit about which transform goes on which tile
- */
-export const DEFAULT_NUMBER_TRANSFORMS: [number, string | undefined][] = [
-  [0, undefined],
-  [1, "translate(36.708729,-0.05175909)"],
-  [2, "translate(73.417459,-0.10351909)"],
-  [3, "translate(-18.309541,31.816581)"],
-  [4, "translate(18.399189,31.764821)"],
-  [5, "translate(55.107919,31.713061)"],
-  [6, "translate(91.816649,31.661291)"],
-  [7, "translate(-36.619081,63.633151)"],
-  [8, "translate(0.08964933,63.581391)"],
-  [9, "translate(36.798382,63.529629)"],
-  [10, "translate(73.507109,63.477871)"],
-  [11, "translate(110.21584,63.426101)"],
-  [12, "translate(-18.219891,95.397961)"],
-  [13, "translate(18.488839,95.346201)"],
-  [14, "translate(55.197569,95.294441)"],
-  [15, "translate(91.906309,95.242681)"],
-  [16, "translate(0.17929933,127.16278)"],
-  [17, "translate(36.888029,127.11101)"],
-  [18, "translate(73.596769,127.05925)"],
 ];
 
 export const TILE_FLASH_DURATION = 3000;

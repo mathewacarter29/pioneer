@@ -6,18 +6,17 @@ import {
   DEFAULT_VERTICES,
   type NumberSvgInfo,
   DEFAULT_NUMBERS,
-  DEFAULT_NUMBER_TRANSFORMS,
   TILE_COLORS,
   TILE_FLASH_DURATION,
   type VertexSvgInfo,
   type PathSvgInfo,
+  type HexSvgInfo,
 } from "../../constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../../Table/Table";
 import BoardSvg, {
   type EdgeInfo,
   type HexInfo,
-  type NumberInfo,
   type VertexInfo,
 } from "./BoardSvg/BoardSvg";
 import { getRandomInt } from "../../../utils/numbers";
@@ -36,81 +35,55 @@ interface TilesProps {
 const Board = (props: TilesProps) => {
   const { selectedBuild, onBuild, numberRolled } = props;
 
-  const [hexes, setHexes] = useState<HexInfo[]>([]);
+  const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
   const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
-  const [numbers, setNumbers] = useState<NumberInfo[]>([]);
 
   useEffect(() => {
-    const coloredHexes = getTiles(DEFAULT_HEXES);
+    // dont shuffle the tiles, shuffle the colors
+    const coloredHexes = getTiles(DEFAULT_HEXES, DEFAULT_NUMBERS);
     setHexes(coloredHexes);
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
-    // pass in hexes to figure out the index of the desert tile and don't put a number there
-    setNumbers(
-      getNumbers(DEFAULT_NUMBERS, DEFAULT_NUMBER_TRANSFORMS, coloredHexes),
-    );
   }, []);
 
   useEffect(() => {
     if (numberRolled === 0) {
       return;
     }
+    const hexKeys = Object.keys(hexes);
     // find the hexes with the rolled number
-    const rolledIndexes = numbers
-      .filter((num) => num.numberInfo.number === numberRolled)
-      .map((num) => num.index);
-    setHexes((prevHexes) =>
-      prevHexes.map((hex) => ({
-        ...hex,
-        isHighlighted: rolledIndexes.includes(hex.index),
-      })),
+    const rolledIndexes = hexKeys.reduce((accumulator, element, index) => {
+      if (hexes[element].numberSvgInfo?.number === numberRolled) {
+        accumulator.push(index);
+      }
+      return accumulator;
+    }, [] as number[]);
+
+    const rolledTiles = rolledIndexes.reduce(
+      (acc, index) => {
+        const key = index.toString();
+        acc[key] = { ...hexes[key], isHighlighted: true };
+        return acc;
+      },
+      {} as Record<string, HexInfo>,
     );
+    setHexes((prevHexes) => ({
+      ...prevHexes,
+      ...rolledTiles,
+    }));
     setTimeout(() => {
       setHexes((prevHexes) =>
-        prevHexes.map((hex) => ({
-          ...hex,
-          isHighlighted: false,
-        })),
+        hexKeys.reduce(
+          (acc, key) => {
+            acc[key] = { ...prevHexes[key], isHighlighted: false };
+            return acc;
+          },
+          {} as Record<string, HexInfo>,
+        ),
       );
     }, TILE_FLASH_DURATION);
   }, [numberRolled]);
-
-  /**
-   * Generates an array of NumberInfo objects based on the provided number information, transforms, and hexes.
-   * @param numbersSvgInfo The base number information.
-   * @param transforms The transforms for each number.
-   * @param hexes The hexes on the board.
-   * @returns An array of NumberInfo objects.
-   */
-  const getNumbers = (
-    numbersSvgInfo: NumberSvgInfo[],
-    transforms: [number, string | undefined][],
-    hexes: HexInfo[],
-  ): NumberInfo[] => {
-    // remove the transform for any desert tiles
-    const desertTiles = hexes.filter((hex) => hex.color === TILE_COLORS.DESERT);
-    const availableTransforms = transforms.filter(
-      ([index, _]) =>
-        !desertTiles.some((desertTile) => desertTile.index === index),
-    );
-    if (
-      numbersSvgInfo.length !== transforms.length &&
-      numbersSvgInfo.length + desertTiles.length !== hexes.length
-    ) {
-      throw new Error(
-        "The number of numbers, transforms, and hexes must be the same.",
-      );
-    }
-    const shuffledTransforms = shuffle(availableTransforms);
-    return numbersSvgInfo.map(
-      (numberInfo, i): NumberInfo => ({
-        numberInfo,
-        index: shuffledTransforms[i][0],
-        transform: shuffledTransforms[i][1],
-      }),
-    );
-  };
 
   /**
    * Generates an array of VertexInfo objects based on the provided vertex information.
@@ -173,20 +146,58 @@ const Board = (props: TilesProps) => {
    * @param baseHexInfo The base hex information.
    * @returns An array of HexInfo objects with assigned colors.
    */
-  const getTiles = (baseHexInfo: [number, PathSvgInfo][]): HexInfo[] => {
-    let tileColors = getTileTypes(baseHexInfo.length);
-    if (tileColors.length < baseHexInfo.length) {
+  const getTiles = (
+    baseHexInfo: Record<string, HexSvgInfo>,
+    numbers: NumberSvgInfo[],
+  ): Record<string, HexInfo> => {
+    // first, get tile colors
+    const hexKeys = Object.keys(baseHexInfo);
+    let tileColors = getTileTypes(hexKeys.length);
+    if (tileColors.length !== hexKeys.length) {
       throw new Error(
         "Not enough tile colors provided for the number of hexes.",
       );
     }
     tileColors = shuffle(tileColors);
-    return baseHexInfo.map(([index, hex], i) => ({
-      svgInfo: hex,
-      color: tileColors[i],
-      index: index,
-      isHighlighted: false,
-    }));
+    // next, get numbers for each tile
+    const desertTileIndexes = tileColors.reduce(
+      (accumulator, element, index) => {
+        if (element === TILE_COLORS.DESERT) {
+          accumulator.push(index);
+        }
+        return accumulator;
+      },
+      [] as number[],
+    );
+    if (hexKeys.length - desertTileIndexes.length !== numbers.length) {
+      throw new Error("Not enough numbers for the number of hexes.");
+    }
+    const shuffledNumbers = shuffle(numbers);
+    // return tile info
+    let numberIndex = 0;
+    let tiles: Record<string, HexInfo> = {};
+    for (const key in hexKeys) {
+      const index = Number(key);
+      if (index === Number.NaN) {
+        throw new Error(
+          "Invalid hex key - all keys should be integers representing this hex's index on the board",
+        );
+      }
+      const tileColor = tileColors[index]; // asserted earlier that tileColors and hexKeys have same length
+      let tileNumber = undefined;
+      if (!desertTileIndexes.includes(index)) {
+        // if this tile is not a desert, add a number
+        tileNumber = shuffledNumbers[numberIndex];
+        numberIndex++;
+      }
+      tiles[key] = {
+        hexSvgInfo: baseHexInfo[key],
+        color: tileColor,
+        isHighlighted: false,
+        numberSvgInfo: tileNumber,
+      };
+    }
+    return tiles;
   };
 
   /**
@@ -251,7 +262,6 @@ const Board = (props: TilesProps) => {
       hexes={hexes}
       edges={edges}
       vertices={vertices}
-      numbers={numbers}
       selectedBuild={selectedBuild}
       buildVertex={buildVertex}
       buildRoad={buildRoad}
