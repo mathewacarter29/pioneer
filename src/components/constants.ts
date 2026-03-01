@@ -170,7 +170,7 @@ export const DEFAULT_HEXES: Record<string, HexSvgInfo> = {
     },
     numberTransform: "translate(73.596769,127.05925)",
   },
-}
+};
 
 export const DEFAULT_EDGES: PathSvgInfo[] = [
   { d: "M126.257 120.843h2v12h-2z" },
@@ -276,7 +276,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.262 -118.641)",
       path: {
         d: "M56.959 1.3v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -286,7 +286,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.553 -118.693)",
       path: {
         d: "M93.667 1.248v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -296,7 +296,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.844 -118.745)",
       path: {
         d: "M130.376 1.196v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -306,7 +306,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.601 -108.019)",
       path: {
         d: "M38.62 11.923V9.53l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -316,7 +316,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.893 -108.07)",
       path: {
         d: "M75.328 11.871V9.478l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -326,7 +326,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -26.184 -108.122)",
       path: {
         d: "M112.037 11.82V9.425l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -336,7 +336,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.525 -108.174)",
       path: {
         d: "M148.745 11.767V9.375l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -346,7 +346,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.571 -86.825)",
       path: {
         d: "M38.649 33.117v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -356,7 +356,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.863 -86.877)",
       path: {
         d: "M75.358 33.065v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -366,7 +366,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -26.154 -86.928)",
       path: {
         d: "M112.066 33.013V30.62l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -376,7 +376,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.555 -86.98)",
       path: {
         d: "M148.775 32.961v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -386,7 +386,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -117.91 -76.202)",
       path: {
         d: "M20.31 43.74v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -396,7 +396,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.202 -76.254)",
       path: {
         d: "M57.018 43.688v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -406,7 +406,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.493 -76.306)",
       path: {
         d: "M93.727 43.636v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -416,7 +416,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.785 -76.357)",
       path: {
         d: "M130.436 43.584v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -426,7 +426,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 28.924 -76.41)",
       path: {
         d: "M167.144 43.532V41.14l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -436,7 +436,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -117.881 -55.008)",
       path: {
         d: "M20.34 64.933V62.54l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -446,7 +446,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.172 -55.06)",
       path: {
         d: "M57.048 64.881v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -456,7 +456,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.464 -55.112)",
       path: {
         d: "M93.757 64.83v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -466,7 +466,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.755 -55.164)",
       path: {
         d: "M130.466 64.778v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -476,7 +476,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 28.954 -55.215)",
       path: {
         d: "M130.466 64.778v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -486,7 +486,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -136.22 -44.385)",
       path: {
         d: "M2 75.556v-2.393l-2.5 2.393v4h5v-4L2 73.163",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -496,7 +496,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.512 -44.437)",
       path: {
         d: "M38.709 75.504v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -506,7 +506,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.803 -44.489)",
       path: {
         d: "M75.417 75.452V73.06l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -516,7 +516,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -26.094 -44.54)",
       path: {
         d: "M112.126 75.4v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -526,7 +526,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.615 -44.593)",
       path: {
         d: "M148.835 75.349v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -536,7 +536,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 47.323 -44.644)",
       path: {
         d: "M185.544 75.297v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -546,7 +546,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -136.19 -23.192)",
       path: {
         d: "M2.03 96.75v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -556,7 +556,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.482 -23.243)",
       path: {
         d: "M38.739 96.698v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -566,7 +566,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.773 -23.295)",
       path: {
         d: "M75.447 96.646v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -576,7 +576,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -26.064 -23.347)",
       path: {
         d: "M112.156 96.594v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -586,7 +586,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.644 -23.399)",
       path: {
         d: "M148.865 96.543V94.15l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -596,7 +596,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 47.353 -23.45)",
       path: {
         d: "M185.574 96.49v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -606,7 +606,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -117.821 -12.62)",
       path: {
         d: "M20.4 107.32v-2.392l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -616,7 +616,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.112 -12.672)",
       path: {
         d: "M57.108 107.269v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -626,7 +626,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.404 -12.724)",
       path: {
         d: "M93.817 107.217v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -636,7 +636,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.695 -12.776)",
       path: {
         d: "M130.525 107.165v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -646,7 +646,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 29.014 -12.828)",
       path: {
         d: "M167.234 107.114v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -656,7 +656,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -117.791 8.573)",
       path: {
         d: "M20.43 128.514v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -666,7 +666,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.083 8.521)",
       path: {
         d: "M57.138 128.463v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -676,7 +676,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.374 8.47)",
       path: {
         d: "M93.847 128.411v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -686,7 +686,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.665 8.418)",
       path: {
         d: "M130.555 128.36v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -696,7 +696,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 29.044 8.366)",
       path: {
         d: "M167.264 128.307v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -706,7 +706,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.422 19.144)",
       path: {
         d: "M38.798 139.085v-2.392l-2.5 2.392v4h5v-4l-2.5-2.392",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -716,7 +716,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.713 19.092)",
       path: {
         d: "M75.507 139.034v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -726,7 +726,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -26.005 19.04)",
       path: {
         d: "M112.216 138.982v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -736,7 +736,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.704 18.989)",
       path: {
         d: "M148.925 138.93v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -746,7 +746,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -99.392 40.338)",
       path: {
         d: "M38.828 160.28v-2.394l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -756,7 +756,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -62.683 40.286)",
       path: {
         d: "M75.537 160.228v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -766,7 +766,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -25.975 40.234)",
       path: {
         d: "M112.246 160.176v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -776,7 +776,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 10.734 40.183)",
       path: {
         d: "M148.954 160.124v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -786,7 +786,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -81.023 50.909)",
       path: {
         d: "M57.198 170.85v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -796,7 +796,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -44.314 50.857)",
       path: {
         d: "M93.906 170.799v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -806,7 +806,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
       transform: "matrix(.74378 0 0 .74378 -7.605 50.805)",
       path: {
         d: "M130.615 170.747v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
     },
   },
@@ -824,115 +824,86 @@ export interface NumberSvgInfo {
   number: number;
 }
 
+const NUMBER_TWO = {
+  number: 2,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_THREE = {
+  number: 3,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_FOUR = {
+  number: 4,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "53.282574", y: "28.059814" },
+  tspanInfo: { x: "53.282574", y: "28.059814" },
+};
+const NUMBER_FIVE = {
+  number: 5,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_SIX = {
+  number: 6,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_EIGHT = {
+  number: 8,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_NINE = {
+  number: 9,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "52.751755", y: "28.059814" },
+  tspanInfo: { x: "52.751755", y: "28.059814" },
+};
+const NUMBER_TEN = {
+  number: 10,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "47.994209", y: "28.059814" },
+  tspanInfo: { x: "47.994209", y: "28.059814" },
+};
+const NUMBER_ELEVEN = {
+  number: 11,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "49.055847", y: "28.059814" },
+  tspanInfo: { x: "49.055847", y: "28.059814" },
+};
+const NUMBER_TWELVE = {
+  number: 12,
+  circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
+  textInfo: { x: "47.994209", y: "28.059814" },
+  tspanInfo: { x: "47.994209", y: "28.059814" },
+};
+
 export const DEFAULT_NUMBERS: NumberSvgInfo[] = [
-  {
-    number: 8,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 12,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "47.994209", y: "28.059814" },
-    tspanInfo: { x: "47.994209", y: "28.059814" },
-  },
-  {
-    number: 2,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 3,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 4,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "53.282574", y: "28.059814" },
-    tspanInfo: { x: "53.282574", y: "28.059814" },
-  },
-  {
-    number: 5,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 6,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 8,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 9,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 10,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "47.994209", y: "28.059814" },
-    tspanInfo: { x: "47.994209", y: "28.059814" },
-  },
-  {
-    number: 11,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "49.055847", y: "28.059814" },
-    tspanInfo: { x: "49.055847", y: "28.059814" },
-  },
-  {
-    number: 4,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "53.282574", y: "28.059814" },
-    tspanInfo: { x: "53.282574", y: "28.059814" },
-  },
-  {
-    number: 5,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 6,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 10,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "47.994209", y: "28.059814" },
-    tspanInfo: { x: "47.994209", y: "28.059814" },
-  },
-  {
-    number: 9,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
-  {
-    number: 11,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "49.055847", y: "28.059814" },
-    tspanInfo: { x: "49.055847", y: "28.059814" },
-  },
-  {
-    number: 3,
-    circleInfo: { cx: "56.988392", cy: "23.297314", r: 10 },
-    textInfo: { x: "52.751755", y: "28.059814" },
-    tspanInfo: { x: "52.751755", y: "28.059814" },
-  },
+  NUMBER_EIGHT,
+  NUMBER_TWELVE,
+  NUMBER_TWO,
+  NUMBER_THREE,
+  NUMBER_FOUR,
+  NUMBER_FIVE,
+  NUMBER_SIX,
+  NUMBER_EIGHT,
+  NUMBER_NINE,
+  NUMBER_TEN,
+  NUMBER_ELEVEN,
+  NUMBER_FOUR,
+  NUMBER_FIVE,
+  NUMBER_SIX,
+  NUMBER_TEN,
+  NUMBER_NINE,
+  NUMBER_ELEVEN,
+  NUMBER_THREE,
 ];
 
 export const TILE_FLASH_DURATION = 3000;
