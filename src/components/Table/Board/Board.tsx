@@ -4,14 +4,13 @@ import {
   DEFAULT_HEXES,
   DEFAULT_EDGES,
   DEFAULT_VERTICES,
-  type EdgeSvgInfo,
-  type HexSvgInfo,
   type NumberSvgInfo,
   DEFAULT_NUMBERS,
   DEFAULT_NUMBER_TRANSFORMS,
   TILE_COLORS,
   TILE_FLASH_DURATION,
   type VertexSvgInfo,
+  type PathSvgInfo,
 } from "../../constants";
 import { useState, useEffect } from "react";
 import type { Builds } from "../../Table/Table";
@@ -137,7 +136,7 @@ const Board = (props: TilesProps) => {
    * @param baseEdgesInfo The base edge information.
    * @returns An array of EdgeInfo objects.
    */
-  const getEdges = (baseEdgesInfo: EdgeSvgInfo[]): EdgeInfo[] => {
+  const getEdges = (baseEdgesInfo: PathSvgInfo[]): EdgeInfo[] => {
     return baseEdgesInfo.map((edge) => ({
       svgInfo: edge,
       selected: false,
@@ -174,7 +173,7 @@ const Board = (props: TilesProps) => {
    * @param baseHexInfo The base hex information.
    * @returns An array of HexInfo objects with assigned colors.
    */
-  const getTiles = (baseHexInfo: [number, HexSvgInfo][]): HexInfo[] => {
+  const getTiles = (baseHexInfo: [number, PathSvgInfo][]): HexInfo[] => {
     let tileColors = getTileTypes(baseHexInfo.length);
     if (tileColors.length < baseHexInfo.length) {
       throw new Error(

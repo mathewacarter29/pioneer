@@ -31,16 +31,11 @@ export const DEFAULT_TILES = [
   TILE_COLORS.PLAINS,
 ];
 
-export interface HexSvgInfo {
-  d: string;
-  transform: string;
-}
-
 /**
  * first number is the index of the hex, second is the svg info for that hex
  */
 // TODO rewrite this to be objects with hexinfo, index, numbertransform
-export const DEFAULT_HEXES: [number, HexSvgInfo][] = [
+export const DEFAULT_HEXES: [number, PathSvgInfo][] = [
   [
     0,
     {
@@ -176,11 +171,7 @@ export const DEFAULT_HEXES: [number, HexSvgInfo][] = [
   ],
 ];
 
-export interface EdgeSvgInfo {
-  d: string;
-  transform?: string;
-}
-export const DEFAULT_EDGES: EdgeSvgInfo[] = [
+export const DEFAULT_EDGES: PathSvgInfo[] = [
   { d: "M126.257 120.843h2v12h-2z" },
   { d: "M163.279-68.669h2v12h-2z", transform: "rotate(60)" },
   { d: "M-19.667 183.486h2v12h-2z", transform: "rotate(-60)" },
@@ -255,27 +246,28 @@ export const DEFAULT_EDGES: EdgeSvgInfo[] = [
   { d: "M236.563 247.851h2v12h-2z" },
 ];
 
-interface PathInfo {
+export interface PathSvgInfo {
   d: string;
-  strokeWidth: number;
+  strokeWidth?: number;
+  transform?: string;
 }
 
-export interface SettlementInfo {
+interface SettlementSvgInfo {
   transform: string;
-  path: PathInfo;
+  path: PathSvgInfo;
 }
 
 export interface VertexSvgInfo {
   unsettledSvgInfo: CircleSvgInfo;
-  settlementSvgInfo: SettlementInfo;
+  settlementSvgInfo: SettlementSvgInfo;
 }
 
-export interface CircleSvgInfo {
+interface CircleSvgInfo {
   cx: string;
   cy: string;
   r: number;
 }
-// TODO redo path to use just one instead of 2
+
 export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
   "0": {
     unsettledSvgInfo: { cx: "145.582", cy: "105.624", r: 2 },
@@ -819,7 +811,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
   },
 };
 
-export interface CoordinateSvgInfo {
+interface CoordinateSvgInfo {
   x: string;
   y: string;
 }
@@ -978,4 +970,4 @@ export const ROLL_DURATION = 1000;
 
 export const UNSELECTED_BUILD_COLOR = "#555555";
 
-export const SELECTED_BUILD_COLOR = "red";
+export const SELECTED_BUILD_COLOR = "#bb0000";

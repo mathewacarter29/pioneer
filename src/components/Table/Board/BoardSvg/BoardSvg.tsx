@@ -1,12 +1,11 @@
 import type { Builds } from "../../Table";
 import {
-  type EdgeSvgInfo,
-  type HexSvgInfo,
   type TileColorType,
   type NumberSvgInfo,
   UNSELECTED_BUILD_COLOR,
   SELECTED_BUILD_COLOR,
   type VertexSvgInfo,
+  type PathSvgInfo,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
 
@@ -27,12 +26,12 @@ export interface VertexInfo {
 }
 
 export interface EdgeInfo {
-  svgInfo: EdgeSvgInfo;
+  svgInfo: PathSvgInfo;
   selected: boolean;
 }
 
 export interface HexInfo {
-  svgInfo: HexSvgInfo;
+  svgInfo: PathSvgInfo;
   color: TileColorType;
   index: number;
   isHighlighted: boolean;
