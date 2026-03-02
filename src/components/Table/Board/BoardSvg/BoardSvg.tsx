@@ -175,13 +175,11 @@ const BoardSvg = (props: BoardSvgProps) => {
         })}
       </g>
       {Object.entries(vertices).map(([index, vertex]) => {
-        let color = UNSELECTED_BUILD_COLOR;
         // CITIES
         if (vertex.isCity) {
-          color = "blue";
           return (
             <g transform="translate(.766)" key={index}>
-              <g id="CITY" style={{ opacity: 1, fill: color }}>
+              <g id="CITY" style={{ opacity: 1, fill: SELECTED_BUILD_COLOR }}>
                 <path d={vertex.svgInfo.citySvgInfo.d}></path>
               </g>
             </g>
@@ -189,14 +187,13 @@ const BoardSvg = (props: BoardSvgProps) => {
         }
         // SETTLEMENTS
         if (vertex.isSettlement) {
-          color = SELECTED_BUILD_COLOR;
           return (
             <g transform="translate(1.2661766,1.1964232)" key={index}>
               <g
                 id="SETTLEMENT"
                 style={{
                   opacity: 1,
-                  fill: color,
+                  fill: SELECTED_BUILD_COLOR,
                   pointerEvents: selectedBuild === "CITY" ? "inherit" : "none",
                 }}
                 className={selectedBuild === "CITY" ? classes.flashSvg : ""}
@@ -223,7 +220,7 @@ const BoardSvg = (props: BoardSvgProps) => {
               r={vertex.svgInfo.unsettledSvgInfo.r}
               style={{
                 opacity: selectedBuild === "SETTLEMENT" ? 1 : 0.3,
-                fill: color,
+                fill: UNSELECTED_BUILD_COLOR,
                 pointerEvents:
                   selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}
