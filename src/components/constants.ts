@@ -261,6 +261,7 @@ interface SettlementSvgInfo {
 export interface VertexSvgInfo {
   unsettledSvgInfo: CircleSvgInfo;
   settlementSvgInfo: SettlementSvgInfo;
+  citySvgInfo: PathSvgInfo;
 }
 
 interface CircleSvgInfo {
@@ -279,6 +280,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.192 6.496v-4L55.983.104l1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "1": {
     unsettledSvgInfo: { cx: "182.291", cy: "105.572", r: 2 },
@@ -289,6 +293,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M90.901 6.445v-4L92.692.052l1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "2": {
     unsettledSvgInfo: { cx: "218.999", cy: "105.52", r: 2 },
@@ -299,6 +306,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.61 6.393v-4L129.4 0l1.792 2.393V3.92h2.95v2.473z"
+    }
   },
   "3": {
     unsettledSvgInfo: { cx: "127.243", cy: "116.246", r: 2 },
@@ -309,6 +319,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M35.853 17.12v-4l1.79-2.394 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "4": {
     unsettledSvgInfo: { cx: "163.951", cy: "116.195", r: 2 },
@@ -319,6 +332,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M35.853 17.12v-4l1.79-2.394 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "5": {
     unsettledSvgInfo: { cx: "200.66", cy: "116.143", r: 2 },
@@ -329,6 +345,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.27 17.016v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "6": {
     unsettledSvgInfo: { cx: "237.369", cy: "116.091", r: 2 },
@@ -339,6 +358,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M145.98 16.964v-4l1.79-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "7": {
     unsettledSvgInfo: { cx: "127.272", cy: "137.44", r: 2 },
@@ -349,6 +371,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M35.883 38.313v-4l1.79-2.393 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "8": {
     unsettledSvgInfo: { cx: "163.981", cy: "137.388", r: 2 },
@@ -359,6 +384,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M72.592 38.261v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "9": {
     unsettledSvgInfo: { cx: "200.69", cy: "137.337", r: 2 },
@@ -369,6 +397,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.3 38.21v-4l1.791-2.393 1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "10": {
     unsettledSvgInfo: { cx: "237.399", cy: "137.285", r: 2 },
@@ -379,6 +410,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M146.009 38.158v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "11": {
     unsettledSvgInfo: { cx: "108.933", cy: "148.063", r: 2 },
@@ -389,6 +423,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M17.543 48.936v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "12": {
     unsettledSvgInfo: { cx: "145.642", cy: "148.011", r: 2 },
@@ -399,6 +436,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.252 48.884v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "13": {
     unsettledSvgInfo: { cx: "182.35", cy: "147.959", r: 2 },
@@ -409,6 +449,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M90.96 48.832v-4l1.792-2.393 1.79 2.393v1.528h2.951v2.472z"
+    }
   },
   "14": {
     unsettledSvgInfo: { cx: "219.059", cy: "147.908", r: 2 },
@@ -419,6 +462,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.67 48.78v-4l1.79-2.392 1.792 2.392v1.528h2.95v2.472z"
+    }
   },
   "15": {
     unsettledSvgInfo: { cx: "255.768", cy: "147.856", r: 2 },
@@ -429,6 +475,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M164.378 48.729v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "16": {
     unsettledSvgInfo: { cx: "108.963", cy: "169.257", r: 2 },
@@ -439,6 +488,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M17.573 70.13v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "17": {
     unsettledSvgInfo: { cx: "145.672", cy: "169.205", r: 2 },
@@ -449,6 +501,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.282 70.078v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "18": {
     unsettledSvgInfo: { cx: "182.38", cy: "169.153", r: 2 },
@@ -459,6 +514,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M90.99 70.026v-4l1.792-2.393 1.79 2.393v1.527h2.951v2.473z"
+    }
   },
   "19": {
     unsettledSvgInfo: { cx: "219.089", cy: "169.101", r: 2 },
@@ -469,6 +527,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.7 69.974v-4l1.79-2.393 1.791 2.393v1.528h2.95v2.472z"
+    }
   },
   "20": {
     unsettledSvgInfo: { cx: "255.798", cy: "169.05", r: 2 },
@@ -479,6 +540,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M164.408 69.922v-4l1.791-2.392 1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "21": {
     unsettledSvgInfo: { cx: "90.623", cy: "179.88", r: 2 },
@@ -489,6 +553,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M-.766 80.752v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "22": {
     unsettledSvgInfo: { cx: "127.332", cy: "179.828", r: 2 },
@@ -499,6 +566,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M35.943 80.7v-4l1.79-2.392 1.792 2.393v1.527h2.95V80.7z"
+    }
   },
   "23": {
     unsettledSvgInfo: { cx: "164.041", cy: "179.776", r: 2 },
@@ -509,6 +579,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M72.651 80.649v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "24": {
     unsettledSvgInfo: { cx: "200.75", cy: "179.724", r: 2 },
@@ -519,6 +592,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.36 80.597v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "25": {
     unsettledSvgInfo: { cx: "237.458", cy: "179.672", r: 2 },
@@ -529,6 +605,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M146.069 80.545v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "26": {
     unsettledSvgInfo: { cx: "274.167", cy: "179.621", r: 2 },
@@ -539,6 +618,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M182.777 80.493v-4l1.791-2.392 1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "27": {
     unsettledSvgInfo: { cx: "90.653", cy: "201.073", r: 2 },
@@ -549,6 +631,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M-.736 101.946v-4l1.79-2.393 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "28": {
     unsettledSvgInfo: { cx: "127.362", cy: "201.022", r: 2 },
@@ -559,6 +644,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M35.972 101.894v-4l1.791-2.393 1.791 2.393v1.528h2.95v2.472z"
+    }
   },
   "29": {
     unsettledSvgInfo: { cx: "164.071", cy: "200.97", r: 2 },
@@ -569,6 +657,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M72.681 101.843v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "30": {
     unsettledSvgInfo: { cx: "200.78", cy: "200.918", r: 2 },
@@ -579,6 +670,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.39 101.79v-4l1.79-2.392 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "31": {
     unsettledSvgInfo: { cx: "237.488", cy: "200.866", r: 2 },
@@ -589,6 +683,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M146.099 101.739v-4l1.79-2.393 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "32": {
     unsettledSvgInfo: { cx: "274.197", cy: "200.815", r: 2 },
@@ -599,6 +696,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M182.807 101.687v-4l1.791-2.393 1.791 2.393v1.528h2.95v2.472z"
+    }
   },
   "33": {
     unsettledSvgInfo: { cx: "109.023", cy: "211.644", r: 2 },
@@ -609,6 +709,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M17.633 112.517v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "34": {
     unsettledSvgInfo: { cx: "145.731", cy: "211.593", r: 2 },
@@ -619,6 +722,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.342 112.465v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "35": {
     unsettledSvgInfo: { cx: "182.44", cy: "211.541", r: 2 },
@@ -629,6 +735,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M91.05 112.414v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "36": {
     unsettledSvgInfo: { cx: "219.149", cy: "211.489", r: 2 },
@@ -639,6 +748,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.76 112.362v-4l1.79-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "37": {
     unsettledSvgInfo: { cx: "255.858", cy: "211.437", r: 2 },
@@ -649,6 +761,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M164.468 112.31v-4l1.791-2.393 1.791 2.393v1.527H171v2.473z"
+    }
   },
   "38": {
     unsettledSvgInfo: { cx: "109.052", cy: "232.838", r: 2 },
@@ -659,6 +774,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M17.663 133.71v-4l1.79-2.392 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "39": {
     unsettledSvgInfo: { cx: "145.761", cy: "232.786", r: 2 },
@@ -669,6 +787,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.372 133.66v-4l1.79-2.394 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "40": {
     unsettledSvgInfo: { cx: "182.47", cy: "232.735", r: 2 },
@@ -679,6 +800,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M91.08 133.607v-4l1.791-2.392 1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "41": {
     unsettledSvgInfo: { cx: "219.179", cy: "232.683", r: 2 },
@@ -689,6 +813,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.79 133.556v-4l1.79-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "42": {
     unsettledSvgInfo: { cx: "255.887", cy: "232.631", r: 2 },
@@ -699,6 +826,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M164.498 133.504v-4l1.79-2.393 1.792 2.393v1.527h2.95v2.473z"
+    }
   },
   "43": {
     unsettledSvgInfo: { cx: "127.422", cy: "243.409", r: 2 },
@@ -709,6 +839,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M36.032 144.282v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "44": {
     unsettledSvgInfo: { cx: "164.131", cy: "243.357", r: 2 },
@@ -719,6 +852,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M72.74 144.23v-4l1.792-2.393 1.79 2.393v1.528h2.951v2.472z"
+    }
   },
   "45": {
     unsettledSvgInfo: { cx: "200.839", cy: "243.306", r: 2 },
@@ -729,6 +865,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.45 144.178v-4l1.79-2.392 1.792 2.392v1.528h2.95v2.472z"
+    }
   },
   "46": {
     unsettledSvgInfo: { cx: "237.548", cy: "243.254", r: 2 },
@@ -739,6 +878,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M146.158 144.127v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "47": {
     unsettledSvgInfo: { cx: "127.452", cy: "264.603", r: 2 },
@@ -749,6 +891,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M36.062 165.476v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "48": {
     unsettledSvgInfo: { cx: "164.16", cy: "264.551", r: 2 },
@@ -759,6 +904,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M72.77 165.424v-4l1.792-2.393 1.79 2.393v1.527h2.951v2.473z"
+    }
   },
   "49": {
     unsettledSvgInfo: { cx: "200.869", cy: "264.499", r: 2 },
@@ -769,6 +917,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M109.48 165.372v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
   "50": {
     unsettledSvgInfo: { cx: "237.578", cy: "264.448", r: 2 },
@@ -779,6 +930,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M146.188 165.32v-4l1.791-2.392 1.791 2.392v1.528h2.95v2.472z"
+    }
   },
   "51": {
     unsettledSvgInfo: { cx: "145.821", cy: "275.174", r: 2 },
@@ -789,6 +943,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M54.431 176.047v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "52": {
     unsettledSvgInfo: { cx: "182.53", cy: "275.122", r: 2 },
@@ -799,6 +956,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M91.14 175.995v-4l1.791-2.393 1.791 2.393v1.527h2.95v2.473z"
+    }
   },
   "53": {
     unsettledSvgInfo: { cx: "219.238", cy: "275.07", r: 2 },
@@ -809,6 +969,9 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
         strokeWidth: 1,
       },
     },
+    citySvgInfo: {
+      d: "M127.849 175.943v-4l1.79-2.393 1.792 2.393v1.528h2.95v2.472z"
+    }
   },
 };
 

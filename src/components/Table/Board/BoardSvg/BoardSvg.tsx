@@ -103,7 +103,7 @@ const BoardSvg = (props: BoardSvgProps) => {
               fillOpacity="1"
               fillRule="nonzero"
               strokeWidth="0.265"
-              transform="translate(-88.123417,-102.32365)"
+              transform="translate(-87.357237,-102.32365)"
             >
               <path
                 id="HEX"
@@ -115,7 +115,7 @@ const BoardSvg = (props: BoardSvgProps) => {
             </g>
             {/* NUMBERS */}
             {hex.numberSvgInfo && (
-              <g transform="translate(0.49999631,1.1964218)">
+              <g transform="translate(1.2661766,1.1964232)">
                 <g id="NUMBER" transform={hex.hexSvgInfo.numberTransform}>
                   <circle
                     style={{ ...circleStyle, stroke: color }}
@@ -151,7 +151,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         id="EDGES"
         fill="#000"
         strokeWidth="0.265"
-        transform="translate(-88.123417,-102.32365)"
+        transform="translate(-87.357237,-102.32365)"
       >
         {edges.map((edge, i) => {
           const shouldFlash = selectedBuild === "ROAD" && !edge.selected;
@@ -179,28 +179,29 @@ const BoardSvg = (props: BoardSvgProps) => {
         const canBecomeCity =
           vertex.isSettlement && selectedBuild === "CITY" && !vertex.isCity;
         // CITIES
+        /**
+         * TODO
+         * add city SVGs from inkscape
+         * update transforms for everything since svg dimensions changed
+         */
         if (vertex.isCity) {
           color = "blue";
           return (
-            <g
-              id="VERTICES"
-              strokeWidth="0.265"
-              transform="translate(-88.123417,-102.32365)"
-              key={index}
-            >
-              <circle
-                key={index}
-                id="VERTEX"
-                cy={vertex.svgInfo.unsettledSvgInfo.cy}
-                cx={vertex.svgInfo.unsettledSvgInfo.cx}
-                r={vertex.svgInfo.unsettledSvgInfo.r}
+            <g id="layer3" transform="translate(.766)" key={index}>
+              <g
+                id="CITY"
+                // transform={vertex.svgInfo.settlementSvgInfo.transform}
                 style={{
                   opacity: 1,
                   fill: color,
                   pointerEvents: "none",
                 }}
-                onClick={() => buildVertex(index)}
-              />
+              >
+                <path
+                  id="CITY"
+                  d={vertex.svgInfo.citySvgInfo.d}
+                ></path>
+              </g>
             </g>
           );
         }
@@ -208,7 +209,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         if (vertex.isSettlement) {
           color = SELECTED_BUILD_COLOR;
           return (
-            <g id="layer3" transform="translate(.5 1.196)" key={index}>
+            <g id="layer3" transform="translate(1.2661766,1.1964232)" key={index}>
               <g
                 id="SETTLEMENT"
                 // transform={vertex.svgInfo.settlementSvgInfo.transform}
@@ -237,7 +238,7 @@ const BoardSvg = (props: BoardSvgProps) => {
           <g
             id="VERTICES"
             strokeWidth="0.265"
-            transform="translate(-88.123417,-102.32365)"
+            transform="translate(-87.357237,-102.32365)"
             key={index}
           >
             <circle
