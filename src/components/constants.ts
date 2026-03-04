@@ -448,7 +448,7 @@ export const DEFAULT_VERTICES: Record<string, VertexSvgInfo> = {
   "20": {
     unsettledSvgInfo: { cx: "255.798", cy: "169.05", r: 2 },
     settlementSvgInfo: {
-      d: "M130.466 64.778v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
+      d: "M167.174 64.726v-2.393l-2.5 2.393v4h5v-4l-2.5-2.393",
     },
     citySvgInfo: {
       d: "M164.408 69.922v-4l1.791-2.392 1.791 2.392v1.528h2.95v2.472z",
@@ -854,3 +854,9 @@ export const ROLL_DURATION = 1000;
 export const UNSELECTED_BUILD_COLOR = "#555555";
 
 export const SELECTED_BUILD_COLOR = "#bb0000";
+
+export const BOTTOM_BUTTON_DIV_HEIGHT = "5vh";
+
+export const BOARD_HEIGHT = "40vh";
+
+export const MIN_BOARD_DIMENSIONS = "600px";

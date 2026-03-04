@@ -7,6 +7,8 @@ import {
   type VertexSvgInfo,
   type PathSvgInfo,
   type HexSvgInfo,
+  BOARD_HEIGHT,
+  MIN_BOARD_DIMENSIONS,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
 
@@ -88,7 +90,12 @@ const BoardSvg = (props: BoardSvgProps) => {
       id="svg1"
       version="1.1"
       viewBox="0 0 188.574 176.047"
-      style={{ width: "40vw", minWidth: "600px" }}
+      style={{
+        width: "40vw",
+        minWidth: MIN_BOARD_DIMENSIONS,
+        height: BOARD_HEIGHT,
+        minHeight: MIN_BOARD_DIMENSIONS,
+      }}
     >
       {Object.entries(hexes).map(([key, hex]) => {
         const color =
