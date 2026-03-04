@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Board from "./Board/Board";
 import { Button } from "@mui/material";
 import { getRandomInt } from "../../utils/numbers";
@@ -35,6 +35,7 @@ const Table = () => {
   const setDiceToRandom = () => {
     setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
   };
+  const currPlayerIndex = Math.floor((gameRound % (2 * 2)) / 2) % players.length;
 
   const initialBuildPhaseStep = () => {
     // num stages = # players * # rounds * 2 (1 city build and 1 road build)

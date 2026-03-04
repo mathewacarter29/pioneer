@@ -21,7 +21,7 @@ import BoardSvg, {
 } from "./BoardSvg/BoardSvg";
 import { getRandomInt } from "../../../utils/numbers";
 
-interface TilesProps {
+interface BoardProps {
   selectedBuild: Builds;
   onBuild: () => void;
   numberRolled: number;
@@ -32,7 +32,7 @@ interface TilesProps {
  * @param props The properties for the Board component.
  * @returns The Board component.
  */
-const Board = (props: TilesProps) => {
+const Board = (props: BoardProps) => {
   const { selectedBuild, onBuild, numberRolled } = props;
 
   const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
