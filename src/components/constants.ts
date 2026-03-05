@@ -853,8 +853,6 @@ export const ROLL_DURATION = 1000;
 
 export const UNSELECTED_BUILD_COLOR = "#555555";
 
-export const SELECTED_BUILD_COLOR = "#bb0000";
-
 export const BOTTOM_BUTTON_DIV_HEIGHT = "5vh";
 
 export const BOARD_HEIGHT = "40vh";

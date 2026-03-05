@@ -1,9 +1,8 @@
-import type { Builds } from "../../Table";
+import type { Builds, Player } from "../../Table";
 import {
   type TileColorType,
   type NumberSvgInfo,
   UNSELECTED_BUILD_COLOR,
-  SELECTED_BUILD_COLOR,
   type VertexSvgInfo,
   type PathSvgInfo,
   type HexSvgInfo,
@@ -25,11 +24,13 @@ export interface VertexInfo {
   svgInfo: VertexSvgInfo;
   isSettlement: boolean;
   isCity: boolean;
+  owner?: Player;
 }
 
 export interface EdgeInfo {
   svgInfo: PathSvgInfo;
   selected: boolean;
+  owner?: Player;
 }
 
 export interface HexInfo {
@@ -170,9 +171,7 @@ const BoardSvg = (props: BoardSvgProps) => {
               transform={edge.svgInfo.transform}
               style={{
                 opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
-                fill: edge.selected
-                  ? SELECTED_BUILD_COLOR
-                  : UNSELECTED_BUILD_COLOR,
+                fill: edge.owner?.color ?? UNSELECTED_BUILD_COLOR,
                 pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
               }}
               className={shouldFlash ? classes.flashSvg : ""}
@@ -186,7 +185,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         if (vertex.isCity) {
           return (
             <g transform="translate(.766)" key={index}>
-              <g id="CITY" style={{ opacity: 1, fill: SELECTED_BUILD_COLOR }}>
+              <g id="CITY" style={{ opacity: 1, fill: vertex.owner?.color ?? UNSELECTED_BUILD_COLOR }}>
                 <path d={vertex.svgInfo.citySvgInfo.d}></path>
               </g>
             </g>
@@ -200,7 +199,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                 id="SETTLEMENT"
                 style={{
                   opacity: 1,
-                  fill: SELECTED_BUILD_COLOR,
+                  fill: vertex.owner?.color ?? UNSELECTED_BUILD_COLOR,
                   pointerEvents: selectedBuild === "CITY" ? "inherit" : "none",
                 }}
                 className={selectedBuild === "CITY" ? classes.flashSvg : ""}
@@ -227,7 +226,7 @@ const BoardSvg = (props: BoardSvgProps) => {
               r={vertex.svgInfo.unsettledSvgInfo.r}
               style={{
                 opacity: selectedBuild === "SETTLEMENT" ? 1 : 0.3,
-                fill: UNSELECTED_BUILD_COLOR,
+                fill: vertex.owner?.color ?? UNSELECTED_BUILD_COLOR,
                 pointerEvents:
                   selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}

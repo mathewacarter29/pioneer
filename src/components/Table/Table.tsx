@@ -13,17 +13,20 @@ import {
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
 
+export interface Player {
+  color: string;
+}
+
 const Table = () => {
   const [dice, setDice] = useState<[number, number]>([0, 0]);
   const [isRolling, setIsRolling] = useState<boolean>(false);
   const [isRollButtonDisabled, setIsRollButtonDisabled] =
     useState<boolean>(true);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
-  const players = useMemo(() => {
-    return ["#bb0000", "#00bb00"];
+  const players = useMemo<Player[]>(() => {
+    return [{ color: "#bb0000" }, { color: "#00bb00" }];
   }, []);
-  const [gameRound, setGameRound] =
-    useState<number>(0);
+  const [gameRound, setGameRound] = useState<number>(0);
   const [instructionText, setInstructionText] = useState<string>(
     "Player 1: Place a Settlement",
   );
@@ -35,7 +38,8 @@ const Table = () => {
   const setDiceToRandom = () => {
     setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
   };
-  const currPlayerIndex = Math.floor((gameRound % (2 * 2)) / 2) % players.length;
+  const currPlayerIndex =
+    Math.floor((gameRound % (2 * 2)) / 2) % players.length;
 
   const initialBuildPhaseStep = () => {
     // num stages = # players * # rounds * 2 (1 city build and 1 road build)
@@ -71,6 +75,7 @@ const Table = () => {
     setTimeout(() => {
       clearInterval(timerId);
       setIsRolling(false);
+      setGameRound((prev) => prev + 1);
       setTimeout(() => {
         setIsRollButtonDisabled(false);
       }, TILE_FLASH_DURATION);
@@ -90,6 +95,7 @@ const Table = () => {
             initialBuildPhaseStep();
           }}
           numberRolled={isRolling ? 0 : dice[0] + dice[1]}
+          currPlayer={players[currPlayerIndex]}
         />
         <div
           style={{

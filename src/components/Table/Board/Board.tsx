@@ -13,7 +13,7 @@ import {
   type HexSvgInfo,
 } from "../../constants";
 import { useState, useEffect } from "react";
-import type { Builds } from "../../Table/Table";
+import type { Builds, Player } from "../../Table/Table";
 import BoardSvg, {
   type EdgeInfo,
   type HexInfo,
@@ -25,6 +25,7 @@ interface BoardProps {
   selectedBuild: Builds;
   onBuild: () => void;
   numberRolled: number;
+  currPlayer: Player;
 }
 
 /**
@@ -33,7 +34,7 @@ interface BoardProps {
  * @returns The Board component.
  */
 const Board = (props: BoardProps) => {
-  const { selectedBuild, onBuild, numberRolled } = props;
+  const { selectedBuild, onBuild, numberRolled, currPlayer } = props;
 
   const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
   const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
@@ -230,6 +231,7 @@ const Board = (props: BoardProps) => {
         [vertexIndex]: {
           ...prevVertices[vertexIndex],
           isSettlement: true,
+          owner: currPlayer
         },
       }));
     } else if (selectedBuild === "CITY") {
@@ -238,6 +240,7 @@ const Board = (props: BoardProps) => {
         [vertexIndex]: {
           ...prevVertices[vertexIndex],
           isCity: true,
+          owner: currPlayer
         },
       }));
     }
@@ -250,8 +253,8 @@ const Board = (props: BoardProps) => {
    */
   const buildRoad = (edgeIndex: number) => {
     setEdges((prevEdges) =>
-      prevEdges.map((edge, i) =>
-        i === edgeIndex ? { ...edge, selected: true } : edge,
+      prevEdges.map((edge, i): EdgeInfo =>
+        i === edgeIndex ? { ...edge, selected: true, owner: currPlayer } : edge,
       ),
     );
     onBuild();
