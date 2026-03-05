@@ -24,7 +24,8 @@ const Table = () => {
     useState<boolean>(true);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
   const players = useMemo<Player[]>(() => {
-    return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
+    return [{ color: "#bb0000" }, { color: "#00bb00" }];
+    // return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
   }, []);
   const [gameRound, setGameRound] = useState<number>(0);
   const [instructionText, setInstructionText] = useState<string>(
@@ -39,17 +40,20 @@ const Table = () => {
     setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
   };
 
-  const getPlayerIndex = (round: number, numPlayers: number) => {
-    return Math.floor((round % (2 * numPlayers)) / 2) % numPlayers;
+  const getPlayerIndex = (round: number, numPlayers: number, numInitialPhaseRounds: number) => {
+    if (round < numInitialPhaseRounds) {
+      return Math.floor((round % (2 * numPlayers)) / 2) % numPlayers;
+    }
+    return (round - numInitialPhaseRounds) % numPlayers;
   }
-  const currPlayerIndex = getPlayerIndex(gameRound, players.length);
+  // num rounds = # players * # rounds * 2 (1 city build and 1 road build)
+  const totalRounds = players.length * 2 * 2;
+  const currPlayerIndex = getPlayerIndex(gameRound, players.length, totalRounds);
 
   const initialBuildPhaseStep = () => {
-    // num stages = # players * # rounds * 2 (1 city build and 1 road build)
-    const totalRounds = players.length * 2 * 2;
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = getPlayerIndex(newRound, players.length);
+      const playerIndex = getPlayerIndex(newRound, players.length, totalRounds);
       if (newRound >= totalRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
@@ -91,7 +95,7 @@ const Table = () => {
         <Board
           selectedBuild={selectedBuild}
           onBuild={() => {
-            if (gameRound > players.length * 2 * 2) {
+            if (gameRound >= players.length * 2 * 2) {
               setSelectedBuild("");
               return;
             }
