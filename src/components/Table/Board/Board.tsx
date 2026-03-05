@@ -268,6 +268,7 @@ const Board = (props: BoardProps) => {
       selectedBuild={selectedBuild}
       buildVertex={buildVertex}
       buildRoad={buildRoad}
+      currPlayer={currPlayer}
     />
   );
 };

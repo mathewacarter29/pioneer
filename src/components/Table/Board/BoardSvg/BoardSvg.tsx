@@ -18,6 +18,7 @@ interface BoardSvgProps {
   selectedBuild: Builds;
   buildVertex: (vertexIndex: string) => void;
   buildRoad: (edgeIndex: number) => void;
+  currPlayer: Player;
 }
 
 export interface VertexInfo {
@@ -47,7 +48,7 @@ export interface NumberInfo {
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad } =
+  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer } =
     props;
   const textStyle: React.CSSProperties = {
     fontStyle: "normal",
@@ -84,6 +85,14 @@ const BoardSvg = (props: BoardSvgProps) => {
     strokeDasharray: "none",
     strokeOpacity: 0.997409,
   };
+
+  const canBuildCity = (vertex: VertexInfo) => {
+    return selectedBuild === "CITY" && vertex.owner === currPlayer;
+  }
+
+  const canBuildRoad = (road: EdgeInfo) => {
+    return selectedBuild === "ROAD" && !road.selected;
+  }
 
   return (
     <svg
@@ -162,7 +171,6 @@ const BoardSvg = (props: BoardSvgProps) => {
         transform="translate(-87.357237,-102.32365)"
       >
         {edges.map((edge, i) => {
-          const shouldFlash = selectedBuild === "ROAD" && !edge.selected;
           return (
             <path
               key={i}
@@ -172,9 +180,9 @@ const BoardSvg = (props: BoardSvgProps) => {
               style={{
                 opacity: selectedBuild === "ROAD" || edge.selected ? 1 : 0.3,
                 fill: edge.owner?.color ?? UNSELECTED_BUILD_COLOR,
-                pointerEvents: selectedBuild === "ROAD" ? "inherit" : "none",
+                pointerEvents: canBuildRoad(edge) ? "inherit" : "none",
               }}
-              className={shouldFlash ? classes.flashSvg : ""}
+              className={canBuildRoad(edge) ? classes.flashSvg : ""}
               onClick={() => buildRoad(i)}
             />
           );
@@ -200,9 +208,9 @@ const BoardSvg = (props: BoardSvgProps) => {
                 style={{
                   opacity: 1,
                   fill: vertex.owner?.color ?? UNSELECTED_BUILD_COLOR,
-                  pointerEvents: selectedBuild === "CITY" ? "inherit" : "none",
+                  pointerEvents: canBuildCity(vertex) ? "inherit" : "none",
                 }}
-                className={selectedBuild === "CITY" ? classes.flashSvg : ""}
+                className={canBuildCity(vertex) ? classes.flashSvg : ""}
                 onClick={() => buildVertex(index)}
               >
                 <path d={vertex.svgInfo.settlementSvgInfo.d}></path>
