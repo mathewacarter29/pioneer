@@ -24,7 +24,7 @@ const Table = () => {
     useState<boolean>(true);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
   const players = useMemo<Player[]>(() => {
-    return [{ color: "#bb0000" }, { color: "#00bb00" }];
+    return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
   }, []);
   const [gameRound, setGameRound] = useState<number>(0);
   const [instructionText, setInstructionText] = useState<string>(
@@ -38,15 +38,18 @@ const Table = () => {
   const setDiceToRandom = () => {
     setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
   };
-  const currPlayerIndex =
-    Math.floor((gameRound % (2 * 2)) / 2) % players.length;
+
+  const getPlayerIndex = (round: number, numPlayers: number) => {
+    return Math.floor((round % (2 * numPlayers)) / 2) % numPlayers;
+  }
+  const currPlayerIndex = getPlayerIndex(gameRound, players.length);
 
   const initialBuildPhaseStep = () => {
     // num stages = # players * # rounds * 2 (1 city build and 1 road build)
     const totalRounds = players.length * 2 * 2;
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = Math.floor((newRound % (2 * 2)) / 2) % players.length;
+      const playerIndex = getPlayerIndex(newRound, players.length);
       if (newRound >= totalRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
