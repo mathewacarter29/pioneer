@@ -24,8 +24,8 @@ const Table = () => {
     useState<boolean>(true);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
   const players = useMemo<Player[]>(() => {
-    // return [{ color: "#bb0000" }, { color: "#00bb00" }];
-    return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
+    return [{ color: "#bb0000" }, { color: "#00bb00" }];
+    // return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
   }, []);
   const [gameRound, setGameRound] = useState<number>(0);
   const [instructionText, setInstructionText] = useState<string>(
@@ -55,18 +55,18 @@ const Table = () => {
     }
   };
   // num rounds = # players * # rounds * 2 (1 city build and 1 road build)
-  const totalRounds = players.length * 2 * 2;
+  const totalInitialBuildRounds = players.length * 2 * 2;
   const currPlayerIndex = getPlayerIndex(
     gameRound,
     players.length,
-    totalRounds,
+    totalInitialBuildRounds,
   );
 
   const initialBuildPhaseStep = () => {
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = getPlayerIndex(newRound, players.length, totalRounds);
-      if (newRound >= totalRounds) {
+      const playerIndex = getPlayerIndex(newRound, players.length, totalInitialBuildRounds);
+      if (newRound >= totalInitialBuildRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
         setInstructionText("Player 1: Roll the dice");
@@ -170,6 +170,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("ROAD")}
+          disabled={gameRound < totalInitialBuildRounds}
         >
           Road
         </Button>
@@ -177,6 +178,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("SETTLEMENT")}
+          disabled={gameRound < totalInitialBuildRounds}
         >
           Settlement
         </Button>
@@ -184,6 +186,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("CITY")}
+          disabled={gameRound < totalInitialBuildRounds}
         >
           City
         </Button>
@@ -191,6 +194,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("DEVELOPMENT_CARD")}
+          disabled={gameRound < totalInitialBuildRounds}
         >
           Development Card
         </Button>
@@ -198,7 +202,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("")}
-          disabled={selectedBuild === ""}
+          disabled={selectedBuild === "" || gameRound < totalInitialBuildRounds}
         >
           Cancel
         </Button>
