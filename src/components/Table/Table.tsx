@@ -32,6 +32,13 @@ const Table = () => {
     "Player 1: Place a Settlement",
   );
 
+  const borderBoxStyle = {
+    padding: "5px",
+    border: "solid",
+    borderWidth: "3px",
+    borderColor: "white",
+  };
+
   const onClickBuild = (build: Builds) => {
     setSelectedBuild(build);
   };
@@ -45,10 +52,10 @@ const Table = () => {
     numPlayers: number,
     numInitialPhaseRounds: number,
   ) => {
-    if (round >= numInitialPhaseRounds) { // use >= here since game round starts at 0
+    if (round >= numInitialPhaseRounds) {
+      // use >= here since game round starts at 0
       return (round - numInitialPhaseRounds) % numPlayers;
-    }
-    else if (round < numInitialPhaseRounds / 2) {
+    } else if (round < numInitialPhaseRounds / 2) {
       return Math.floor(round / 2) % numPlayers;
     } else {
       return Math.abs(numPlayers - 1 - (Math.floor(round / 2) % numPlayers));
@@ -65,7 +72,11 @@ const Table = () => {
   const initialBuildPhaseStep = () => {
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = getPlayerIndex(newRound, players.length, totalInitialBuildRounds);
+      const playerIndex = getPlayerIndex(
+        newRound,
+        players.length,
+        totalInitialBuildRounds,
+      );
       if (newRound >= totalInitialBuildRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
@@ -125,10 +136,25 @@ const Table = () => {
             height: BOARD_HEIGHT,
             minHeight: MIN_BOARD_DIMENSIONS,
             justifyContent: "space-between",
+            padding: '5px',
+            backgroundColor: "#1a5725"
           }}
         >
-          <h2>{instructionText}</h2>
           <div>
+            <h4>
+              {gameRound < totalInitialBuildRounds
+                ? "Initial Build Phase"
+                : `Round ${gameRound - totalInitialBuildRounds + 1}`}
+            </h4>
+          </div>
+          <div style={{ ...borderBoxStyle }}>
+            <h2>{instructionText}</h2>
+          </div>
+          <div
+            style={{
+              ...borderBoxStyle,
+            }}
+          >
             <div
               style={{
                 display: "flex",
