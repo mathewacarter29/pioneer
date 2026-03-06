@@ -32,21 +32,6 @@ const Table = () => {
     "Player 1: Place a Settlement",
   );
 
-  const borderBoxStyle = {
-    padding: "5px",
-    border: "solid",
-    borderWidth: "3px",
-    borderColor: "white",
-  };
-
-  const onClickBuild = (build: Builds) => {
-    setSelectedBuild(build);
-  };
-
-  const setDiceToRandom = () => {
-    setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
-  };
-
   const getPlayerIndex = (
     round: number,
     numPlayers: number,
@@ -61,6 +46,7 @@ const Table = () => {
       return Math.abs(numPlayers - 1 - (Math.floor(round / 2) % numPlayers));
     }
   };
+
   // num rounds = # players * # rounds * 2 (1 city build and 1 road build)
   const totalInitialBuildRounds = players.length * 2 * 2;
   const currPlayerIndex = getPlayerIndex(
@@ -68,6 +54,21 @@ const Table = () => {
     players.length,
     totalInitialBuildRounds,
   );
+  const isInitialBuildPhase = gameRound < totalInitialBuildRounds;
+  const selectedButtonStyle = {
+    backgroundColor: "floralwhite",
+    color: "black",
+  };
+
+  const onClickBuild = (build: Builds) => {
+    setSelectedBuild((prev) => {
+      return build === prev ? "" : build;
+    });
+  };
+
+  const setDiceToRandom = () => {
+    setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
+  };
 
   const initialBuildPhaseStep = () => {
     setGameRound((prevRound) => {
@@ -136,25 +137,21 @@ const Table = () => {
             height: BOARD_HEIGHT,
             minHeight: MIN_BOARD_DIMENSIONS,
             justifyContent: "space-between",
-            padding: '5px',
-            backgroundColor: "#1a5725"
+            padding: "5px",
+            backgroundColor: "#1a5725",
           }}
         >
           <div>
             <h4>
-              {gameRound < totalInitialBuildRounds
+              {isInitialBuildPhase
                 ? "Initial Build Phase"
                 : `Round ${gameRound - totalInitialBuildRounds + 1}`}
             </h4>
           </div>
-          <div style={{ ...borderBoxStyle }}>
+          <div>
             <h2>{instructionText}</h2>
           </div>
-          <div
-            style={{
-              ...borderBoxStyle,
-            }}
-          >
+          <div>
             <div
               style={{
                 display: "flex",
@@ -196,7 +193,12 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("ROAD")}
-          disabled={gameRound < totalInitialBuildRounds}
+          disabled={isInitialBuildPhase}
+          style={
+            selectedBuild === "ROAD" && gameRound >= totalInitialBuildRounds
+              ? { ...selectedButtonStyle }
+              : undefined
+          }
         >
           Road
         </Button>
@@ -204,7 +206,12 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("SETTLEMENT")}
-          disabled={gameRound < totalInitialBuildRounds}
+          disabled={isInitialBuildPhase}
+          style={
+            selectedBuild === "SETTLEMENT" && gameRound >= totalInitialBuildRounds
+              ? { ...selectedButtonStyle }
+              : undefined
+          }
         >
           Settlement
         </Button>
@@ -212,7 +219,12 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("CITY")}
-          disabled={gameRound < totalInitialBuildRounds}
+          disabled={isInitialBuildPhase}
+          style={
+            selectedBuild === "CITY" && gameRound >= totalInitialBuildRounds
+              ? { ...selectedButtonStyle }
+              : undefined
+          }
         >
           City
         </Button>
@@ -220,17 +232,14 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onClickBuild("DEVELOPMENT_CARD")}
-          disabled={gameRound < totalInitialBuildRounds}
+          disabled={isInitialBuildPhase}
+          style={
+            selectedBuild === "DEVELOPMENT_CARD" && gameRound >= totalInitialBuildRounds
+              ? { ...selectedButtonStyle }
+              : undefined
+          }
         >
           Development Card
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={() => onClickBuild("")}
-          disabled={selectedBuild === "" || gameRound < totalInitialBuildRounds}
-        >
-          Cancel
         </Button>
       </div>
     </div>
