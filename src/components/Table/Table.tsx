@@ -31,6 +31,7 @@ const Table = () => {
   const [instructionText, setInstructionText] = useState<string>(
     "Player 1: Place a Settlement",
   );
+  const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
 
   const getPlayerIndex = (
     round: number,
@@ -106,11 +107,50 @@ const Table = () => {
     setTimeout(() => {
       clearInterval(timerId);
       setIsRolling(false);
-      setGameRound((prev) => prev + 1);
+      setIsTurnOngoing(true);
+      setInstructionText(`Player ${currPlayerIndex + 1}: Build Stage`)
       setTimeout(() => {
         setIsRollButtonDisabled(false);
       }, TILE_FLASH_DURATION);
     }, ROLL_DURATION);
+  };
+
+  const onEndTurn = () => {
+    setSelectedBuild("");
+    setGameRound((prev) => {
+      const nextRound = prev + 1;
+      const nextPlayerIndex = getPlayerIndex(
+        nextRound,
+        players.length,
+        totalInitialBuildRounds,
+      );
+      setInstructionText(`Player ${nextPlayerIndex + 1}: Roll the Dice`)
+      return nextRound;
+    });
+    setIsTurnOngoing(false);
+  };
+
+  interface BuildButtonProps {
+    buildType: Builds;
+    text: string;
+  }
+  const BuildButton = (props: BuildButtonProps) => {
+    return (
+      <Button
+        fullWidth
+        variant="contained"
+        onClick={() => onClickBuild(props.buildType)}
+        disabled={!isTurnOngoing}
+        style={
+          selectedBuild === props.buildType &&
+          gameRound >= totalInitialBuildRounds
+            ? { ...selectedButtonStyle }
+            : undefined
+        }
+      >
+        {props.text}
+      </Button>
+    );
   };
 
   return (
@@ -167,7 +207,7 @@ const Table = () => {
               fullWidth
               variant="contained"
               onClick={() => onRollDice()}
-              disabled={isRollButtonDisabled}
+              disabled={isTurnOngoing || isInitialBuildPhase}
             >
               Roll Dice
             </Button>
@@ -189,57 +229,18 @@ const Table = () => {
           height: BOTTOM_BUTTON_DIV_HEIGHT,
         }}
       >
+        <BuildButton buildType="ROAD" text={"Road"} />
+        <BuildButton buildType="SETTLEMENT" text={"Settlement"} />
+        <BuildButton buildType="CITY" text={"City"} />
+        <BuildButton buildType="DEVELOPMENT_CARD" text={"Development Card"} />
+        <Button style={{ visibility: "hidden" }} /> {/* For spacing */}
         <Button
           fullWidth
           variant="contained"
-          onClick={() => onClickBuild("ROAD")}
-          disabled={isInitialBuildPhase}
-          style={
-            selectedBuild === "ROAD" && gameRound >= totalInitialBuildRounds
-              ? { ...selectedButtonStyle }
-              : undefined
-          }
+          onClick={() => onEndTurn()}
+          disabled={!isTurnOngoing || isInitialBuildPhase}
         >
-          Road
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={() => onClickBuild("SETTLEMENT")}
-          disabled={isInitialBuildPhase}
-          style={
-            selectedBuild === "SETTLEMENT" && gameRound >= totalInitialBuildRounds
-              ? { ...selectedButtonStyle }
-              : undefined
-          }
-        >
-          Settlement
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={() => onClickBuild("CITY")}
-          disabled={isInitialBuildPhase}
-          style={
-            selectedBuild === "CITY" && gameRound >= totalInitialBuildRounds
-              ? { ...selectedButtonStyle }
-              : undefined
-          }
-        >
-          City
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={() => onClickBuild("DEVELOPMENT_CARD")}
-          disabled={isInitialBuildPhase}
-          style={
-            selectedBuild === "DEVELOPMENT_CARD" && gameRound >= totalInitialBuildRounds
-              ? { ...selectedButtonStyle }
-              : undefined
-          }
-        >
-          Development Card
+          End Turn
         </Button>
       </div>
     </div>
