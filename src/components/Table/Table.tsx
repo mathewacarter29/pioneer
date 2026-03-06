@@ -7,6 +7,10 @@ import {
   BOARD_HEIGHT,
   BOTTOM_BUTTON_DIV_HEIGHT,
   MIN_BOARD_DIMENSIONS,
+  PLAYER_BUILD_TEXT,
+  PLAYER_ROAD_TEXT,
+  PLAYER_ROLL_TEXT,
+  PLAYER_SETTLEMENT_TEXT,
   ROLL_DURATION,
   TILE_FLASH_DURATION,
 } from "../constants";
@@ -20,24 +24,16 @@ export interface Player {
 const Table = () => {
   const [dice, setDice] = useState<[number, number]>([0, 0]);
   const [isRolling, setIsRolling] = useState<boolean>(false);
-  const [isRollButtonDisabled, setIsRollButtonDisabled] =
-    useState<boolean>(true);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
   const players = useMemo<Player[]>(() => {
     return [{ color: "#bb0000" }, { color: "#00bb00" }];
     // return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
   }, []);
   const [gameRound, setGameRound] = useState<number>(0);
-  const [instructionText, setInstructionText] = useState<string>(
-    "Player 1: Place a Settlement",
-  );
+  const [instructionText, setInstructionText] = useState<string>(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", "1"));
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
 
-  const getPlayerIndex = (
-    round: number,
-    numPlayers: number,
-    numInitialPhaseRounds: number,
-  ) => {
+  const getPlayerIndex = (round: number, numPlayers: number, numInitialPhaseRounds: number) => {
     if (round >= numInitialPhaseRounds) {
       // use >= here since game round starts at 0
       return (round - numInitialPhaseRounds) % numPlayers;
@@ -50,11 +46,7 @@ const Table = () => {
 
   // num rounds = # players * # rounds * 2 (1 city build and 1 road build)
   const totalInitialBuildRounds = players.length * 2 * 2;
-  const currPlayerIndex = getPlayerIndex(
-    gameRound,
-    players.length,
-    totalInitialBuildRounds,
-  );
+  const currPlayerIndex = getPlayerIndex(gameRound, players.length, totalInitialBuildRounds);
   const isInitialBuildPhase = gameRound < totalInitialBuildRounds;
   const selectedButtonStyle = {
     backgroundColor: "floralwhite",
@@ -74,24 +66,19 @@ const Table = () => {
   const initialBuildPhaseStep = () => {
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = getPlayerIndex(
-        newRound,
-        players.length,
-        totalInitialBuildRounds,
-      );
+      const playerIndex = getPlayerIndex(newRound, players.length, totalInitialBuildRounds);
       if (newRound >= totalInitialBuildRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
-        setInstructionText("Player 1: Roll the dice");
-        setIsRollButtonDisabled(false);
+        setInstructionText(PLAYER_ROLL_TEXT.replace("playerNumber", "1"));
       } else if (newRound % 2 === 1) {
         // if this round is odd, we are building a road
         setSelectedBuild("ROAD");
-        setInstructionText(`Player ${playerIndex + 1}: Build a Road`);
+        setInstructionText(PLAYER_ROAD_TEXT.replace("playerNumber", (playerIndex + 1).toString()));
       } else {
         // if even, we are building a settlement
         setSelectedBuild("SETTLEMENT");
-        setInstructionText(`Player ${playerIndex + 1}: Build a Settlement`);
+        setInstructionText(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", (playerIndex + 1).toString()));
       }
       return newRound;
     });
@@ -99,18 +86,16 @@ const Table = () => {
 
   const onRollDice = () => {
     setIsRolling(true);
-    setIsRollButtonDisabled(true);
     // cycle through dice numbers
     let timerId = setInterval(() => {
       setDiceToRandom();
     }, 100);
     setTimeout(() => {
       clearInterval(timerId);
-      setIsRolling(false);
+      setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
       setIsTurnOngoing(true);
-      setInstructionText(`Player ${currPlayerIndex + 1}: Build Stage`)
       setTimeout(() => {
-        setIsRollButtonDisabled(false);
+        setIsRolling(false);
       }, TILE_FLASH_DURATION);
     }, ROLL_DURATION);
   };
@@ -119,12 +104,8 @@ const Table = () => {
     setSelectedBuild("");
     setGameRound((prev) => {
       const nextRound = prev + 1;
-      const nextPlayerIndex = getPlayerIndex(
-        nextRound,
-        players.length,
-        totalInitialBuildRounds,
-      );
-      setInstructionText(`Player ${nextPlayerIndex + 1}: Roll the Dice`)
+      const nextPlayerIndex = getPlayerIndex(nextRound, players.length, totalInitialBuildRounds);
+      setInstructionText(PLAYER_ROLL_TEXT.replace("playerNumber", (nextPlayerIndex + 1).toString()));
       return nextRound;
     });
     setIsTurnOngoing(false);
@@ -142,8 +123,7 @@ const Table = () => {
         onClick={() => onClickBuild(props.buildType)}
         disabled={!isTurnOngoing}
         style={
-          selectedBuild === props.buildType &&
-          gameRound >= totalInitialBuildRounds
+          selectedBuild === props.buildType && gameRound >= totalInitialBuildRounds
             ? { ...selectedButtonStyle }
             : undefined
         }
@@ -182,11 +162,7 @@ const Table = () => {
           }}
         >
           <div>
-            <h4>
-              {isInitialBuildPhase
-                ? "Initial Build Phase"
-                : `Round ${gameRound - totalInitialBuildRounds + 1}`}
-            </h4>
+            <h4>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h4>
           </div>
           <div>
             <h2>{instructionText}</h2>
@@ -207,7 +183,7 @@ const Table = () => {
               fullWidth
               variant="contained"
               onClick={() => onRollDice()}
-              disabled={isTurnOngoing || isInitialBuildPhase}
+              disabled={isTurnOngoing || isInitialBuildPhase || isRolling}
             >
               Roll Dice
             </Button>
@@ -238,7 +214,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onEndTurn()}
-          disabled={!isTurnOngoing || isInitialBuildPhase}
+          disabled={!isTurnOngoing || isInitialBuildPhase || isRolling}
         >
           End Turn
         </Button>
