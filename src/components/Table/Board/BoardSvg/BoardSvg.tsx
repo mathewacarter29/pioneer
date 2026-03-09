@@ -127,7 +127,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                 d={hex.hexSvgInfo.pathInfo.d}
                 transform={hex.hexSvgInfo.pathInfo.transform}
                 fill={hex.color}
-                filter={hex.isHighlighted ? "brightness(120%)" : "none"}
+                filter={hex.isHighlighted ? "brightness(140%)" : "none"}
               />
             </g>
             {/* NUMBERS */}

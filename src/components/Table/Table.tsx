@@ -32,6 +32,7 @@ const Table = () => {
   const [gameRound, setGameRound] = useState<number>(0);
   const [instructionText, setInstructionText] = useState<string>(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", "1"));
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
+  const [isFlashing, setIsFlashing] = useState<boolean>(false);
 
   const getPlayerIndex = (round: number, numPlayers: number, numInitialPhaseRounds: number) => {
     if (round >= numInitialPhaseRounds) {
@@ -93,9 +94,11 @@ const Table = () => {
     setTimeout(() => {
       clearInterval(timerId);
       setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
-      setIsTurnOngoing(true);
+      setIsRolling(false);
+      setIsFlashing(true);
       setTimeout(() => {
-        setIsRolling(false);
+        setIsFlashing(false);
+        setIsTurnOngoing(true);
       }, TILE_FLASH_DURATION);
     }, ROLL_DURATION);
   };
@@ -183,7 +186,7 @@ const Table = () => {
               fullWidth
               variant="contained"
               onClick={() => onRollDice()}
-              disabled={isTurnOngoing || isInitialBuildPhase || isRolling}
+              disabled={isTurnOngoing || isInitialBuildPhase || isRolling || isFlashing}
             >
               Roll Dice
             </Button>
