@@ -39,6 +39,7 @@ export interface HexInfo {
   color: TileColorType;
   isHighlighted: boolean;
   numberSvgInfo?: NumberSvgInfo;
+  hasRobber: boolean;
 }
 
 export interface NumberInfo {
@@ -48,8 +49,7 @@ export interface NumberInfo {
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer } =
-    props;
+  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer } = props;
   const textStyle: React.CSSProperties = {
     fontStyle: "normal",
     fontVariant: "normal",
@@ -88,11 +88,11 @@ const BoardSvg = (props: BoardSvgProps) => {
 
   const canBuildCity = (vertex: VertexInfo) => {
     return selectedBuild === "CITY" && vertex.owner === currPlayer;
-  }
+  };
 
   const canBuildRoad = (road: EdgeInfo) => {
     return selectedBuild === "ROAD" && !road.selected;
-  }
+  };
 
   return (
     <svg
@@ -108,10 +108,7 @@ const BoardSvg = (props: BoardSvgProps) => {
       }}
     >
       {Object.entries(hexes).map(([key, hex]) => {
-        const color =
-          hex.numberSvgInfo?.number === 6 || hex.numberSvgInfo?.number === 8
-            ? "#da0000"
-            : "black";
+        const color = hex.numberSvgInfo?.number === 6 || hex.numberSvgInfo?.number === 8 ? "#da0000" : "black";
         return (
           <g key={key}>
             {/* HEXES */}
@@ -160,16 +157,13 @@ const BoardSvg = (props: BoardSvgProps) => {
                 </g>
               </g>
             )}
+            {/* ROBBER */}
+            {hex.hasRobber && <path d={hex.hexSvgInfo.robberSvgInfo.d} />}
           </g>
         );
       })}
       {/* ROADS */}
-      <g
-        id="EDGES"
-        fill="#000"
-        strokeWidth="0.265"
-        transform="translate(-87.357237,-102.32365)"
-      >
+      <g id="EDGES" fill="#000" strokeWidth="0.265" transform="translate(-87.357237,-102.32365)">
         {edges.map((edge, i) => {
           return (
             <path
@@ -221,12 +215,7 @@ const BoardSvg = (props: BoardSvgProps) => {
         // UNSETTLED
         return (
           // not a city or settlement yet
-          <g
-            id="VERTICES"
-            strokeWidth="0.265"
-            transform="translate(-87.357237,-102.32365)"
-            key={index}
-          >
+          <g id="VERTICES" strokeWidth="0.265" transform="translate(-87.357237,-102.32365)" key={index}>
             <circle
               key={index}
               cy={vertex.svgInfo.unsettledSvgInfo.cy}
@@ -235,8 +224,7 @@ const BoardSvg = (props: BoardSvgProps) => {
               style={{
                 opacity: selectedBuild === "SETTLEMENT" ? 1 : 0.3,
                 fill: vertex.owner?.color ?? UNSELECTED_BUILD_COLOR,
-                pointerEvents:
-                  selectedBuild === "SETTLEMENT" ? "inherit" : "none",
+                pointerEvents: selectedBuild === "SETTLEMENT" ? "inherit" : "none",
               }}
               className={selectedBuild === "SETTLEMENT" ? classes.flashSvg : ""}
               onClick={() => buildVertex(index)}

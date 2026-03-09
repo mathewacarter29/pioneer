@@ -61,29 +61,34 @@ const Board = (props: BoardProps) => {
       return accumulator;
     }, [] as number[]);
 
-    const rolledTiles = rolledIndexes.reduce(
-      (acc, index) => {
-        const key = index.toString();
-        acc[key] = { ...hexes[key], isHighlighted: true };
-        return acc;
-      },
-      {} as Record<string, HexInfo>,
-    );
-    setHexes((prevHexes) => ({
-      ...prevHexes,
-      ...rolledTiles,
-    }));
-    setTimeout(() => {
-      setHexes((prevHexes) =>
-        hexKeys.reduce(
-          (acc, key) => {
-            acc[key] = { ...prevHexes[key], isHighlighted: false };
-            return acc;
-          },
-          {} as Record<string, HexInfo>,
-        ),
+    if (numberRolled === 7) { // move the robber
+
+    } else {
+      // set rolled tiles as highlighted
+      const rolledTiles = rolledIndexes.reduce(
+        (acc, index) => {
+          const key = index.toString();
+          acc[key] = { ...hexes[key], isHighlighted: true };
+          return acc;
+        },
+        {} as Record<string, HexInfo>,
       );
-    }, TILE_FLASH_DURATION);
+      setHexes((prevHexes) => ({
+        ...prevHexes,
+        ...rolledTiles,
+      }));
+      setTimeout(() => {
+        setHexes((prevHexes) =>
+          hexKeys.reduce(
+            (acc, key) => {
+              acc[key] = { ...prevHexes[key], isHighlighted: false };
+              return acc;
+            },
+            {} as Record<string, HexInfo>,
+          ),
+        );
+      }, TILE_FLASH_DURATION);
+    }
   }, [numberRolled]);
 
   /**
@@ -177,7 +182,9 @@ const Board = (props: BoardProps) => {
     // return tile info
     let numberIndex = 0;
     let tiles: Record<string, HexInfo> = {};
+    let isRobberPlaced = false;
     for (const key in hexKeys) {
+      let hasRobber = false;
       const index = Number(key);
       if (index === Number.NaN) {
         throw new Error(
@@ -190,12 +197,19 @@ const Board = (props: BoardProps) => {
         // if this tile is not a desert, add a number
         tileNumber = shuffledNumbers[numberIndex];
         numberIndex++;
+      } else {
+        // if this is a desert, add a robber
+        if (!isRobberPlaced) {
+          hasRobber = true;
+          isRobberPlaced = true;
+        }
       }
       tiles[key] = {
         hexSvgInfo: baseHexInfo[key],
         color: tileColor,
         isHighlighted: false,
         numberSvgInfo: tileNumber,
+        hasRobber: hasRobber
       };
     }
     return tiles;
