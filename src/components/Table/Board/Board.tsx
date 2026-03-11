@@ -108,7 +108,7 @@ const Board = (props: BoardProps) => {
   }, [numberRolled]);
 
   // can implement friendly robber here
-  const isHexClickable = (hex: HexInfo): boolean => {
+  const isHexClickable = (_: HexInfo): boolean => {
     return true;
   }
 
