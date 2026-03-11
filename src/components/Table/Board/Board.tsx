@@ -14,11 +14,7 @@ import {
 } from "../../constants";
 import { useState, useEffect } from "react";
 import type { Builds, Player } from "../../Table/Table";
-import BoardSvg, {
-  type EdgeInfo,
-  type HexInfo,
-  type VertexInfo,
-} from "./BoardSvg/BoardSvg";
+import BoardSvg, { type EdgeInfo, type HexInfo, type VertexInfo } from "./BoardSvg/BoardSvg";
 import { getRandomInt } from "../../../utils/numbers";
 
 interface BoardProps {
@@ -54,20 +50,44 @@ const Board = (props: BoardProps) => {
     }
     const hexKeys = Object.keys(hexes);
     // find the hexes with the rolled number
-    const rolledIndexes = hexKeys.reduce((accumulator, element, index) => {
-      if (hexes[element].numberSvgInfo?.number === numberRolled) {
-        accumulator.push(index);
+    const rolledIndexes = hexKeys.reduce((accumulator, key) => {
+      if (hexes[key].numberSvgInfo?.number === numberRolled) {
+        accumulator.push(key);
       }
       return accumulator;
-    }, [] as number[]);
+    }, [] as string[]);
 
-    if (numberRolled === 7) { // move the robber
-
+    if (numberRolled === 7) {
+      // move the robber
+      /**
+       * TODO make so tiles available to put a robber on flash
+       * on tile click, move robber to that tile
+       * dont teleport it, make it slide across the screen to it's spot? (REACH)
+       */
+      // find the current hex with the robber
+      const robberIndex = hexKeys.find((i) => hexes[i].hasRobber);
+      if (!robberIndex) {
+        throw new Error("Could not find robber hex upon rolling a 7");
+      }
+      // make all available tiles flash
+      setHexes(
+        hexKeys.reduce(
+          (acc, key) => {
+            if (key !== robberIndex) {
+              acc[key] = { ...hexes[key], isClickable: true };
+            } else {
+              acc[key] = { ...hexes[key] };
+            }
+            return acc;
+          },
+          {} as Record<string, HexInfo>,
+        ),
+      );
+      // in the tile onclick, set old tile to not have robber and new tile to have robber
     } else {
       // set rolled tiles as highlighted
       const rolledTiles = rolledIndexes.reduce(
-        (acc, index) => {
-          const key = index.toString();
+        (acc, key) => {
           acc[key] = { ...hexes[key], isHighlighted: true };
           return acc;
         },
@@ -91,14 +111,38 @@ const Board = (props: BoardProps) => {
     }
   }, [numberRolled]);
 
+  const moveRobberHere = (clickedHexKey: string) => {
+    const hexKeys = Object.keys(hexes);
+    // when a hex is clicked after a 7 is rolled, change the location of the robber to the given key
+    const robberIndex = hexKeys.find((i) => hexes[i].hasRobber);
+    if (!robberIndex) {
+      throw new Error("Could not find robber hex after click");
+    }
+    setHexes(
+      hexKeys.reduce(
+        (acc, key) => {
+          if (key === robberIndex) {
+            // make this not the robber hex anymore
+            acc[key] = { ...hexes[key], isClickable: false, hasRobber: false };
+          } else if (key === clickedHexKey) {
+            // new robber hex
+            acc[key] = { ...hexes[key], isClickable: false, hasRobber: true };
+          } else {
+            acc[key] = { ...hexes[key], isClickable: false };
+          }
+          return acc;
+        },
+        {} as Record<string, HexInfo>,
+      ),
+    );
+  };
+
   /**
    * Generates an array of VertexInfo objects based on the provided vertex information.
    * @param baseVerticesInfo The base vertex information.
    * @returns An array of VertexInfo objects.
    */
-  const getVertices = (
-    baseVerticesInfo: Record<string, VertexSvgInfo>,
-  ): Record<string, VertexInfo> => {
+  const getVertices = (baseVerticesInfo: Record<string, VertexSvgInfo>): Record<string, VertexInfo> => {
     let vertices: Record<string, VertexInfo> = {};
     for (const key in baseVerticesInfo) {
       vertices[key] = {
@@ -138,10 +182,7 @@ const Board = (props: BoardProps) => {
       currentIndex--;
 
       // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
 
     return array;
@@ -152,29 +193,21 @@ const Board = (props: BoardProps) => {
    * @param baseHexInfo The base hex information.
    * @returns An array of HexInfo objects with assigned colors.
    */
-  const getTiles = (
-    baseHexInfo: Record<string, HexSvgInfo>,
-    numbers: NumberSvgInfo[],
-  ): Record<string, HexInfo> => {
+  const getTiles = (baseHexInfo: Record<string, HexSvgInfo>, numbers: NumberSvgInfo[]): Record<string, HexInfo> => {
     // first, get tile colors
     const hexKeys = Object.keys(baseHexInfo);
     let tileColors = getTileTypes(hexKeys.length);
     if (tileColors.length !== hexKeys.length) {
-      throw new Error(
-        "Not enough tile colors provided for the number of hexes.",
-      );
+      throw new Error("Not enough tile colors provided for the number of hexes.");
     }
     tileColors = shuffle(tileColors);
     // next, get numbers for each tile
-    const desertTileIndexes = tileColors.reduce(
-      (accumulator, element, index) => {
-        if (element === TILE_COLORS.DESERT) {
-          accumulator.push(index);
-        }
-        return accumulator;
-      },
-      [] as number[],
-    );
+    const desertTileIndexes = tileColors.reduce((accumulator, element, index) => {
+      if (element === TILE_COLORS.DESERT) {
+        accumulator.push(index);
+      }
+      return accumulator;
+    }, [] as number[]);
     if (hexKeys.length - desertTileIndexes.length !== numbers.length) {
       throw new Error("Not enough numbers for the number of hexes.");
     }
@@ -187,9 +220,7 @@ const Board = (props: BoardProps) => {
       let hasRobber = false;
       const index = Number(key);
       if (index === Number.NaN) {
-        throw new Error(
-          "Invalid hex key - all keys should be integers representing this hex's index on the board",
-        );
+        throw new Error("Invalid hex key - all keys should be integers representing this hex's index on the board");
       }
       const tileColor = tileColors[index]; // asserted earlier that tileColors and hexKeys have same length
       let tileNumber = undefined;
@@ -209,7 +240,8 @@ const Board = (props: BoardProps) => {
         color: tileColor,
         isHighlighted: false,
         numberSvgInfo: tileNumber,
-        hasRobber: hasRobber
+        hasRobber: hasRobber,
+        isClickable: false,
       };
     }
     return tiles;
@@ -245,7 +277,7 @@ const Board = (props: BoardProps) => {
         [vertexIndex]: {
           ...prevVertices[vertexIndex],
           isSettlement: true,
-          owner: currPlayer
+          owner: currPlayer,
         },
       }));
     } else if (selectedBuild === "CITY") {
@@ -254,7 +286,7 @@ const Board = (props: BoardProps) => {
         [vertexIndex]: {
           ...prevVertices[vertexIndex],
           isCity: true,
-          owner: currPlayer
+          owner: currPlayer,
         },
       }));
     }
@@ -267,9 +299,7 @@ const Board = (props: BoardProps) => {
    */
   const buildRoad = (edgeIndex: number) => {
     setEdges((prevEdges) =>
-      prevEdges.map((edge, i): EdgeInfo =>
-        i === edgeIndex ? { ...edge, selected: true, owner: currPlayer } : edge,
-      ),
+      prevEdges.map((edge, i): EdgeInfo => (i === edgeIndex ? { ...edge, selected: true, owner: currPlayer } : edge)),
     );
     onBuild();
   };
@@ -283,6 +313,7 @@ const Board = (props: BoardProps) => {
       buildVertex={buildVertex}
       buildRoad={buildRoad}
       currPlayer={currPlayer}
+      hexOnClick={moveRobberHere}
     />
   );
 };

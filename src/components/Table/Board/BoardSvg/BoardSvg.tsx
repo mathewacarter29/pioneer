@@ -19,6 +19,7 @@ interface BoardSvgProps {
   buildVertex: (vertexIndex: string) => void;
   buildRoad: (edgeIndex: number) => void;
   currPlayer: Player;
+  hexOnClick: (hexKey: string) => void;
 }
 
 export interface VertexInfo {
@@ -40,6 +41,7 @@ export interface HexInfo {
   isHighlighted: boolean;
   numberSvgInfo?: NumberSvgInfo;
   hasRobber: boolean;
+  isClickable: boolean;
 }
 
 export interface NumberInfo {
@@ -49,7 +51,7 @@ export interface NumberInfo {
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer } = props;
+  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer, hexOnClick } = props;
   const textStyle: React.CSSProperties = {
     fontStyle: "normal",
     fontVariant: "normal",
@@ -125,6 +127,9 @@ const BoardSvg = (props: BoardSvgProps) => {
                 transform={hex.hexSvgInfo.pathInfo.transform}
                 fill={hex.color}
                 filter={hex.isHighlighted ? "brightness(140%)" : "none"}
+                className={hex.isClickable ? classes.flashSvg : ""}
+                style={{ pointerEvents: hex.isClickable ? "inherit" : "none" }}
+                onClick={() => hexOnClick(key)}
               />
             </g>
             {/* NUMBERS */}
