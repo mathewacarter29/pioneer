@@ -9,7 +9,21 @@
     filter: brightness(100%);
   }
 }
-
 .flashSvg {
   animation: flashBrightness 1s infinite; /* Adjust speed as needed */
+}
+
+@keyframes hexFlashBrightness {
+  0% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(140%);
+  } /* Flash brightness */
+  100% {
+    filter: brightness(100%);
+  }
+}
+.flashHex {
+  animation: hexFlashBrightness 1s infinite; /* Adjust speed as needed */
 }

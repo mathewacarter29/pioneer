@@ -70,7 +70,7 @@ const Board = (props: BoardProps) => {
         hexKeys.reduce(
           (acc, key) => {
             if (key !== robberIndex) {
-              acc[key] = { ...hexes[key], isClickable: true };
+              acc[key] = { ...hexes[key], isClickable: isHexClickable(hexes[key]) };
             } else {
               acc[key] = { ...hexes[key] };
             }
@@ -106,6 +106,11 @@ const Board = (props: BoardProps) => {
       }, TILE_FLASH_DURATION);
     }
   }, [numberRolled]);
+
+  // can implement friendly robber here
+  const isHexClickable = (hex: HexInfo): boolean => {
+    return true;
+  }
 
   const moveRobberHere = (clickedHexKey: string) => {
     const hexKeys = Object.keys(hexes);

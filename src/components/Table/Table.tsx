@@ -131,6 +131,10 @@ const Table = () => {
     buildType: Builds;
     text: string;
   }
+  /**
+   * @param props Build type and what the button should say
+   * @returns A button at the bottom of the screen to build something
+   */
   const BuildButton = (props: BuildButtonProps) => {
     return (
       <Button
@@ -149,6 +153,9 @@ const Table = () => {
     );
   };
 
+  /**
+   * Board.tsx calls this function after the user clicks a hex to move the robber to
+   */
   const afterMoveRobber = () => {
     setHasMovedRobber(true);
     setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));

@@ -127,7 +127,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                 transform={hex.hexSvgInfo.pathInfo.transform}
                 fill={hex.color}
                 filter={hex.isHighlighted ? "brightness(140%)" : "none"}
-                className={hex.isClickable ? classes.flashSvg : ""}
+                className={hex.isClickable ? classes.flashHex : ""}
                 style={{ pointerEvents: hex.isClickable ? "inherit" : "none" }}
                 onClick={() => hexOnClick(key)}
               />
