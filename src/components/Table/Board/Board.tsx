@@ -22,6 +22,7 @@ interface BoardProps {
   onBuild: () => void;
   numberRolled: number;
   currPlayer: Player;
+  afterMoveRobber: () => void;
 }
 
 /**
@@ -30,7 +31,7 @@ interface BoardProps {
  * @returns The Board component.
  */
 const Board = (props: BoardProps) => {
-  const { selectedBuild, onBuild, numberRolled, currPlayer } = props;
+  const { selectedBuild, onBuild, numberRolled, currPlayer, afterMoveRobber } = props;
 
   const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
   const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
@@ -59,11 +60,6 @@ const Board = (props: BoardProps) => {
 
     if (numberRolled === 7) {
       // move the robber
-      /**
-       * TODO make so tiles available to put a robber on flash
-       * on tile click, move robber to that tile
-       * dont teleport it, make it slide across the screen to it's spot? (REACH)
-       */
       // find the current hex with the robber
       const robberIndex = hexKeys.find((i) => hexes[i].hasRobber);
       if (!robberIndex) {
@@ -135,6 +131,7 @@ const Board = (props: BoardProps) => {
         {} as Record<string, HexInfo>,
       ),
     );
+    afterMoveRobber();
   };
 
   /**

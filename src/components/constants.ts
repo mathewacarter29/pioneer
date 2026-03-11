@@ -921,3 +921,4 @@ export const PLAYER_SETTLEMENT_TEXT = "Player playerNumber: Build a Settlement";
 export const PLAYER_ROAD_TEXT = "Player playerNumber: Build a Road";
 export const PLAYER_ROLL_TEXT = "Player playerNumber: Roll the Dice";
 export const PLAYER_BUILD_TEXT = "Player playerNumber: Build Stage";
+export const PLAYER_ROBBER_TEXT = "Player playerNumber: Move the Robber";

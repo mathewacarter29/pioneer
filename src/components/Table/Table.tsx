@@ -9,6 +9,7 @@ import {
   MIN_BOARD_DIMENSIONS,
   PLAYER_BUILD_TEXT,
   PLAYER_ROAD_TEXT,
+  PLAYER_ROBBER_TEXT,
   PLAYER_ROLL_TEXT,
   PLAYER_SETTLEMENT_TEXT,
   ROLL_DURATION,
@@ -33,6 +34,7 @@ const Table = () => {
   const [instructionText, setInstructionText] = useState<string>(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", "1"));
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
   const [isFlashing, setIsFlashing] = useState<boolean>(false);
+  const [hasMovedRobber, setHasMovedRobber] = useState<boolean>(true);
 
   const getPlayerIndex = (round: number, numPlayers: number, numInitialPhaseRounds: number) => {
     if (round >= numInitialPhaseRounds) {
@@ -60,8 +62,8 @@ const Table = () => {
     });
   };
 
-  const setDiceToRandom = () => {
-    setDice([getRandomInt(6) + 1, getRandomInt(6) + 1]);
+  const getRandomDiceValues = (): [number, number] => {
+    return [getRandomInt(6) + 1, getRandomInt(6) + 1];
   };
 
   const initialBuildPhaseStep = () => {
@@ -89,17 +91,28 @@ const Table = () => {
     setIsRolling(true);
     // cycle through dice numbers
     let timerId = setInterval(() => {
-      setDiceToRandom();
+      setDice(getRandomDiceValues());
     }, 100);
     setTimeout(() => {
+      // stop rolling
+      const finalRoll = getRandomDiceValues();
       clearInterval(timerId);
-      setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
       setIsRolling(false);
-      setIsFlashing(true);
-      setTimeout(() => {
-        setIsFlashing(false);
+      setDice(finalRoll);
+      if (finalRoll[0] + finalRoll[1] !== 7) {
+        // if normal roll, flash rolled tiles
+        setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
+        setIsFlashing(true);
+        setTimeout(() => {
+          setIsFlashing(false);
+          setIsTurnOngoing(true);
+        }, TILE_FLASH_DURATION);
+      } else {
+        // if rolled robber, dont flash
+        setInstructionText(PLAYER_ROBBER_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
+        setHasMovedRobber(false);
         setIsTurnOngoing(true);
-      }, TILE_FLASH_DURATION);
+      }
     }, ROLL_DURATION);
   };
 
@@ -124,7 +137,7 @@ const Table = () => {
         fullWidth
         variant="contained"
         onClick={() => onClickBuild(props.buildType)}
-        disabled={!isTurnOngoing}
+        disabled={!isTurnOngoing || !hasMovedRobber}
         style={
           selectedBuild === props.buildType && gameRound >= totalInitialBuildRounds
             ? { ...selectedButtonStyle }
@@ -134,6 +147,11 @@ const Table = () => {
         {props.text}
       </Button>
     );
+  };
+
+  const afterMoveRobber = () => {
+    setHasMovedRobber(true);
+    setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
   };
 
   return (
@@ -150,6 +168,7 @@ const Table = () => {
           }}
           numberRolled={isRolling ? 0 : dice[0] + dice[1]}
           currPlayer={players[currPlayerIndex]}
+          afterMoveRobber={afterMoveRobber}
         />
         <div
           style={{
@@ -217,7 +236,7 @@ const Table = () => {
           fullWidth
           variant="contained"
           onClick={() => onEndTurn()}
-          disabled={!isTurnOngoing || isInitialBuildPhase || isRolling}
+          disabled={!isTurnOngoing || isInitialBuildPhase || isRolling || !hasMovedRobber}
         >
           End Turn
         </Button>
