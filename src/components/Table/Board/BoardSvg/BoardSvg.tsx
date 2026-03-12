@@ -135,7 +135,7 @@ const BoardSvg = (props: BoardSvgProps) => {
             {/* NUMBERS */}
             {hex.numberSvgInfo && (
               <g transform="translate(1.2661766,1.1964232)">
-                <g id="NUMBER" transform={hex.hexSvgInfo.numberTransform}>
+                <g id="NUMBER" transform={hex.hexSvgInfo.numberTransform} onClick={() => hexOnClick(key)}>
                   <circle
                     style={{ ...circleStyle, stroke: color }}
                     cx={hex.numberSvgInfo.circleInfo.cx}
