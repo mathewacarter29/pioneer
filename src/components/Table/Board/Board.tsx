@@ -38,9 +38,7 @@ const Board = (props: BoardProps) => {
   const [edges, setEdges] = useState<EdgeInfo[]>([]);
 
   useEffect(() => {
-    // dont shuffle the tiles, shuffle the colors
-    const coloredHexes = getTiles(DEFAULT_HEXES, DEFAULT_NUMBERS);
-    setHexes(coloredHexes);
+    setHexes(getTiles(DEFAULT_HEXES, DEFAULT_NUMBERS));
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
   }, []);
@@ -52,7 +50,7 @@ const Board = (props: BoardProps) => {
     const hexKeys = Object.keys(hexes);
     // find the hexes with the rolled number
     const rolledIndexes = hexKeys.reduce((accumulator, key) => {
-      if (hexes[key].numberSvgInfo?.number === numberRolled) {
+      if (hexes[key].numberSvgInfo?.number === numberRolled && !hexes[key].hasRobber) {
         accumulator.push(key);
       }
       return accumulator;
