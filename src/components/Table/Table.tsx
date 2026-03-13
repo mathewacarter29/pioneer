@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Board from "./Board/Board";
 import {
   Button,
@@ -27,26 +28,36 @@ import {
 } from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
-type Resource = "SHEEP" | "WHEAT" | "BRICK" | "WOOD" | "ORE";
+export type Resource = "SHEEP" | "WHEAT" | "BRICK" | "WOOD" | "ORE" | "";
 
 export interface Player {
   color: string;
   hand: Resource[];
+  name: string;
+  id: string;
 }
 
 const Table = () => {
+  const getInstructionText = (text: string, playerIndex: number): string => {
+    if (!text.includes("playerName")) {
+      throw new Error(
+        'getInstructionText replaces "playerName" with the current player name. Ensure it is in the given string.',
+      );
+    }
+    return text.replace("playerName", players[playerIndex].name);
+  };
+  const getPlayers = (): Player[] => {
+    return [
+      { color: "#bb0000", hand: [], name: "Player 1", id: uuidv4() },
+      { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4() },
+    ];
+  };
   const [dice, setDice] = useState<[number, number]>([0, 0]);
   const [isRolling, setIsRolling] = useState<boolean>(false);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
-  const players = useMemo<Player[]>(() => {
-    return [
-      { color: "#bb0000", hand: [] },
-      { color: "#00bb00", hand: [] },
-    ];
-    // return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
-  }, []);
+  const [players, setPlayers] = useState<Player[]>(getPlayers());
   const [gameRound, setGameRound] = useState<number>(0);
-  const [instructionText, setInstructionText] = useState<string>(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", "1"));
+  const [instructionText, setInstructionText] = useState<string>(getInstructionText(PLAYER_SETTLEMENT_TEXT, 0));
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
   const [isFlashing, setIsFlashing] = useState<boolean>(false);
   const [hasMovedRobber, setHasMovedRobber] = useState<boolean>(true);
@@ -74,7 +85,7 @@ const Table = () => {
     color: "black",
   };
   const sidePanelStyle = {
-    marginLeft: "2vw",
+    margin: "2vw",
     width: "12vw",
     display: "flex",
     flexDirection: "column" as const, // need to do this or else you get typescript error
@@ -98,19 +109,18 @@ const Table = () => {
   const initialBuildPhaseStep = () => {
     setGameRound((prevRound) => {
       const newRound = prevRound + 1;
-      const playerIndex = getPlayerIndex(newRound, players.length, totalInitialBuildRounds);
       if (newRound >= totalInitialBuildRounds) {
         // if this round is more than totalRounds, play the regular game
         setSelectedBuild("");
-        setInstructionText(PLAYER_ROLL_TEXT.replace("playerNumber", "1"));
+        setInstructionText(getInstructionText(PLAYER_ROLL_TEXT, currPlayerIndex));
       } else if (newRound % 2 === 1) {
         // if this round is odd, we are building a road
         setSelectedBuild("ROAD");
-        setInstructionText(PLAYER_ROAD_TEXT.replace("playerNumber", (playerIndex + 1).toString()));
+        setInstructionText(getInstructionText(PLAYER_ROAD_TEXT, currPlayerIndex));
       } else {
         // if even, we are building a settlement
         setSelectedBuild("SETTLEMENT");
-        setInstructionText(PLAYER_SETTLEMENT_TEXT.replace("playerNumber", (playerIndex + 1).toString()));
+        setInstructionText(getInstructionText(PLAYER_SETTLEMENT_TEXT, currPlayerIndex));
       }
       return newRound;
     });
@@ -130,7 +140,7 @@ const Table = () => {
       setDice(finalRoll);
       if (finalRoll[0] + finalRoll[1] !== 7) {
         // if normal roll, flash rolled tiles
-        setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
+        setInstructionText(getInstructionText(PLAYER_BUILD_TEXT, currPlayerIndex));
         setIsFlashing(true);
         setTimeout(() => {
           setIsFlashing(false);
@@ -138,7 +148,7 @@ const Table = () => {
         }, TILE_FLASH_DURATION);
       } else {
         // if rolled robber, dont flash
-        setInstructionText(PLAYER_ROBBER_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
+        setInstructionText(getInstructionText(PLAYER_ROBBER_TEXT, currPlayerIndex));
         setHasMovedRobber(false);
         setIsTurnOngoing(true);
       }
@@ -149,8 +159,7 @@ const Table = () => {
     setSelectedBuild("");
     setGameRound((prev) => {
       const nextRound = prev + 1;
-      const nextPlayerIndex = getPlayerIndex(nextRound, players.length, totalInitialBuildRounds);
-      setInstructionText(PLAYER_ROLL_TEXT.replace("playerNumber", (nextPlayerIndex + 1).toString()));
+      setInstructionText(getInstructionText(PLAYER_ROLL_TEXT, currPlayerIndex));
       return nextRound;
     });
     setIsTurnOngoing(false);
@@ -182,16 +191,22 @@ const Table = () => {
     );
   };
 
+  /**
+   * Shows players what cards they have
+   * @returns a table with each resource quantity owned by the player
+   */
   const CardTable = () => {
     const Cell = styled(TableCell)(() => ({
       [`&.${tableCellClasses.body}`]: {
         color: "white",
         fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+        innerWidth: '50%'
       },
       [`&.${tableCellClasses.head}`]: {
         color: "white",
         fontSize: 15,
         fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+        innerWidth: '50%'
       },
     }));
 
@@ -213,9 +228,7 @@ const Table = () => {
           <TableBody>
             <TableRow>
               <Cell>Wheat</Cell>
-              <Cell>
-                {getResourceCount(players[myPlayerIndex].hand, "WHEAT")}
-              </Cell>
+              <Cell>{getResourceCount(players[myPlayerIndex].hand, "WHEAT")}</Cell>
             </TableRow>
             <TableRow>
               <Cell>Sheep</Cell>
@@ -244,7 +257,21 @@ const Table = () => {
    */
   const afterMoveRobber = () => {
     setHasMovedRobber(true);
-    setInstructionText(PLAYER_BUILD_TEXT.replace("playerNumber", (currPlayerIndex + 1).toString()));
+    setInstructionText(getInstructionText(PLAYER_BUILD_TEXT, currPlayerIndex));
+  };
+
+  /**
+   * Add resources provided by Board to each players hand
+   * @param cardsToGive Map<Player ID, list of resources to add to their hand>
+   */
+  const giveResources = (cardsToGive: Record<string, Resource[]>) => {
+    setPlayers((prev) => {
+      return prev.map((player) => {
+        return {...player,
+          hand: [...player.hand, ...cardsToGive[player.id] ?? []]
+        }
+      })
+    })
   };
 
   return (
@@ -252,7 +279,7 @@ const Table = () => {
       <div style={{ display: "flex", flexDirection: "row", alignItems: "end" }}>
         <div style={sidePanelStyle}>
           <div>
-            <h2>Player {myPlayerIndex + 1}</h2>
+            <h2>Player Name: {players[myPlayerIndex].name}</h2>
           </div>
           <div>
             <CardTable />
@@ -270,6 +297,7 @@ const Table = () => {
           numberRolled={isRolling ? 0 : dice[0] + dice[1]}
           currPlayer={players[currPlayerIndex]}
           afterMoveRobber={afterMoveRobber}
+          giveResources={giveResources}
         />
         <div style={sidePanelStyle}>
           <div>

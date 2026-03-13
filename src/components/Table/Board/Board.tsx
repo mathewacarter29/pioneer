@@ -13,7 +13,7 @@ import {
   type HexSvgInfo,
 } from "../../constants";
 import { useState, useEffect } from "react";
-import type { Builds, Player } from "../../Table/Table";
+import type { Builds, Player, Resource } from "../../Table/Table";
 import BoardSvg, { type EdgeInfo, type HexInfo, type VertexInfo } from "./BoardSvg/BoardSvg";
 import { getRandomInt } from "../../../utils/numbers";
 
@@ -23,6 +23,7 @@ interface BoardProps {
   numberRolled: number;
   currPlayer: Player;
   afterMoveRobber: () => void;
+  giveResources: (cards: Record<string, Resource[]>) => void;
 }
 
 /**
@@ -31,7 +32,7 @@ interface BoardProps {
  * @returns The Board component.
  */
 const Board = (props: BoardProps) => {
-  const { selectedBuild, onBuild, numberRolled, currPlayer, afterMoveRobber } = props;
+  const { selectedBuild, onBuild, numberRolled, currPlayer, afterMoveRobber, giveResources } = props;
 
   const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
   const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
@@ -42,6 +43,33 @@ const Board = (props: BoardProps) => {
     setVertices(getVertices(DEFAULT_VERTICES));
     setEdges(getEdges(DEFAULT_EDGES));
   }, []);
+
+  // TODO delete this function and have Resource be a field on hex, then get color from resource
+  const getResourceFromColor = (color: TileColorType): Resource => {
+    const resourceMap: Record<TileColorType, Resource> = {
+      [TILE_COLORS.PLAINS]: "SHEEP",
+      [TILE_COLORS.FIELD]: "WHEAT",
+      [TILE_COLORS.FORREST]: "WOOD",
+      [TILE_COLORS.QUARRY]: "ORE",
+      [TILE_COLORS.BRICKYARD]: "BRICK",
+      [TILE_COLORS.DESERT]: "",
+      [TILE_COLORS.TEST]: ""
+    };
+    return resourceMap[color];
+  }
+
+  /**
+   * Get the cards for each player based on the tiles rolled
+   * @param tiles tiles rolled this turn
+   * @returns map<player ID, resource cards they are owed>
+   */
+  const getCards = (tiles: HexInfo[]): Record<string, Resource[]> => {
+    let acc = {} as Record<string, Resource[]>;
+    for (const tile of tiles) {
+      acc[currPlayer.id] = [...acc[currPlayer.id] ?? [], getResourceFromColor(tile.color)]
+    }
+    return acc;
+  }
 
   useEffect(() => {
     if (numberRolled === 0) {
@@ -91,6 +119,8 @@ const Board = (props: BoardProps) => {
         ...prevHexes,
         ...rolledTiles,
       }));
+      // give players cards based on rolled tiles
+      giveResources(getCards(Object.values(rolledTiles))) // rolledTiles already doesn't include robber tiles
       setTimeout(() => {
         setHexes((prevHexes) =>
           hexKeys.reduce(
@@ -105,11 +135,15 @@ const Board = (props: BoardProps) => {
     }
   }, [numberRolled]);
 
-  // can implement friendly robber here
+  // TODO can implement friendly robber here
   const isHexClickable = (_: HexInfo): boolean => {
     return true;
   }
 
+  /**
+   * Move the robber to the given hex
+   * @param clickedHexKey hex we want to move the robber to
+   */
   const moveRobberHere = (clickedHexKey: string) => {
     const hexKeys = Object.keys(hexes);
     // when a hex is clicked after a 7 is rolled, change the location of the robber to the given key
