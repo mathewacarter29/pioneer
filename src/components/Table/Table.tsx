@@ -1,6 +1,16 @@
 import { useMemo, useState } from "react";
 import Board from "./Board/Board";
-import { Button } from "@mui/material";
+import {
+  Button,
+  TableContainer,
+  Table as MuiTable,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  styled,
+  tableCellClasses,
+} from "@mui/material";
 import { getRandomInt } from "../../utils/numbers";
 import Die from "./Die/Die";
 import {
@@ -17,9 +27,11 @@ import {
 } from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
+type Resource = "SHEEP" | "WHEAT" | "BRICK" | "WOOD" | "ORE";
 
 export interface Player {
   color: string;
+  hand: Resource[];
 }
 
 const Table = () => {
@@ -27,7 +39,10 @@ const Table = () => {
   const [isRolling, setIsRolling] = useState<boolean>(false);
   const [selectedBuild, setSelectedBuild] = useState<Builds>("SETTLEMENT");
   const players = useMemo<Player[]>(() => {
-    return [{ color: "#bb0000" }, { color: "#00bb00" }];
+    return [
+      { color: "#bb0000", hand: [] },
+      { color: "#00bb00", hand: [] },
+    ];
     // return [{ color: "#bb0000" }, { color: "#00bb00" }, { color: "#0000bb" }];
   }, []);
   const [gameRound, setGameRound] = useState<number>(0);
@@ -35,6 +50,9 @@ const Table = () => {
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
   const [isFlashing, setIsFlashing] = useState<boolean>(false);
   const [hasMovedRobber, setHasMovedRobber] = useState<boolean>(true);
+  const myPlayerIndex = useMemo<number>(() => {
+    return 0;
+  }, []);
 
   const getPlayerIndex = (round: number, numPlayers: number, numInitialPhaseRounds: number) => {
     if (round >= numInitialPhaseRounds) {
@@ -54,6 +72,17 @@ const Table = () => {
   const selectedButtonStyle = {
     backgroundColor: "floralwhite",
     color: "black",
+  };
+  const sidePanelStyle = {
+    marginLeft: "2vw",
+    width: "12vw",
+    display: "flex",
+    flexDirection: "column" as const, // need to do this or else you get typescript error
+    height: BOARD_HEIGHT,
+    minHeight: MIN_BOARD_DIMENSIONS,
+    justifyContent: "space-between",
+    padding: "5px",
+    backgroundColor: "#1a5725",
   };
 
   const onClickBuild = (build: Builds) => {
@@ -153,6 +182,63 @@ const Table = () => {
     );
   };
 
+  const CardTable = () => {
+    const Cell = styled(TableCell)(() => ({
+      [`&.${tableCellClasses.body}`]: {
+        color: "white",
+        fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+      },
+      [`&.${tableCellClasses.head}`]: {
+        color: "white",
+        fontSize: 15,
+        fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+      },
+    }));
+
+    const getResourceCount = (hand: Resource[], resource: Resource): number => {
+      return hand.reduce((acc, curr) => {
+        return curr === resource ? acc + 1 : acc;
+      }, 0);
+    };
+
+    return (
+      <TableContainer>
+        <MuiTable aria-label="card-table">
+          <TableHead>
+            <TableRow>
+              <Cell>Card Type</Cell>
+              <Cell>Quantity</Cell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <Cell>Wheat</Cell>
+              <Cell>
+                {getResourceCount(players[myPlayerIndex].hand, "WHEAT")}
+              </Cell>
+            </TableRow>
+            <TableRow>
+              <Cell>Sheep</Cell>
+              <Cell>{getResourceCount(players[myPlayerIndex].hand, "SHEEP")}</Cell>
+            </TableRow>
+            <TableRow>
+              <Cell>Wood</Cell>
+              <Cell>{getResourceCount(players[myPlayerIndex].hand, "WOOD")}</Cell>
+            </TableRow>
+            <TableRow>
+              <Cell>Brick</Cell>
+              <Cell>{getResourceCount(players[myPlayerIndex].hand, "BRICK")}</Cell>
+            </TableRow>
+            <TableRow>
+              <Cell>Ore</Cell>
+              <Cell>{getResourceCount(players[myPlayerIndex].hand, "ORE")}</Cell>
+            </TableRow>
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
+    );
+  };
+
   /**
    * Board.tsx calls this function after the user clicks a hex to move the robber to
    */
@@ -164,6 +250,14 @@ const Table = () => {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "row", alignItems: "end" }}>
+        <div style={sidePanelStyle}>
+          <div>
+            <h2>Player {myPlayerIndex + 1}</h2>
+          </div>
+          <div>
+            <CardTable />
+          </div>
+        </div>
         <Board
           selectedBuild={selectedBuild}
           onBuild={() => {
@@ -177,19 +271,7 @@ const Table = () => {
           currPlayer={players[currPlayerIndex]}
           afterMoveRobber={afterMoveRobber}
         />
-        <div
-          style={{
-            marginLeft: "2vw",
-            width: "12vw",
-            display: "flex",
-            flexDirection: "column",
-            height: BOARD_HEIGHT,
-            minHeight: MIN_BOARD_DIMENSIONS,
-            justifyContent: "space-between",
-            padding: "5px",
-            backgroundColor: "#1a5725",
-          }}
-        >
+        <div style={sidePanelStyle}>
           <div>
             <h4>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h4>
           </div>
