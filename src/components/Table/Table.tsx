@@ -25,6 +25,7 @@ import {
   PLAYER_SETTLEMENT_TEXT,
   ROLL_DURATION,
   TILE_FLASH_DURATION,
+  BUILD_COSTS,
 } from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
@@ -175,18 +176,11 @@ const Table = () => {
    */
   const BuildButton = (props: BuildButtonProps) => {
     const canBuildResource = (build: Builds): boolean => {
-      const buildCostMap: Record<Builds, Resource[]> = { //TODO try to remove "" from Builds type
-        "ROAD": ["BRICK", "WOOD"],
-        "SETTLEMENT": ["BRICK", "WOOD", "WHEAT", "SHEEP"],
-        "CITY": ["ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
-        "DEVELOPMENT_CARD": ["SHEEP", "WHEAT", "ORE"],
-        "": []
-      }
       // make sure each of these cards are in the curr players hand to enable
-      let handCopy = [...players[myPlayerIndex].hand]
-      for (const card of buildCostMap[build]) {
+      let handCopy = [...players[myPlayerIndex].hand];
+      for (const card of BUILD_COSTS[build]) {
         // if this card is not in the player's hand, return false
-        const i = handCopy.indexOf(card)
+        const i = handCopy.indexOf(card);
         if (i === -1) {
           return false;
         } else {
@@ -194,8 +188,7 @@ const Table = () => {
         }
       }
       return true;
-    }
-
+    };
 
     return (
       <Button
@@ -223,13 +216,13 @@ const Table = () => {
       [`&.${tableCellClasses.body}`]: {
         color: "white",
         fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-        innerWidth: '50%'
+        innerWidth: "50%",
       },
       [`&.${tableCellClasses.head}`]: {
         color: "white",
         fontSize: 15,
         fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-        innerWidth: '50%'
+        innerWidth: "50%",
       },
     }));
 
@@ -290,11 +283,9 @@ const Table = () => {
   const giveResources = (cardsToGive: Record<string, Resource[]>) => {
     setPlayers((prev) => {
       return prev.map((player) => {
-        return {...player,
-          hand: [...player.hand, ...cardsToGive[player.id] ?? []]
-        }
-      })
-    })
+        return { ...player, hand: [...player.hand, ...(cardsToGive[player.id] ?? [])] };
+      });
+    });
   };
 
   return (
@@ -310,8 +301,30 @@ const Table = () => {
         </div>
         <Board
           selectedBuild={selectedBuild}
-          onBuild={() => {
+          onBuild={(build: Builds) => {
             if (gameRound >= players.length * 2 * 2) {
+              // subtract build materials from curr player's hand
+              let handCopy = [...players[myPlayerIndex].hand];
+              for (const card of BUILD_COSTS[build]) {
+                // if this card is not in the player's hand, return false
+                const i = handCopy.indexOf(card);
+                if (i === -1) {
+                  throw new Error("Resource not found in hand when trying to build");
+                }
+                handCopy.splice(i, 1);
+              }
+              setPlayers((prev) => {
+                return prev.map((player, i) => {
+                  if (i === myPlayerIndex) {
+                    // you can only build for your player
+                    return {
+                      ...player,
+                      hand: handCopy,
+                    };
+                  }
+                  return player;
+                });
+              });
               setSelectedBuild("");
               return;
             }

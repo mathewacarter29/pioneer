@@ -19,7 +19,7 @@ import { getRandomInt } from "../../../utils/numbers";
 
 interface BoardProps {
   selectedBuild: Builds;
-  onBuild: () => void;
+  onBuild: (build: Builds) => void;
   numberRolled: number;
   currPlayer: Player;
   afterMoveRobber: () => void;
@@ -53,10 +53,10 @@ const Board = (props: BoardProps) => {
       [TILE_COLORS.QUARRY]: "ORE",
       [TILE_COLORS.BRICKYARD]: "BRICK",
       [TILE_COLORS.DESERT]: "",
-      [TILE_COLORS.TEST]: ""
+      [TILE_COLORS.TEST]: "",
     };
     return resourceMap[color];
-  }
+  };
 
   /**
    * Get the cards for each player based on the tiles rolled
@@ -66,10 +66,10 @@ const Board = (props: BoardProps) => {
   const getCards = (tiles: HexInfo[]): Record<string, Resource[]> => {
     let acc = {} as Record<string, Resource[]>;
     for (const tile of tiles) {
-      acc[currPlayer.id] = [...acc[currPlayer.id] ?? [], getResourceFromColor(tile.color)]
+      acc[currPlayer.id] = [...(acc[currPlayer.id] ?? []), getResourceFromColor(tile.color)];
     }
     return acc;
-  }
+  };
 
   useEffect(() => {
     if (numberRolled === 0) {
@@ -120,7 +120,7 @@ const Board = (props: BoardProps) => {
         ...rolledTiles,
       }));
       // give players cards based on rolled tiles
-      giveResources(getCards(Object.values(rolledTiles))) // rolledTiles already doesn't include robber tiles
+      giveResources(getCards(Object.values(rolledTiles))); // rolledTiles already doesn't include robber tiles
       setTimeout(() => {
         setHexes((prevHexes) =>
           hexKeys.reduce(
@@ -138,7 +138,7 @@ const Board = (props: BoardProps) => {
   // TODO can implement friendly robber here
   const isHexClickable = (_: HexInfo): boolean => {
     return true;
-  }
+  };
 
   /**
    * Move the robber to the given hex
@@ -314,6 +314,7 @@ const Board = (props: BoardProps) => {
           owner: currPlayer,
         },
       }));
+      onBuild("SETTLEMENT");
     } else if (selectedBuild === "CITY") {
       setVertices((prevVertices) => ({
         ...prevVertices,
@@ -323,8 +324,8 @@ const Board = (props: BoardProps) => {
           owner: currPlayer,
         },
       }));
+      onBuild("CITY");
     }
-    onBuild();
   };
 
   /**
@@ -335,7 +336,7 @@ const Board = (props: BoardProps) => {
     setEdges((prevEdges) =>
       prevEdges.map((edge, i): EdgeInfo => (i === edgeIndex ? { ...edge, selected: true, owner: currPlayer } : edge)),
     );
-    onBuild();
+    onBuild("ROAD");
   };
 
   return (

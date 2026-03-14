@@ -1,3 +1,5 @@
+import type { Builds, Resource } from "./Table/Table";
+
 export const TILE_COLORS = {
   PLAINS: "#A0DE7E",
   FIELD: "#F0F878",
@@ -922,3 +924,12 @@ export const PLAYER_ROAD_TEXT = "playerName: Build a Road";
 export const PLAYER_ROLL_TEXT = "playerName: Roll the Dice";
 export const PLAYER_BUILD_TEXT = "playerName: Build Stage";
 export const PLAYER_ROBBER_TEXT = "playerName: Move the Robber";
+
+export const BUILD_COSTS: Record<Builds, Resource[]> = {
+  //TODO try to remove "" from Builds type
+  ROAD: ["BRICK", "WOOD"],
+  SETTLEMENT: ["BRICK", "WOOD", "WHEAT", "SHEEP"],
+  CITY: ["ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
+  DEVELOPMENT_CARD: ["SHEEP", "WHEAT", "ORE"],
+  "": [],
+};
