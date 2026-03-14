@@ -15,7 +15,7 @@ interface BoardSvgProps {
   hexes: Record<string, HexInfo>;
   edges: EdgeInfo[];
   vertices: Record<string, VertexInfo>;
-  selectedBuild: Builds;
+  selectedBuild?: Builds;
   buildVertex: (vertexIndex: string) => void;
   buildRoad: (edgeIndex: number) => void;
   currPlayer: Player;
@@ -51,7 +51,7 @@ export interface NumberInfo {
 }
 
 const BoardSvg = (props: BoardSvgProps) => {
-  const { hexes, edges, vertices, selectedBuild, buildVertex, buildRoad, currPlayer, hexOnClick } = props;
+  const { hexes, edges, vertices, selectedBuild = "", buildVertex, buildRoad, currPlayer, hexOnClick } = props;
   const textStyle: React.CSSProperties = {
     fontStyle: "normal",
     fontVariant: "normal",

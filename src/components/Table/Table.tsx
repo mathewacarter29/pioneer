@@ -159,7 +159,7 @@ const Table = () => {
     setSelectedBuild("");
     setGameRound((prev) => {
       const nextRound = prev + 1;
-      setInstructionText(getInstructionText(PLAYER_ROLL_TEXT, currPlayerIndex));
+      setInstructionText(getInstructionText(PLAYER_ROLL_TEXT, (currPlayerIndex + 1) % players.length));
       return nextRound;
     });
     setIsTurnOngoing(false);
@@ -174,12 +174,35 @@ const Table = () => {
    * @returns A button at the bottom of the screen to build something
    */
   const BuildButton = (props: BuildButtonProps) => {
+    const canBuildResource = (build: Builds): boolean => {
+      const buildCostMap: Record<Builds, Resource[]> = { //TODO try to remove "" from Builds type
+        "ROAD": ["BRICK", "WOOD"],
+        "SETTLEMENT": ["BRICK", "WOOD", "WHEAT", "SHEEP"],
+        "CITY": ["ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
+        "DEVELOPMENT_CARD": ["SHEEP", "WHEAT", "ORE"],
+        "": []
+      }
+      // make sure each of these cards are in the curr players hand to enable
+      let handCopy = [...players[myPlayerIndex].hand]
+      for (const card of buildCostMap[build]) {
+        // if this card is not in the player's hand, return false
+        const i = handCopy.indexOf(card)
+        if (i === -1) {
+          return false;
+        } else {
+          handCopy.splice(i, 1);
+        }
+      }
+      return true;
+    }
+
+
     return (
       <Button
         fullWidth
         variant="contained"
         onClick={() => onClickBuild(props.buildType)}
-        disabled={!isTurnOngoing || !hasMovedRobber}
+        disabled={!isTurnOngoing || !hasMovedRobber || !canBuildResource(props.buildType)}
         style={
           selectedBuild === props.buildType && gameRound >= totalInitialBuildRounds
             ? { ...selectedButtonStyle }
@@ -301,7 +324,7 @@ const Table = () => {
         />
         <div style={sidePanelStyle}>
           <div>
-            <h4>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h4>
+            <h2>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h2>
           </div>
           <div>
             <h2>{instructionText}</h2>
