@@ -34,6 +34,7 @@ export type Resource = "SHEEP" | "WHEAT" | "BRICK" | "WOOD" | "ORE" | "";
 export interface Player {
   color: string;
   hand: Resource[];
+  developmentCards: number;
   name: string;
   id: string;
 }
@@ -49,8 +50,8 @@ const Table = () => {
   };
   const getPlayers = (): Player[] => {
     return [
-      { color: "#bb0000", hand: [], name: "Player 1", id: uuidv4() },
-      { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4() },
+      { color: "#bb0000", hand: ["ORE", "SHEEP", "WHEAT"], name: "Player 1", id: uuidv4(), developmentCards: 0 },
+      { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4(), developmentCards: 0 },
     ];
   };
   const [dice, setDice] = useState<[number, number]>([0, 0]);
@@ -97,7 +98,52 @@ const Table = () => {
     backgroundColor: "#1a5725",
   };
 
+  const getNewHand = (build: Builds, hand: Resource[]): Resource[] => {
+    let handCopy = [...hand]; // dont edit the passed in hand
+    for (const card of BUILD_COSTS[build]) {
+      // if this card is not in the player's hand, return false
+      const i = handCopy.indexOf(card);
+      if (i === -1) {
+        throw new Error("Resource not found in hand when trying to build");
+      }
+      handCopy.splice(i, 1);
+    }
+    return handCopy;
+  };
+
+  const giveMeNewHand = (newHand: Resource[]) => {
+    setPlayers((prev) => {
+      return prev.map((player, i) => {
+        if (i === myPlayerIndex) {
+          // you can only build for your player
+          return {
+            ...player,
+            hand: newHand,
+          };
+        }
+        return player;
+      });
+    });
+  };
+
   const onClickBuild = (build: Builds) => {
+    // development cards dont require clicking anything else, so handle removing cards here
+    if (build === "DEVELOPMENT_CARD") {
+      const newHand = getNewHand("DEVELOPMENT_CARD", players[myPlayerIndex].hand);
+      giveMeNewHand(newHand);
+      setPlayers((prev) => {
+        return prev.map((player, i) => {
+          if (i === myPlayerIndex) {
+            return {
+              ...player, developmentCards: player.developmentCards + 1
+            }
+          }
+          return player;
+        })
+      })
+      setSelectedBuild("");
+      return;
+    }
     setSelectedBuild((prev) => {
       return build === prev ? "" : build;
     });
@@ -262,6 +308,10 @@ const Table = () => {
               <Cell>Ore</Cell>
               <Cell>{getResourceCount(players[myPlayerIndex].hand, "ORE")}</Cell>
             </TableRow>
+            <TableRow>
+              <Cell>Development Cards</Cell>
+              <Cell>{players[myPlayerIndex].developmentCards}</Cell>
+            </TableRow>
           </TableBody>
         </MuiTable>
       </TableContainer>
@@ -304,27 +354,8 @@ const Table = () => {
           onBuild={(build: Builds) => {
             if (gameRound >= players.length * 2 * 2) {
               // subtract build materials from curr player's hand
-              let handCopy = [...players[myPlayerIndex].hand];
-              for (const card of BUILD_COSTS[build]) {
-                // if this card is not in the player's hand, return false
-                const i = handCopy.indexOf(card);
-                if (i === -1) {
-                  throw new Error("Resource not found in hand when trying to build");
-                }
-                handCopy.splice(i, 1);
-              }
-              setPlayers((prev) => {
-                return prev.map((player, i) => {
-                  if (i === myPlayerIndex) {
-                    // you can only build for your player
-                    return {
-                      ...player,
-                      hand: handCopy,
-                    };
-                  }
-                  return player;
-                });
-              });
+              const newHand = getNewHand(build, players[myPlayerIndex].hand);
+              giveMeNewHand(newHand);
               setSelectedBuild("");
               return;
             }
@@ -349,6 +380,7 @@ const Table = () => {
                 flexDirection: "row",
                 gap: "1vw",
                 margin: "1vh",
+                justifyContent: 'center'
               }}
             >
               <Die value={dice[0]} isRolling={isRolling} />
