@@ -50,7 +50,7 @@ const Table = () => {
   };
   const getPlayers = (): Player[] => {
     return [
-      { color: "#bb0000", hand: ["ORE", "SHEEP", "WHEAT"], name: "Player 1", id: uuidv4(), developmentCards: 0 },
+      { color: "#bb0000", hand: [], name: "Player 1", id: uuidv4(), developmentCards: 0 },
       { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4(), developmentCards: 0 },
     ];
   };
