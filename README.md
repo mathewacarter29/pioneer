@@ -71,3 +71,6 @@ export default defineConfig([
   },
 ])
 ```
+
+# Deploy to Github Pages
+Follow the instructions in [this article](https://dev.to/rashidshamloo/deploying-vite-react-app-to-github-pages-35hf)
