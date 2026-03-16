@@ -37,6 +37,7 @@ export interface Player {
   developmentCards: number;
   name: string;
   id: string;
+  points: number;
 }
 
 const Table = () => {
@@ -50,8 +51,17 @@ const Table = () => {
   };
   const getPlayers = (): Player[] => {
     return [
-      { color: "#bb0000", hand: [], name: "Player 1", id: uuidv4(), developmentCards: 0 },
-      { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4(), developmentCards: 0 },
+      {
+        color: "#bb0000",
+        hand: ["ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
+        name: "Player 1",
+        id: uuidv4(),
+        developmentCards: 0,
+        points: 0,
+      },
+      { color: "#00bb00", hand: [], name: "Player 2", id: uuidv4(), developmentCards: 0, points: 0 },
+      // { color: "#0000bb", hand: [], name: "Player 3", id: uuidv4(), developmentCards: 0, points: 0 },
+      // { color: "#880088", hand: [], name: "Player 4", id: uuidv4(), developmentCards: 0, points: 0 },
     ];
   };
   const [dice, setDice] = useState<[number, number]>([0, 0]);
@@ -135,12 +145,13 @@ const Table = () => {
         return prev.map((player, i) => {
           if (i === myPlayerIndex) {
             return {
-              ...player, developmentCards: player.developmentCards + 1
-            }
+              ...player,
+              developmentCards: player.developmentCards + 1,
+            };
           }
           return player;
-        })
-      })
+        });
+      });
       setSelectedBuild("");
       return;
     }
@@ -241,7 +252,9 @@ const Table = () => {
         fullWidth
         variant="contained"
         onClick={() => onClickBuild(props.buildType)}
-        disabled={!isTurnOngoing || !hasMovedRobber || !canBuildResource(props.buildType)}
+        disabled={
+          !isTurnOngoing || !hasMovedRobber || !canBuildResource(props.buildType) || currPlayerIndex !== myPlayerIndex
+        }
         style={
           selectedBuild === props.buildType && gameRound >= totalInitialBuildRounds
             ? { ...selectedButtonStyle }
@@ -253,25 +266,48 @@ const Table = () => {
     );
   };
 
+  const Cell = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.body}`]: {
+      color: "white",
+      fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+      innerWidth: "50%",
+    },
+    [`&.${tableCellClasses.head}`]: {
+      color: "white",
+      fontSize: 15,
+      fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
+      innerWidth: "50%",
+    },
+  }));
+
+  const PointsTable = () => {
+    return (
+      <TableContainer>
+        <MuiTable aria-label="card-table">
+          <TableHead>
+            <TableRow>
+              <Cell>Player</Cell>
+              <Cell>Points</Cell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {players.map((player) => (
+              <TableRow key={player.id}>
+                <Cell>{player.name}</Cell>
+                <Cell>{player.points}</Cell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
+    );
+  };
+
   /**
    * Shows players what cards they have
    * @returns a table with each resource quantity owned by the player
    */
   const CardTable = () => {
-    const Cell = styled(TableCell)(() => ({
-      [`&.${tableCellClasses.body}`]: {
-        color: "white",
-        fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-        innerWidth: "50%",
-      },
-      [`&.${tableCellClasses.head}`]: {
-        color: "white",
-        fontSize: 15,
-        fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-        innerWidth: "50%",
-      },
-    }));
-
     const getResourceCount = (hand: Resource[], resource: Resource): number => {
       return hand.reduce((acc, curr) => {
         return curr === resource ? acc + 1 : acc;
@@ -352,6 +388,17 @@ const Table = () => {
         <Board
           selectedBuild={selectedBuild}
           onBuild={(build: Builds) => {
+            // add player points
+            if (build === "SETTLEMENT" || build === "CITY") {
+              setPlayers((prev) => {
+                return prev.map((player, index) => {
+                  if (index === currPlayerIndex) {
+                    return { ...player, points: player.points + 1 };
+                  }
+                  return player;
+                });
+              });
+            }
             if (gameRound >= players.length * 2 * 2) {
               // subtract build materials from curr player's hand
               const newHand = getNewHand(build, players[myPlayerIndex].hand);
@@ -374,13 +421,16 @@ const Table = () => {
             <h2>{instructionText}</h2>
           </div>
           <div>
+            <PointsTable />
+          </div>
+          <div>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
                 gap: "1vw",
                 margin: "1vh",
-                justifyContent: 'center'
+                justifyContent: "center",
               }}
             >
               <Die value={dice[0]} isRolling={isRolling} />
@@ -390,7 +440,9 @@ const Table = () => {
               fullWidth
               variant="contained"
               onClick={() => onRollDice()}
-              disabled={isTurnOngoing || isInitialBuildPhase || isRolling || isFlashing}
+              disabled={
+                isTurnOngoing || isInitialBuildPhase || isRolling || isFlashing
+              }
             >
               Roll Dice
             </Button>

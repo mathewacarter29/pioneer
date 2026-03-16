@@ -89,7 +89,7 @@ const BoardSvg = (props: BoardSvgProps) => {
   };
 
   const canBuildCity = (vertex: VertexInfo) => {
-    return selectedBuild === "CITY" && vertex.owner === currPlayer;
+    return selectedBuild === "CITY" && vertex.owner?.id == currPlayer.id;
   };
 
   const canBuildRoad = (road: EdgeInfo) => {
