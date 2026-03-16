@@ -293,8 +293,8 @@ const Table = () => {
           <TableBody>
             {players.map((player) => (
               <TableRow key={player.id}>
-                <Cell style={{color: player.color}}>{player.name}</Cell>
-                <Cell style={{color: player.color}}>{player.points}</Cell>
+                <Cell style={{color: player.color, fontWeight: 'bold'}}>{player.name}</Cell>
+                <Cell style={{color: player.color, fontWeight: 'bold'}}>{player.points}</Cell>
               </TableRow>
             ))}
           </TableBody>
