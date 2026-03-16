@@ -101,7 +101,7 @@ const BoardSvg = (props: BoardSvgProps) => {
       xmlns="http://www.w3.org/2000/svg"
       id="svg1"
       version="1.1"
-      viewBox="0 0 188.574 176.047"
+      viewBox="0 0 190.10589 176.04671"
       style={{
         width: "40vw",
         minWidth: MIN_BOARD_DIMENSIONS,
