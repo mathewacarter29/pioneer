@@ -293,8 +293,8 @@ const Table = () => {
           <TableBody>
             {players.map((player) => (
               <TableRow key={player.id}>
-                <Cell>{player.name}</Cell>
-                <Cell>{player.points}</Cell>
+                <Cell style={{color: player.color}}>{player.name}</Cell>
+                <Cell style={{color: player.color}}>{player.points}</Cell>
               </TableRow>
             ))}
           </TableBody>
@@ -414,10 +414,10 @@ const Table = () => {
           giveResources={giveResources}
         />
         <div style={sidePanelStyle}>
-          <div>
+          <div style={{height: '15%'}}>
             <h2>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h2>
           </div>
-          <div>
+          <div style={{height: '25%'}}>
             <h2>{instructionText}</h2>
           </div>
           <div>
