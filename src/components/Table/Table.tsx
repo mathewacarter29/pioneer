@@ -54,7 +54,7 @@ const Table = () => {
     return [
       {
         color: "#bb0000",
-        hand: ["ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
+        hand: ["ORE", "ORE", "ORE", "WHEAT", "WHEAT", "ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
         name: "Player 1",
         id: uuidv4(),
         developmentCards: 0,
@@ -376,6 +376,23 @@ const Table = () => {
    */
   const afterMoveRobber = () => {
     setHasMovedRobber(true);
+    // Remove half (rounded down) of cards from player's hand if they have more than 7 cards
+    setPlayers((prev) => {
+      return prev.map((player) => {
+        if (player.hand.length > 7) {
+          // Remove Math.floor(hand.length / 2) random cards
+          const numToRemove = Math.floor(player.hand.length / 2);
+          const handCopy = [...player.hand];
+          for (let i = 0; i < numToRemove; i++) {
+            // Remove a random card
+            const idx = Math.floor(Math.random() * handCopy.length);
+            handCopy.splice(idx, 1);
+          }
+          return { ...player, hand: handCopy };
+        }
+        return player;
+      });
+    });
     setInstructionText(getInstructionText(PLAYER_BUILD_TEXT, currPlayerIndex));
   };
 
@@ -389,6 +406,42 @@ const Table = () => {
         return { ...player, hand: [...player.hand, ...(cardsToGive[player.id] ?? [])] };
       });
     });
+  };
+
+  /**
+   * What to do when a user builds a resource
+   * @param build the resource being build
+   */
+  const onBuild = (build: Builds) => {
+    // add player points
+    if (build === "SETTLEMENT" || build === "CITY") {
+      // set point change value
+      const pointsToAdd = 1;
+      const newPointsChange: Record<string, number> = {
+        [players[currPlayerIndex].id]: pointsToAdd,
+      };
+      setPointsChange(newPointsChange);
+      // after 2 secs, reset change value and add points
+      setTimeout(() => {
+        setPlayers((prev) => {
+          return prev.map((player) => {
+            if (player.id in newPointsChange) {
+              return { ...player, points: player.points + newPointsChange[player.id] };
+            }
+            return player;
+          });
+        });
+        setPointsChange({});
+      }, POINT_CHANGE_DURATION);
+    }
+    if (gameRound >= players.length * 2 * 2) {
+      // subtract build materials from curr player's hand
+      const newHand = getNewHand(build, players[myPlayerIndex].hand);
+      giveMeNewHand(newHand);
+      setSelectedBuild("");
+      return;
+    }
+    initialBuildPhaseStep();
   };
 
   return (
@@ -413,37 +466,7 @@ const Table = () => {
         </div>
         <Board
           selectedBuild={selectedBuild}
-          onBuild={(build: Builds) => {
-            // add player points
-            if (build === "SETTLEMENT" || build === "CITY") {
-              // set point change value
-              const pointsToAdd = 1;
-              const newPointsChange: Record<string, number> = {
-                [players[currPlayerIndex].id]: pointsToAdd,
-              };
-              setPointsChange(newPointsChange);
-              // after 2 secs, reset change value and add points
-              setTimeout(() => {
-                setPlayers((prev) => {
-                  return prev.map((player) => {
-                    if (player.id in newPointsChange) {
-                      return { ...player, points: player.points + newPointsChange[player.id] };
-                    }
-                    return player;
-                  });
-                });
-                setPointsChange({});
-              }, POINT_CHANGE_DURATION);
-            }
-            if (gameRound >= players.length * 2 * 2) {
-              // subtract build materials from curr player's hand
-              const newHand = getNewHand(build, players[myPlayerIndex].hand);
-              giveMeNewHand(newHand);
-              setSelectedBuild("");
-              return;
-            }
-            initialBuildPhaseStep();
-          }}
+          onBuild={onBuild}
           numberRolled={isRolling ? 0 : dice[0] + dice[1]}
           currPlayer={players[currPlayerIndex]}
           afterMoveRobber={afterMoveRobber}

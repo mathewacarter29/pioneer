@@ -1,10 +1,10 @@
 # Items to work on (ordered by priority)
 
-1. Add green + and red - text whenever a change happens inside a table (cards)
-2. Add "cheat sheet" pop up with the build costs for each build
-3. When robber is rolled and any player has more than 7 cards, discard half (rounded down) at random
-4. Add adjacency matrix so tiles know what settlements are on them
+* Add "cheat sheet" pop up with the build costs for each build
+* Pop up for rules of the game upon game start
+* New fancy card interface that is not in table form
+    * Let players choose what cards they discard
+* Add adjacency matrix so tiles know what settlements are on them
     * Implement only receiving cards when that number is rolled
-5. Add adjacency matrix from settlement -> road -> settlement
-6. Pop up for rules of the game upon game start
-7. New fancy card interface that is not in table form
+    * Give players starting cards based on second placed settlement
+* Add adjacency matrix from settlement -> road -> settlement
