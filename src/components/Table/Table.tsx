@@ -99,7 +99,8 @@ const Table = () => {
     color: "black",
   };
   const sidePanelStyle = {
-    margin: "2vw",
+    marginLeft: "2vw",
+    marginRight: "2vw",
     width: "12vw",
     display: "flex",
     flexDirection: "column" as const, // need to do this or else you get typescript error
@@ -305,7 +306,7 @@ const Table = () => {
                     {player.id in pointsChange ? (
                       <div>
                         <p
-                          style={{ color: pointsChange[player.id] > 0 ? "green" : "red", marginLeft: '8px' }}
+                          style={{ color: pointsChange[player.id] > 0 ? "green" : "red", marginLeft: "8px" }}
                         >{`${pointsChange[player.id] > 0 ? "+" : ""}${pointsChange[player.id]}`}</p>
                       </div>
                     ) : null}
@@ -392,7 +393,16 @@ const Table = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "end" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          margin: "auto",
+        }}
+      >
         <div style={sidePanelStyle}>
           <div>
             <h2>Player Name: {players[myPlayerIndex].name}</h2>

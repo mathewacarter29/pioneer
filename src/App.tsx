@@ -13,7 +13,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <h2>Pioneer</h2>
         <Table />
       </div>
     </ThemeProvider>

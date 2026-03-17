@@ -1,6 +1,6 @@
 # Items to work on (ordered by priority)
 
-1. Add green + and red - text whenever a change happens inside a table (cards and points)
+1. Add green + and red - text whenever a change happens inside a table (cards)
 2. Add "cheat sheet" pop up with the build costs for each build
 3. When robber is rolled and any player has more than 7 cards, discard half (rounded down) at random
 4. Add adjacency matrix so tiles know what settlements are on them
