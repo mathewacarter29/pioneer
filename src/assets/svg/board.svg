@@ -24,8 +24,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.0671131"
-     inkscape:cx="368.7519"
-     inkscape:cy="353.28962"
+     inkscape:cx="369.22047"
+     inkscape:cy="353.28964"
      inkscape:window-width="1710"
      inkscape:window-height="955"
      inkscape:window-x="0"
@@ -39,7 +39,8 @@
      inkscape:label="BASE"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-87.357237,-102.32365)">
+     transform="translate(-87.357237,-102.32365)"
+     style="display:inline">
     <path
        sodipodi:type="star"
        style="fill:#a0de7e;fill-opacity:1;fill-rule:nonzero;stroke-width:0.264583"
@@ -368,7 +369,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="EDGES"
-     transform="translate(-87.357237,-102.32365)">
+     transform="translate(-87.357237,-102.32365)"
+     style="display:inline">
     <rect
        style="fill:#000000;stroke-width:0.264999"
        id="rect3"
@@ -1383,7 +1385,8 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="NUMBERS"
-     transform="translate(1.2661766,1.1964232)">
+     transform="translate(1.2661766,1.1964232)"
+     style="display:inline">
     <g
        id="g3"
        inkscape:label="NUMBER">
@@ -2083,7 +2086,8 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="CITIES"
-     transform="translate(0.76618031)">
+     transform="translate(0.76618031)"
+     style="display:none">
     <path
        style="display:inline;fill:#000000;stroke-width:0.224297"
        d="m 54.192323,6.4963604 v -4 l 1.79101,-2.39284205 1.791009,2.39284205 v 1.527391 h 2.950339 v 2.472608 z"
@@ -2358,7 +2362,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="ROBBERS">
+     inkscape:label="ROBBERS"
+     style="display:none">
     <path
        id="rect6"
        style="fill:#666666;stroke-width:0.406001"

@@ -26,6 +26,7 @@ import {
   ROLL_DURATION,
   TILE_FLASH_DURATION,
   BUILD_COSTS,
+  POINT_CHANGE_DURATION,
 } from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
@@ -73,6 +74,7 @@ const Table = () => {
   const [isTurnOngoing, setIsTurnOngoing] = useState<boolean>(false);
   const [isFlashing, setIsFlashing] = useState<boolean>(false);
   const [hasMovedRobber, setHasMovedRobber] = useState<boolean>(true);
+  const [pointsChange, setPointsChange] = useState<Record<string, number>>({});
   const myPlayerIndex = useMemo<number>(() => {
     return 0;
   }, []);
@@ -281,9 +283,10 @@ const Table = () => {
   }));
 
   const PointsTable = () => {
+    const customCellStyle = { fontWeight: "bold", paddingTop: 0, paddingBottom: 0 };
     return (
       <TableContainer>
-        <MuiTable aria-label="card-table">
+        <MuiTable aria-label="points-table">
           <TableHead>
             <TableRow>
               <Cell>Player</Cell>
@@ -293,8 +296,21 @@ const Table = () => {
           <TableBody>
             {players.map((player) => (
               <TableRow key={player.id}>
-                <Cell style={{color: player.color, fontWeight: 'bold'}}>{player.name}</Cell>
-                <Cell style={{color: player.color, fontWeight: 'bold'}}>{player.points}</Cell>
+                <Cell style={customCellStyle}>
+                  <p style={{ color: player.color }}>{player.name}</p>
+                </Cell>
+                <Cell style={customCellStyle}>
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <p style={{ color: player.color }}>{player.points}</p>
+                    {player.id in pointsChange ? (
+                      <div>
+                        <p
+                          style={{ color: pointsChange[player.id] > 0 ? "green" : "red", marginLeft: '8px' }}
+                        >{`${pointsChange[player.id] > 0 ? "+" : ""}${pointsChange[player.id]}`}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </Cell>
               </TableRow>
             ))}
           </TableBody>
@@ -390,14 +406,24 @@ const Table = () => {
           onBuild={(build: Builds) => {
             // add player points
             if (build === "SETTLEMENT" || build === "CITY") {
-              setPlayers((prev) => {
-                return prev.map((player, index) => {
-                  if (index === currPlayerIndex) {
-                    return { ...player, points: player.points + 1 };
-                  }
-                  return player;
+              // set point change value
+              const pointsToAdd = 1;
+              const newPointsChange: Record<string, number> = {
+                [players[currPlayerIndex].id]: pointsToAdd,
+              };
+              setPointsChange(newPointsChange);
+              // after 2 secs, reset change value and add points
+              setTimeout(() => {
+                setPlayers((prev) => {
+                  return prev.map((player) => {
+                    if (player.id in newPointsChange) {
+                      return { ...player, points: player.points + newPointsChange[player.id] };
+                    }
+                    return player;
+                  });
                 });
-              });
+                setPointsChange({});
+              }, POINT_CHANGE_DURATION);
             }
             if (gameRound >= players.length * 2 * 2) {
               // subtract build materials from curr player's hand
@@ -414,10 +440,10 @@ const Table = () => {
           giveResources={giveResources}
         />
         <div style={sidePanelStyle}>
-          <div style={{height: '15%'}}>
+          <div style={{ height: "15%" }}>
             <h2>{isInitialBuildPhase ? "Initial Build Phase" : `Round ${gameRound - totalInitialBuildRounds + 1}`}</h2>
           </div>
-          <div style={{height: '25%'}}>
+          <div style={{ height: "25%" }}>
             <h2>{instructionText}</h2>
           </div>
           <div>
@@ -440,9 +466,7 @@ const Table = () => {
               fullWidth
               variant="contained"
               onClick={() => onRollDice()}
-              disabled={
-                isTurnOngoing || isInitialBuildPhase || isRolling || isFlashing
-              }
+              disabled={isTurnOngoing || isInitialBuildPhase || isRolling || isFlashing}
             >
               Roll Dice
             </Button>
