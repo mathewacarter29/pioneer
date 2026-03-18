@@ -1,6 +1,5 @@
-import type { Builds, Player } from "../../Table";
+import type { Builds, Player, Resource } from "../../Table";
 import {
-  type TileColorType,
   type NumberSvgInfo,
   UNSELECTED_BUILD_COLOR,
   type VertexSvgInfo,
@@ -8,6 +7,7 @@ import {
   type HexSvgInfo,
   BOARD_HEIGHT,
   MIN_BOARD_DIMENSIONS,
+  RESOURCE_COLORS,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
 
@@ -37,7 +37,7 @@ export interface EdgeInfo {
 
 export interface HexInfo {
   hexSvgInfo: HexSvgInfo;
-  color: TileColorType;
+  resource: Resource;
   isHighlighted: boolean;
   numberSvgInfo?: NumberSvgInfo;
   hasRobber: boolean;
@@ -125,7 +125,7 @@ const BoardSvg = (props: BoardSvgProps) => {
                 id="HEX"
                 d={hex.hexSvgInfo.pathInfo.d}
                 transform={hex.hexSvgInfo.pathInfo.transform}
-                fill={hex.color}
+                fill={RESOURCE_COLORS[hex.resource]}
                 filter={hex.isHighlighted ? "brightness(140%)" : "none"}
                 className={hex.isClickable ? classes.flashHex : ""}
                 style={{ pointerEvents: hex.isClickable ? "inherit" : "none" }}

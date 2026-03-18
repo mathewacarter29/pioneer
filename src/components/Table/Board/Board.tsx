@@ -1,12 +1,10 @@
 import {
   DEFAULT_TILES,
-  type TileColorType,
   DEFAULT_HEXES,
   DEFAULT_EDGES,
   DEFAULT_VERTICES,
   type NumberSvgInfo,
   DEFAULT_NUMBERS,
-  TILE_COLORS,
   TILE_FLASH_DURATION,
   type VertexSvgInfo,
   type PathSvgInfo,
@@ -44,20 +42,6 @@ const Board = (props: BoardProps) => {
     setEdges(getEdges(DEFAULT_EDGES));
   }, []);
 
-  // TODO delete this function and have Resource be a field on hex, then get color from resource
-  const getResourceFromColor = (color: TileColorType): Resource => {
-    const resourceMap: Record<TileColorType, Resource> = {
-      [TILE_COLORS.PLAINS]: "SHEEP",
-      [TILE_COLORS.FIELD]: "WHEAT",
-      [TILE_COLORS.FORREST]: "WOOD",
-      [TILE_COLORS.QUARRY]: "ORE",
-      [TILE_COLORS.BRICKYARD]: "BRICK",
-      [TILE_COLORS.DESERT]: "",
-      [TILE_COLORS.TEST]: "",
-    };
-    return resourceMap[color];
-  };
-
   /**
    * Get the cards for each player based on the tiles rolled
    * @param tiles tiles rolled this turn
@@ -66,7 +50,7 @@ const Board = (props: BoardProps) => {
   const getCards = (tiles: HexInfo[]): Record<string, Resource[]> => {
     let acc = {} as Record<string, Resource[]>;
     for (const tile of tiles) {
-      acc[currPlayer.id] = [...(acc[currPlayer.id] ?? []), getResourceFromColor(tile.color)];
+      acc[currPlayer.id] = [...(acc[currPlayer.id] ?? []), tile.resource];
     }
     return acc;
   };
@@ -230,17 +214,17 @@ const Board = (props: BoardProps) => {
   const getTiles = (baseHexInfo: Record<string, HexSvgInfo>, numbers: NumberSvgInfo[]): Record<string, HexInfo> => {
     // first, get tile colors
     const hexKeys = Object.keys(baseHexInfo);
-    let tileColors = getTileTypes(hexKeys.length);
-    if (tileColors.length !== hexKeys.length) {
+    let tileTypes = getTileTypes(hexKeys.length);
+    if (tileTypes.length !== hexKeys.length) {
       throw new Error("Not enough tile colors provided for the number of hexes.");
     }
-    tileColors = shuffle(tileColors);
+    tileTypes = shuffle(tileTypes);
     // next, get numbers for each tile
-    const desertTileIndexes = tileColors.reduce((accumulator, element, index) => {
-      if (element === TILE_COLORS.DESERT) {
-        accumulator.push(index);
+    const desertTileIndexes = tileTypes.reduce((acc, element, index) => {
+      if (element === "") {
+        acc.push(index);
       }
-      return accumulator;
+      return acc;
     }, [] as number[]);
     if (hexKeys.length - desertTileIndexes.length !== numbers.length) {
       throw new Error("Not enough numbers for the number of hexes.");
@@ -256,7 +240,7 @@ const Board = (props: BoardProps) => {
       if (index === Number.NaN) {
         throw new Error("Invalid hex key - all keys should be integers representing this hex's index on the board");
       }
-      const tileColor = tileColors[index]; // asserted earlier that tileColors and hexKeys have same length
+      const tileType = tileTypes[index]; // asserted earlier that tileTypes and hexKeys have same length
       let tileNumber = undefined;
       if (!desertTileIndexes.includes(index)) {
         // if this tile is not a desert, add a number
@@ -271,7 +255,7 @@ const Board = (props: BoardProps) => {
       }
       tiles[key] = {
         hexSvgInfo: baseHexInfo[key],
-        color: tileColor,
+        resource: tileType,
         isHighlighted: false,
         numberSvgInfo: tileNumber,
         hasRobber: hasRobber,
@@ -282,11 +266,11 @@ const Board = (props: BoardProps) => {
   };
 
   /**
-   * Generates an array of TileColorType objects based on the number of tiles needed.
+   * Generates an array of Resources based on the number of tiles needed.
    * @param numTiles The number of tiles to generate.
-   * @returns An array of TileColorType objects.
+   * @returns An array of Resources.
    */
-  const getTileTypes = (numTiles: number): TileColorType[] => {
+  const getTileTypes = (numTiles: number): Resource[] => {
     // get a copy of the tiles array
     let startingTiles = DEFAULT_TILES.slice(0, DEFAULT_TILES.length);
     if (numTiles <= startingTiles.length) {
