@@ -8,4 +8,6 @@
 * [ ] Pop up for rules of the game upon game start
 * [ ] New fancy card interface that is not in table form
     * [ ] Let players choose what cards they discard
+    * [ ] Show picture on cards instead of just colors
 * [ ] Add adjacency matrix from settlement -> road -> settlement
+* [ ] Add picture backgrounds to tiles instead of color
