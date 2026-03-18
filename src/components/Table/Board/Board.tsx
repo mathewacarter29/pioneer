@@ -50,25 +50,44 @@ const Board = (props: BoardProps) => {
   const getCards = (tiles: HexInfo[]): Record<string, Resource[]> => {
     let acc = {} as Record<string, Resource[]>;
     for (const tile of tiles) {
-      acc[currPlayer.id] = [...(acc[currPlayer.id] ?? []), tile.resource];
+      // go through this tile's touched vertices
+      for (const vertexIndex of tile.hexSvgInfo.adjacentVertices) {
+        if (!(vertexIndex in vertices)) {
+          console.error(`vertex ${vertexIndex} to give resource to does not exist`)
+          continue;
+        }
+        const vertex = vertices[vertexIndex];
+        if (vertex.owner) {
+          let cardsToGive: Resource[] = [];
+          if (vertex.isCity) {
+            cardsToGive = [tile.resource, tile.resource]
+          } else if (vertex.isSettlement) {
+            cardsToGive = [tile.resource]
+          } else {
+            console.error(`vertex ${vertexIndex} has owner but is not settlement`)
+          }
+          acc[vertex.owner.id] = [...(acc[vertex.owner.id] ?? []), ...cardsToGive]
+        }
+      }
     }
     return acc;
   };
 
-  useEffect(() => {
-    if (numberRolled === 0) {
-      return;
-    }
+  /**
+   * What to do when a number is rolled
+   * @param diceTotal numberRolled
+   */
+  const onNumberRolled = (diceTotal: number) => {
     const hexKeys = Object.keys(hexes);
     // find the hexes with the rolled number
     const rolledIndexes = hexKeys.reduce((accumulator, key) => {
-      if (hexes[key].numberSvgInfo?.number === numberRolled && !hexes[key].hasRobber) {
+      if (hexes[key].numberSvgInfo?.number === diceTotal && !hexes[key].hasRobber) {
         accumulator.push(key);
       }
       return accumulator;
     }, [] as string[]);
 
-    if (numberRolled === 7) {
+    if (diceTotal === 7) {
       // move the robber
       // find the current hex with the robber
       const robberIndex = hexKeys.find((i) => hexes[i].hasRobber);
@@ -117,6 +136,13 @@ const Board = (props: BoardProps) => {
         );
       }, TILE_FLASH_DURATION);
     }
+  };
+
+  useEffect(() => {
+    if (numberRolled === 0) {
+      return;
+    }
+    onNumberRolled(numberRolled);
   }, [numberRolled]);
 
   // TODO can implement friendly robber here

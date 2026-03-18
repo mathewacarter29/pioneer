@@ -54,7 +54,7 @@ const Table = () => {
     return [
       {
         color: "#bb0000",
-        hand: ["ORE", "ORE", "ORE", "WHEAT", "WHEAT", "ORE", "ORE", "ORE", "WHEAT", "WHEAT"],
+        hand: [],
         name: "Player 1",
         id: uuidv4(),
         developmentCards: 0,

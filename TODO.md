@@ -1,8 +1,8 @@
 # Items to work on (ordered by priority)
 
 * [x] Make hexes use Resource instead of TileColor
-* [ ] Add adjacency matrix so tiles know what settlements are on them
-    * [ ] Implement only receiving cards when that number is rolled
+* [x] Add adjacency matrix so tiles know what settlements are on them
+    * [x] Implement only receiving cards when that number is rolled
     * [ ] Give players starting cards based on second placed settlement
 * [ ] Add "cheat sheet" pop up with the build costs for each build
 * [ ] Pop up for rules of the game upon game start
