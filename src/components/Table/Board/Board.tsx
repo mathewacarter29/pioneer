@@ -22,6 +22,7 @@ interface BoardProps {
   currPlayer: Player;
   afterMoveRobber: () => void;
   giveResources: (cards: Record<string, Resource[]>) => void;
+  isSecondTurn: boolean;
 }
 
 /**
@@ -30,7 +31,7 @@ interface BoardProps {
  * @returns The Board component.
  */
 const Board = (props: BoardProps) => {
-  const { selectedBuild, onBuild, numberRolled, currPlayer, afterMoveRobber, giveResources } = props;
+  const { selectedBuild, onBuild, numberRolled, currPlayer, afterMoveRobber, giveResources, isSecondTurn } = props;
 
   const [hexes, setHexes] = useState<Record<string, HexInfo>>({});
   const [vertices, setVertices] = useState<Record<string, VertexInfo>>({});
@@ -53,20 +54,20 @@ const Board = (props: BoardProps) => {
       // go through this tile's touched vertices
       for (const vertexIndex of tile.hexSvgInfo.adjacentVertices) {
         if (!(vertexIndex in vertices)) {
-          console.error(`vertex ${vertexIndex} to give resource to does not exist`)
+          console.error(`vertex ${vertexIndex} to give resource to does not exist`);
           continue;
         }
         const vertex = vertices[vertexIndex];
         if (vertex.owner) {
           let cardsToGive: Resource[] = [];
           if (vertex.isCity) {
-            cardsToGive = [tile.resource, tile.resource]
+            cardsToGive = [tile.resource, tile.resource];
           } else if (vertex.isSettlement) {
-            cardsToGive = [tile.resource]
+            cardsToGive = [tile.resource];
           } else {
-            console.error(`vertex ${vertexIndex} has owner but is not settlement`)
+            console.error(`vertex ${vertexIndex} has owner but is not settlement`);
           }
-          acc[vertex.owner.id] = [...(acc[vertex.owner.id] ?? []), ...cardsToGive]
+          acc[vertex.owner.id] = [...(acc[vertex.owner.id] ?? []), ...cardsToGive];
         }
       }
     }
@@ -324,6 +325,16 @@ const Board = (props: BoardProps) => {
           owner: currPlayer,
         },
       }));
+      if (isSecondTurn) {
+        // find the tiles touching this settlement
+        const resources: Resource[] = [];
+        for (const tile of Object.values(hexes)) {
+          if (tile.hexSvgInfo.adjacentVertices.includes(vertexIndex)) {
+            resources.push(tile.resource);
+          }
+        }
+        giveResources({ [currPlayer.id]: resources });
+      }
       onBuild("SETTLEMENT");
     } else if (selectedBuild === "CITY") {
       setVertices((prevVertices) => ({

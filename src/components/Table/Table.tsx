@@ -413,6 +413,7 @@ const Table = () => {
    * @param build the resource being build
    */
   const onBuild = (build: Builds) => {
+    // if this is players second initial settlement, give them cards
     // add player points
     if (build === "SETTLEMENT" || build === "CITY") {
       // set point change value
@@ -471,6 +472,7 @@ const Table = () => {
           currPlayer={players[currPlayerIndex]}
           afterMoveRobber={afterMoveRobber}
           giveResources={giveResources}
+          isSecondTurn={gameRound >= totalInitialBuildRounds / 2 && gameRound < totalInitialBuildRounds}
         />
         <div style={sidePanelStyle}>
           <div style={{ height: "15%" }}>

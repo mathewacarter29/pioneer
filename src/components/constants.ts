@@ -940,7 +940,7 @@ export const TILE_FLASH_DURATION = 3000;
 
 export const ROLL_DURATION = 1000;
 
-export const POINT_CHANGE_DURATION = 2000;
+export const POINT_CHANGE_DURATION = 500;
 
 export const UNSELECTED_BUILD_COLOR = "#555555";
 
