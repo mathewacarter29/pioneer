@@ -27,6 +27,7 @@ import {
   TILE_FLASH_DURATION,
   BUILD_COSTS,
   POINT_CHANGE_DURATION,
+  PANEL_BACKGROUND_COLOR,
 } from "../constants";
 
 export type Builds = "ROAD" | "CITY" | "SETTLEMENT" | "DEVELOPMENT_CARD" | "";
@@ -108,7 +109,7 @@ const Table = () => {
     minHeight: MIN_BOARD_DIMENSIONS,
     justifyContent: "space-between",
     padding: "5px",
-    backgroundColor: "#1a5725",
+    backgroundColor: PANEL_BACKGROUND_COLOR,
   };
 
   const getNewHand = (build: Builds, hand: Resource[]): Resource[] => {

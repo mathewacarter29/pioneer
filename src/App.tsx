@@ -1,21 +1,25 @@
+import { Route, Routes } from "react-router";
 import "./App.css";
-import Table from "./components/Table/Table";
+import Game from "./pages/Game";
+import Start from "./pages/Start";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#444544"
-    }
-  }
-});
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#444544",
+      },
+    },
+  });
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <h1>Pioneer</h1>
-        <Table />
-      </div>
+      <Routes>
+        <Route path="pioneer">
+          <Route index element={<Start />} />
+          <Route path=":gameId" element={<Game />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 }

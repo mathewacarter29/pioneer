@@ -964,3 +964,5 @@ export const BUILD_COSTS: Record<Builds, Resource[]> = {
   DEVELOPMENT_CARD: ["SHEEP", "WHEAT", "ORE"],
   "": [],
 };
+
+export const PANEL_BACKGROUND_COLOR = "#1a5725";
