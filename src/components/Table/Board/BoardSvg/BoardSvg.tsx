@@ -7,9 +7,14 @@ import {
   type HexSvgInfo,
   BOARD_HEIGHT,
   MIN_BOARD_DIMENSIONS,
-  RESOURCE_COLORS,
 } from "../../../constants";
 import classes from "./BoardSvg.module.css";
+import wheatField from "../../../../assets/hexes/wheat-hex.jpg";
+import pasture from "../../../../assets/hexes/sheep-hex.jpg";
+import brickyard from "../../../../assets/hexes/brick-hex.jpg";
+import quarry from "../../../../assets/hexes/ore-hex.jpg";
+import forest from "../../../../assets/hexes/wood-hex.jpg";
+import desert from "../../../../assets/hexes/desert-hex.jpg";
 
 interface BoardSvgProps {
   hexes: Record<string, HexInfo>;
@@ -109,8 +114,36 @@ const BoardSvg = (props: BoardSvgProps) => {
         minHeight: MIN_BOARD_DIMENSIONS,
       }}
     >
+      <defs>
+        <pattern id="wheatPattern" patternUnits="userSpaceOnUse" height={"100%"} width={"100%"}>
+          <image href={wheatField} x="0" y="0" />
+        </pattern>
+        <pattern id="sheepPattern" patternUnits="userSpaceOnUse" height={"100%"} width={"100%"}>
+          <image href={pasture} x="0" y="0" />
+        </pattern>
+        <pattern id="brickPattern" patternUnits="userSpaceOnUse" height={"100%"} width={"100%"}>
+          <image href={brickyard} x="0" y="0" />
+        </pattern>
+        <pattern id="orePattern" patternUnits="userSpaceOnUse" height={"100%"} width={"100%"}>
+          <image href={quarry} x="0" y="0" />
+        </pattern>
+        <pattern id="woodPattern" patternUnits="userSpaceOnUse" height={"100%"} width={"100%"}>
+          <image href={forest} x="0" y="0" />
+        </pattern>
+        <pattern id="desertPattern" patternUnits="userSpaceOnUse" height={'100%'} width={'100%'}>
+          <image href={desert} x="0" y="0"/>
+        </pattern>
+      </defs>
       {Object.entries(hexes).map(([key, hex]) => {
         const color = hex.numberSvgInfo?.number === 6 || hex.numberSvgInfo?.number === 8 ? "#da0000" : "black";
+        const backgroundImages: Record<Resource, string> = {
+          WHEAT: "url(#wheatPattern)",
+          SHEEP: "url(#sheepPattern)",
+          BRICK: "url(#brickPattern)",
+          WOOD: "url(#woodPattern)",
+          ORE: "url(#orePattern)",
+          "": "url(#desertPattern)",
+        };
         return (
           <g key={key}>
             {/* HEXES */}
@@ -125,7 +158,9 @@ const BoardSvg = (props: BoardSvgProps) => {
                 id="HEX"
                 d={hex.hexSvgInfo.pathInfo.d}
                 transform={hex.hexSvgInfo.pathInfo.transform}
-                fill={RESOURCE_COLORS[hex.resource]}
+                fill={backgroundImages[hex.resource]}
+                stroke="lightyellow"
+                strokeWidth="15"
                 filter={hex.isHighlighted ? "brightness(140%)" : "none"}
                 className={hex.isClickable ? classes.flashHex : ""}
                 style={{ pointerEvents: hex.isClickable ? "inherit" : "none" }}

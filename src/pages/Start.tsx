@@ -22,7 +22,6 @@ const Start = () => {
         Each Settlement is worth 1 point, each City is worth 2 points.
         A player wins when they reach 10 points.
       </p>
-
       <Button onClick={startGame} variant="contained">Play Game</Button>
     </div>
   );
